@@ -17,7 +17,7 @@
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      overflow: hidden; /* Strict no-scroll */
+      overflow: hidden; 
     }
 
     /* Background Dates Layout */
@@ -29,14 +29,16 @@
       height: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 10px;
+      /* Added more padding to create the black margin from screen edges */
+      padding: 40px 60px; 
+      box-sizing: border-box;
       z-index: -1;
       pointer-events: none;
     }
 
     .side-group {
       display: flex;
-      gap: 15px; /* Tight gap between internal columns */
+      gap: 30px; 
       width: 40%;
     }
 
@@ -46,13 +48,13 @@
     .column {
       display: flex;
       flex-direction: column;
-      justify-content: space-between; /* Spreads dates evenly top-to-bottom */
-      height: 98vh;
-      font-size: 0.65rem; /* Smaller text */
+      justify-content: space-between; 
+      height: 100%; /* Spans the padded height */
+      font-size: 0.65rem;
       line-height: 1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.35); /* Less faint, more visible gold */
+      color: rgba(255, 215, 0, 0.35);
       white-space: nowrap;
     }
 
@@ -61,13 +63,13 @@
 
     /* Highlighted Dates */
     .highlight-date {
-      color: rgba(255, 215, 0, 0.9); /* Stronger highlight */
+      color: rgba(255, 215, 0, 0.9);
       font-weight: 900;
       font-size: 0.75rem;
       text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
     }
 
-    /* Main Content */
+    /* Main Content Styling */
     h1 {
       font-size: 2.2rem;
       font-weight: 800;
@@ -130,6 +132,11 @@
       text-transform: uppercase;
       letter-spacing: 3px;
       color: #FFD700;
+    }
+
+    @media (max-width: 1000px) {
+      .bg-dates-container { padding: 20px 30px; }
+      .side-group { gap: 15px; }
     }
 
     @media (max-width: 800px) {
