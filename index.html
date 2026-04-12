@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Results Countdown</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #0a0a0a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 300;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-bottom: 3rem;
+      color: #888;
+    }
+
+    .countdown-wrapper {
+      display: flex;
+      gap: 3rem;
+    }
+
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .value {
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-top: 1rem;
+      color: #555;
+    }
+
+    .watermark {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #333;
+      pointer-events: none;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 700px) {
+      .countdown-wrapper { gap: 1.5rem; }
+      .value { font-size: 2.5rem; }
+      h1 { font-size: 1rem; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Results Countdown</h1>
+
+  <div class="countdown-wrapper">
+    <div class="time-block">
+      <div id="days" class="value">00</div>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-block">
+      <div id="hours" class="value">00</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div id="minutes" class="value">00</div>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-block">
+      <div id="seconds" class="value">00</div>
+      <div class="label">Seconds</div>
+    </div>
+  </div>
+
+  <div class="watermark">Brought to you by Results Committee</div>
+
+  <script>
+    // Target date: May 9, 2026
+    const targetDate = new Date("May 9, 2026 00:00:00").getTime();
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const timeLeft = targetDate - now;
+
+      if (timeLeft < 0) {
+        document.querySelector(".countdown-wrapper").innerHTML = "<div class='value'>RESULTS ACHIEVED</div>";
+        return;
+      }
+
+      const d = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+      const h = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = d.toString().padStart(2, '0');
+      document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+      document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+
+</body>
+</html>
