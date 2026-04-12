@@ -12,12 +12,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       background: #0a0a0a;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      overflow: hidden; /* Prevent scrolling */
+      overflow: hidden; /* Strict no-scroll */
     }
 
     /* Background Dates Layout */
@@ -29,16 +29,15 @@
       height: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 1.5rem;
+      padding: 10px;
       z-index: -1;
       pointer-events: none;
-      opacity: 0.15;
     }
 
     .side-group {
       display: flex;
-      gap: 2rem;
-      width: 45%;
+      gap: 15px; /* Tight gap between internal columns */
+      width: 40%;
     }
 
     .left-side { justify-content: flex-start; }
@@ -47,11 +46,13 @@
     .column {
       display: flex;
       flex-direction: column;
-      font-size: 0.75rem;
-      line-height: 1.4;
+      justify-content: space-between; /* Spreads dates evenly top-to-bottom */
+      height: 98vh;
+      font-size: 0.65rem; /* Smaller text */
+      line-height: 1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #FFD700;
+      color: rgba(255, 215, 0, 0.35); /* Less faint, more visible gold */
       white-space: nowrap;
     }
 
@@ -60,29 +61,27 @@
 
     /* Highlighted Dates */
     .highlight-date {
-      color: #FFD700;
+      color: rgba(255, 215, 0, 0.9); /* Stronger highlight */
       font-weight: 900;
-      font-size: 0.9rem;
-      opacity: 1;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+      font-size: 0.75rem;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
     }
 
     /* Main Content */
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 5px;
-      margin-top: 1rem;
-      margin-bottom: 2rem;
+      margin: 0 0 2rem 0;
       color: #FFD700;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
     }
 
     .countdown-wrapper {
       display: flex;
-      gap: 3rem;
-      margin-bottom: 4rem;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
     }
 
     .time-block {
@@ -92,69 +91,51 @@
     }
 
     .value {
-      font-size: 5rem;
+      font-size: 4.5rem;
       font-weight: 700;
       line-height: 1;
       font-variant-numeric: tabular-nums;
     }
 
     .label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 3px;
-      margin-top: 1rem;
-      color: #666;
+      margin-top: 0.8rem;
+      color: #777;
     }
 
     .subtitle {
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      color: #FFD700;
-      margin-bottom: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .subtitle::before {
-      content: "";
-      width: 40px;
-      height: 2px;
-      background: #FFD700;
-      opacity: 0.3;
-    }
-
-    .secondary-wrapper {
-      display: flex;
-      gap: 2rem;
-      opacity: 0.85;
-    }
-
-    .secondary-wrapper .value { font-size: 2rem; }
-    .secondary-wrapper .label { font-size: 0.6rem; }
-
-    .watermark {
-      margin-top: 3rem;
       font-size: 1rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 3px;
       color: #FFD700;
+      margin-bottom: 1rem;
     }
 
-    @media (max-width: 900px) {
-      .side-group { gap: 1rem; }
-      .column { font-size: 0.6rem; }
+    .secondary-wrapper {
+      display: flex;
+      gap: 1.5rem;
+      opacity: 0.85;
     }
 
-    @media (max-width: 700px) {
-      .bg-dates-container { display: none; } /* Hide on small mobile to keep UI clean */
+    .secondary-wrapper .value { font-size: 1.8rem; }
+    .secondary-wrapper .label { font-size: 0.55rem; }
+
+    .watermark {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #FFD700;
+    }
+
+    @media (max-width: 800px) {
+      .bg-dates-container { display: none; }
       .value { font-size: 2.5rem; }
       .countdown-wrapper { gap: 1rem; }
-      h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -275,27 +256,23 @@
 
     function updateTimer() {
       const now = new Date().getTime();
-
       const updateSection = (diff, containerId, ids) => {
         if (diff <= 0) {
-          document.getElementById(containerId).innerHTML = `<div class='value'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
+          document.getElementById(containerId).innerHTML = `<div class='value' style='font-size:2rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
         } else {
           const d = Math.floor(diff / (1000 * 60 * 60 * 24));
           const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
           const s = Math.floor((diff % (1000 * 60)) / 1000);
-          
           document.getElementById(ids[0]).innerText = d.toString().padStart(2, '0');
           document.getElementById(ids[1]).innerText = h.toString().padStart(2, '0');
           document.getElementById(ids[2]).innerText = m.toString().padStart(2, '0');
           document.getElementById(ids[3]).innerText = s.toString().padStart(2, '0');
         }
       };
-
       updateSection(resultsDate - now, "main-container", ["days", "hours", "minutes", "seconds"]);
       updateSection(examDate - now, "secondary-container", ["ex-days", "ex-hours", "ex-mins", "ex-secs"]);
     }
-
     setInterval(updateTimer, 1000);
     updateTimer();
   </script>
