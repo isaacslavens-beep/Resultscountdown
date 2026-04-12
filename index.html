@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Countdown</title>
   
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-
   <style>
     body {
       margin: 0;
@@ -26,13 +20,15 @@
       position: relative;
     }
 
+    /* Updated Title Styling */
     h1 {
-      font-size: 1.5rem;
-      font-weight: 300;
+      font-size: 2.5rem; /* Larger */
+      font-weight: 800;   /* Bolder */
       text-transform: uppercase;
       letter-spacing: 5px;
       margin-bottom: 3rem;
-      color: #888;
+      color: #FFD700;    /* Bright Gold */
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3); /* Subtle glow */
     }
 
     .countdown-wrapper {
@@ -61,21 +57,23 @@
       color: #555;
     }
 
+    /* Updated Watermark Styling */
     .watermark {
       position: absolute;
-      bottom: 2rem;
-      font-size: 0.7rem;
+      bottom: 3rem;
+      font-size: 1.2rem; /* Larger */
+      font-weight: 700;   /* Bolder */
       text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #333;
+      letter-spacing: 3px;
+      color: #FFD700;    /* Bright Gold */
       pointer-events: none;
     }
 
-    /* Responsive adjustments for mobile */
     @media (max-width: 700px) {
       .countdown-wrapper { gap: 1.5rem; }
       .value { font-size: 2.5rem; }
-      h1 { font-size: 1rem; letter-spacing: 3px; }
+      h1 { font-size: 1.5rem; letter-spacing: 3px; }
+      .watermark { font-size: 0.8rem; bottom: 2rem; }
     }
   </style>
 </head>
