@@ -20,15 +20,14 @@
       position: relative;
     }
 
-    /* Updated Title Styling */
     h1 {
-      font-size: 2.5rem; /* Larger */
-      font-weight: 800;   /* Bolder */
+      font-size: 2.5rem;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 5px;
       margin-bottom: 3rem;
-      color: #FFD700;    /* Bright Gold */
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3); /* Subtle glow */
+      color: #FFD700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
     }
 
     .countdown-wrapper {
@@ -57,15 +56,14 @@
       color: #555;
     }
 
-    /* Updated Watermark Styling */
     .watermark {
       position: absolute;
       bottom: 3rem;
-      font-size: 1.2rem; /* Larger */
-      font-weight: 700;   /* Bolder */
+      font-size: 1.2rem;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: #FFD700;    /* Bright Gold */
+      color: #FFD700;
       pointer-events: none;
     }
 
@@ -103,7 +101,8 @@
   <div class="watermark">Brought to you by Results Committee</div>
 
   <script>
-    const targetDate = new Date("May 9, 2026 00:00:00").getTime();
+    // Updated to May 9, 2026 at 8:00 PM (20:00:00)
+    const targetDate = new Date("May 9, 2026 20:00:00").getTime();
 
     function updateTimer() {
       const now = new Date().getTime();
