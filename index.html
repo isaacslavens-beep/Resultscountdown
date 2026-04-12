@@ -17,8 +17,45 @@
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
+      overflow-x: hidden; /* Prevent scrolling if text overflows */
     }
 
+    /* Background Dates Styling */
+    .bg-dates {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 2rem;
+      z-index: -1; /* Keep behind main content */
+      pointer-events: none; /* User can click through the text */
+      font-weight: 400;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(255, 215, 0, 0.15); /* Faint Gold */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      width: 40%;
+    }
+
+    .left-col { align-items: flex-start; text-align: left; }
+    .right-col { align-items: flex-end; text-align: right; }
+
+    /* Highlighted First and Last Dates */
+    .highlight-date {
+      color: rgba(255, 215, 0, 0.5);
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    /* Original Content Styling */
     h1 {
       font-size: 2.5rem;
       font-weight: 800;
@@ -46,7 +83,6 @@
       font-size: 5rem;
       font-weight: 700;
       line-height: 1;
-      /* Tabular nums prevent the "jittering" effect when numbers change */
       font-variant-numeric: tabular-nums;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     }
@@ -59,7 +95,6 @@
       color: #666;
     }
 
-    /* Secondary Countdown Styling */
     .subtitle {
       font-size: 1.1rem;
       font-weight: 700;
@@ -73,7 +108,6 @@
       gap: 1rem;
     }
 
-    /* Subtle divider line */
     .subtitle::before {
       content: "";
       width: 40px;
@@ -116,10 +150,92 @@
       .secondary-wrapper .value { font-size: 1.5rem; }
       h1 { font-size: 1.5rem; letter-spacing: 3px; }
       .watermark { font-size: 0.8rem; }
+      .bg-dates { font-size: 0.6rem; }
     }
   </style>
 </head>
 <body>
+
+  <div class="bg-dates">
+    <div class="column left-col">
+      <span class="highlight-date">May 11 2024</span>
+      <span>May 10 2025</span>
+      <span>May 9 2026</span>
+      <span>May 8 2027</span>
+      <span>May 13 2028</span>
+      <span>May 12 2029</span>
+      <span>May 11 2030</span>
+      <span>May 10 2031</span>
+      <span>May 8 2032</span>
+      <span>May 14 2033</span>
+      <span>May 13 2034</span>
+      <span>May 12 2035</span>
+      <span>May 10 2036</span>
+      <span>May 9 2037</span>
+      <span>May 8 2038</span>
+      <span>May 14 2039</span>
+      <span>May 12 2040</span>
+      <span>May 11 2041</span>
+      <span>May 10 2042</span>
+      <span>May 9 2043</span>
+      <span>May 14 2044</span>
+      <span>May 13 2045</span>
+      <span>May 12 2046</span>
+      <span>May 11 2047</span>
+      <span>May 9 2048</span>
+      <span>May 8 2049</span>
+      <span>May 14 2050</span>
+      <span>May 13 2051</span>
+      <span>May 11 2052</span>
+      <span>May 10 2053</span>
+      <span>May 9 2054</span>
+      <span>May 8 2055</span>
+      <span>May 13 2056</span>
+      <span>May 12 2057</span>
+      <span>May 11 2058</span>
+      <span>May 10 2059</span>
+      <span>May 8 2060</span>
+    </div>
+    <div class="column right-col">
+      <span>May 14 2061</span>
+      <span>May 13 2062</span>
+      <span>May 12 2063</span>
+      <span>May 10 2064</span>
+      <span>May 9 2065</span>
+      <span>May 8 2066</span>
+      <span>May 14 2067</span>
+      <span>May 12 2068</span>
+      <span>May 11 2069</span>
+      <span>May 10 2070</span>
+      <span>May 9 2071</span>
+      <span>May 14 2072</span>
+      <span>May 13 2073</span>
+      <span>May 12 2074</span>
+      <span>May 11 2075</span>
+      <span>May 9 2076</span>
+      <span>May 8 2077</span>
+      <span>May 14 2078</span>
+      <span>May 13 2079</span>
+      <span>May 11 2080</span>
+      <span>May 10 2081</span>
+      <span>May 9 2082</span>
+      <span>May 8 2083</span>
+      <span>May 13 2084</span>
+      <span>May 12 2085</span>
+      <span>May 11 2086</span>
+      <span>May 10 2087</span>
+      <span>May 8 2088</span>
+      <span>May 14 2089</span>
+      <span>May 13 2090</span>
+      <span>May 12 2091</span>
+      <span>May 10 2092</span>
+      <span>May 9 2093</span>
+      <span>May 8 2094</span>
+      <span>May 14 2095</span>
+      <span>May 13 2096</span>
+      <span class="highlight-date">May 11 2097</span>
+    </div>
+  </div>
 
   <h1>Results Countdown</h1>
 
@@ -165,14 +281,12 @@
   <div class="watermark">Brought to you by Results Committee</div>
 
   <script>
-    // Target Dates
     const resultsDate = new Date("May 9, 2026 00:00:00").getTime();
     const examDate = new Date("April 27, 2026 16:00:00").getTime();
 
     function updateTimer() {
       const now = new Date().getTime();
 
-      // Update Main Timer
       const mainDiff = resultsDate - now;
       if (mainDiff <= 0) {
         document.getElementById("main-container").innerHTML = "<div class='value'>RESULTS ACHIEVED</div>";
@@ -188,7 +302,6 @@
         document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
       }
 
-      // Update Secondary Timer
       const examDiff = examDate - now;
       if (examDiff <= 0) {
         document.getElementById("secondary-container").innerHTML = "<div class='value' style='font-size: 1.5rem;'>EXAM RELEASED</div>";
@@ -205,9 +318,7 @@
       }
     }
 
-    // Run every second
     setInterval(updateTimer, 1000);
-    // Run immediately on load
     updateTimer();
   </script>
 
