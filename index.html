@@ -1,47 +1,215 @@
-<style>
-  /* 1. Improved typography and spacing */
-  .value {
-    font-size: 5rem;
-    font-weight: 700;
-    line-height: 1;
-    /* Keeps numbers from jumping around */
-    font-family: 'Courier New', Courier, monospace; 
-    font-variant-numeric: tabular-nums;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Results Countdown</title>
+  
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #0a0a0a;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      text-align: center;
+    }
 
-  /* 2. Soften the labels */
-  .label {
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-top: 1rem;
-    color: #888; /* Slightly lighter than #555 for better readability */
-  }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-top: 2rem;
+      margin-bottom: 3rem;
+      color: #FFD700;
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    }
 
-  /* 3. Add a separator line for visual structure */
-  .subtitle::before {
-    content: "";
-    display: block;
-    width: 50px;
-    height: 2px;
-    background: #FFD700;
-    margin: 0 auto 2rem auto;
-    opacity: 0.5;
-  }
+    .countdown-wrapper {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 5rem;
+    }
 
-  .subtitle {
-    margin-top: 2rem; /* Give the main timer room */
-    font-size: 1.1rem;
-    color: #FFD700;
-    letter-spacing: 4px;
-  }
+    .time-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  /* 4. Fix the footer positioning */
-  .watermark {
-    margin-top: auto;
-    padding-bottom: 3rem;
-    font-size: 1rem;
-    opacity: 0.8;
-  }
-</style>
+    .value {
+      font-size: 5rem;
+      font-weight: 700;
+      line-height: 1;
+      /* Tabular nums prevent the "jittering" effect when numbers change */
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-top: 1rem;
+      color: #666;
+    }
+
+    /* Secondary Countdown Styling */
+    .subtitle {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #FFD700;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* Subtle divider line */
+    .subtitle::before {
+      content: "";
+      width: 40px;
+      height: 2px;
+      background: #FFD700;
+      opacity: 0.3;
+      margin-bottom: 1rem;
+    }
+
+    .secondary-wrapper {
+      display: flex;
+      gap: 2rem;
+      opacity: 0.85;
+    }
+
+    .secondary-wrapper .value {
+      font-size: 2rem;
+    }
+
+    .secondary-wrapper .label {
+      font-size: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .watermark {
+      margin-top: auto;
+      padding: 4rem 0 2rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #FFD700;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 700px) {
+      .countdown-wrapper { gap: 1rem; }
+      .value { font-size: 2.2rem; }
+      .secondary-wrapper { gap: 1rem; }
+      .secondary-wrapper .value { font-size: 1.5rem; }
+      h1 { font-size: 1.5rem; letter-spacing: 3px; }
+      .watermark { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Results Countdown</h1>
+
+  <div id="main-container" class="countdown-wrapper">
+    <div class="time-block">
+      <div id="days" class="value">00</div>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-block">
+      <div id="hours" class="value">00</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div id="minutes" class="value">00</div>
+      <div class="label">Minutes</div>
+    </div>
+    <div class="time-block">
+      <div id="seconds" class="value">00</div>
+      <div class="label">Seconds</div>
+    </div>
+  </div>
+
+  <div class="subtitle">Exam Gets Released:</div>
+  <div id="secondary-container" class="secondary-wrapper">
+    <div class="time-block">
+      <div id="ex-days" class="value">00</div>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-hours" class="value">00</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-mins" class="value">00</div>
+      <div class="label">Mins</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-secs" class="value">00</div>
+      <div class="label">Secs</div>
+    </div>
+  </div>
+
+  <div class="watermark">Brought to you by Results Committee</div>
+
+  <script>
+    // Target Dates
+    const resultsDate = new Date("May 9, 2026 00:00:00").getTime();
+    const examDate = new Date("April 27, 2026 16:00:00").getTime();
+
+    function updateTimer() {
+      const now = new Date().getTime();
+
+      // Update Main Timer
+      const mainDiff = resultsDate - now;
+      if (mainDiff <= 0) {
+        document.getElementById("main-container").innerHTML = "<div class='value'>RESULTS ACHIEVED</div>";
+      } else {
+        const d = Math.floor(mainDiff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((mainDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((mainDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((mainDiff % (1000 * 60)) / 1000);
+        
+        document.getElementById("days").innerText = d.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+      }
+
+      // Update Secondary Timer
+      const examDiff = examDate - now;
+      if (examDiff <= 0) {
+        document.getElementById("secondary-container").innerHTML = "<div class='value' style='font-size: 1.5rem;'>EXAM RELEASED</div>";
+      } else {
+        const ed = Math.floor(examDiff / (1000 * 60 * 60 * 24));
+        const eh = Math.floor((examDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const em = Math.floor((examDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const es = Math.floor((examDiff % (1000 * 60)) / 1000);
+
+        document.getElementById("ex-days").innerText = ed.toString().padStart(2, '0');
+        document.getElementById("ex-hours").innerText = eh.toString().padStart(2, '0');
+        document.getElementById("ex-mins").innerText = em.toString().padStart(2, '0');
+        document.getElementById("ex-secs").innerText = es.toString().padStart(2, '0');
+      }
+    }
+
+    // Run every second
+    setInterval(updateTimer, 1000);
+    // Run immediately on load
+    updateTimer();
+  </script>
+
+</body>
+</html>
