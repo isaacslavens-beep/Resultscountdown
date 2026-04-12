@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Countdown</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
   
   <style>
     body {
@@ -31,7 +32,6 @@
       box-sizing: border-box;
       z-index: -1;
       pointer-events: none;
-
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
@@ -43,7 +43,7 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.25);
+      color: rgba(255, 215, 0, 0.15); /* Slightly lowered opacity for more focus on timer */
       white-space: nowrap;
     }
 
@@ -57,24 +57,14 @@
       text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
     }
 
-    /* Main Content */
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      margin: 0 0 1.5rem 0;
-      color: #FFD700;
-      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-    }
-
+    /* Main Countdown Wrapper */
     .countdown-wrapper {
       display: flex;
       gap: 1.5rem;
       margin-bottom: 2rem;
-      background: rgba(10, 10, 10, 0.7);
-      padding: 10px;
-      border-radius: 8px;
+      background: rgba(10, 10, 10, 0.8);
+      padding: 20px;
+      border-radius: 12px;
     }
 
     .time-block {
@@ -83,18 +73,25 @@
       align-items: center;
     }
 
-    .value {
-      font-size: 3rem;
-      font-weight: 700;
+    /* Fancier, Bolder, Gold Gradient Font */
+    #main-container .value {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
       line-height: 1;
       font-variant-numeric: tabular-nums;
+      /* Gold Gradient Effect */
+      background: linear-gradient(to bottom, #FFD700 0%, #B8860B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 10px 20px rgba(0,0,0,0.5);
     }
 
     .label {
       font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 0.5rem;
+      margin-top: 0.8rem;
       color: #888;
     }
 
@@ -110,25 +107,28 @@
     .secondary-wrapper {
       display: flex;
       gap: 1rem;
-      opacity: 0.9;
-      margin-bottom: 2rem; /* Added margin for space above the image */
+      opacity: 0.8;
+      margin-bottom: 2.5rem;
     }
 
-    .secondary-wrapper .value { font-size: 1.5rem; }
+    .secondary-wrapper .value { 
+      font-size: 1.5rem; 
+      font-weight: 700;
+    }
+    
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    /* New Image Styling */
+    /* Image Styling */
     .image-footer {
-      margin-top: 10px;
       z-index: 10;
     }
 
     .results-img {
-      max-width: 250px; /* Adjust width as needed */
-      max-height: 150px; /* Prevents vertical overflow */
-      border: 1px solid rgba(255, 215, 0, 0.5);
+      max-width: 250px;
+      max-height: 150px;
+      border: 1px solid rgba(255, 215, 0, 0.4);
       border-radius: 4px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
       object-fit: contain;
     }
 
@@ -141,11 +141,10 @@
       .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
       .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
       
-      h1 { font-size: 2.5rem; }
-      .value { font-size: 5rem; }
-      .countdown-wrapper { gap: 3rem; background: none; }
+      #main-container .value { font-size: 6rem; }
+      .countdown-wrapper { gap: 3.5rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
-      .results-img { max-width: 400px; max-height: 250px; }
+      .results-img { max-width: 450px; max-height: 280px; }
     }
   </style>
 </head>
@@ -184,51 +183,8 @@
     <div class="date-item">May 10 2053</div>
     <div class="date-item">May 9 2054</div>
     <div class="date-item">May 8 2055</div>
-    <div class="date-item">May 13 2056</div>
-    <div class="date-item">May 12 2057</div>
-    <div class="date-item">May 11 2058</div>
-    <div class="date-item">May 10 2059</div>
-    <div class="date-item">May 8 2060</div>
-    <div class="date-item">May 14 2061</div>
-    <div class="date-item">May 13 2062</div>
-    <div class="date-item">May 12 2063</div>
-    <div class="date-item">May 10 2064</div>
-    <div class="date-item">May 9 2065</div>
-    <div class="date-item">May 8 2066</div>
-    <div class="date-item">May 14 2067</div>
-    <div class="date-item">May 12 2068</div>
-    <div class="date-item">May 11 2069</div>
-    <div class="date-item">May 10 2070</div>
-    <div class="date-item">May 9 2071</div>
-    <div class="date-item">May 14 2072</div>
-    <div class="date-item">May 13 2073</div>
-    <div class="date-item">May 12 2074</div>
-    <div class="date-item">May 11 2075</div>
-    <div class="date-item">May 9 2076</div>
-    <div class="date-item">May 8 2077</div>
-    <div class="date-item">May 14 2078</div>
-    <div class="date-item">May 13 2079</div>
-    <div class="date-item">May 11 2080</div>
-    <div class="date-item">May 10 2081</div>
-    <div class="date-item">May 9 2082</div>
-    <div class="date-item">May 8 2083</div>
-    <div class="date-item">May 13 2084</div>
-    <div class="date-item">May 12 2085</div>
-    <div class="date-item">May 11 2086</div>
-    <div class="date-item">May 10 2087</div>
-    <div class="date-item">May 8 2088</div>
-    <div class="date-item">May 14 2089</div>
-    <div class="date-item">May 13 2090</div>
-    <div class="date-item">May 12 2091</div>
-    <div class="date-item">May 10 2092</div>
-    <div class="date-item">May 9 2093</div>
-    <div class="date-item">May 8 2094</div>
-    <div class="date-item">May 14 2095</div>
-    <div class="date-item">May 13 2096</div>
     <div class="date-item highlight-date">May 11 2097</div>
   </div>
-
-  <h1>Results Countdown</h1>
 
   <div id="main-container" class="countdown-wrapper">
     <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
@@ -258,7 +214,7 @@
       const updateSection = (diff, containerId, ids) => {
         const el = document.getElementById(containerId);
         if (diff <= 0) {
-          el.innerHTML = `<div class='value' style='font-size:1.5rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
+          el.innerHTML = `<div class='value' style='font-size:1.5rem; background:none; -webkit-text-fill-color: #FFD700;'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
         } else {
           const d = Math.floor(diff / (1000 * 60 * 60 * 24));
           const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
