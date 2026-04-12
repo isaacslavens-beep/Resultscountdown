@@ -12,12 +12,13 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background: #0a0a0a;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
       position: relative;
+      padding: 2rem 0;
     }
 
     h1 {
@@ -25,7 +26,7 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 5px;
-      margin-bottom: 3rem;
+      margin-bottom: 2rem;
       color: #FFD700;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
     }
@@ -33,6 +34,23 @@
     .countdown-wrapper {
       display: flex;
       gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    /* Secondary Countdown Styling */
+    .subtitle {
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #FFD700;
+      margin-bottom: 1rem;
+    }
+
+    .secondary-wrapper {
+      display: flex;
+      gap: 1.5rem;
+      opacity: 0.9;
     }
 
     .time-block {
@@ -48,6 +66,11 @@
       font-variant-numeric: tabular-nums;
     }
 
+    /* Smaller values for the second timer */
+    .secondary-wrapper .value {
+      font-size: 2rem;
+    }
+
     .label {
       font-size: 0.75rem;
       text-transform: uppercase;
@@ -56,9 +79,14 @@
       color: #555;
     }
 
+    .secondary-wrapper .label {
+      font-size: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
     .watermark {
-      position: absolute;
-      bottom: 3rem;
+      position: relative;
+      margin-top: 5rem;
       font-size: 1.2rem;
       font-weight: 700;
       text-transform: uppercase;
@@ -70,8 +98,9 @@
     @media (max-width: 700px) {
       .countdown-wrapper { gap: 1.5rem; }
       .value { font-size: 2.5rem; }
+      .secondary-wrapper .value { font-size: 1.5rem; }
       h1 { font-size: 1.5rem; letter-spacing: 3px; }
-      .watermark { font-size: 0.8rem; bottom: 2rem; }
+      .watermark { font-size: 0.8rem; }
     }
   </style>
 </head>
@@ -98,30 +127,62 @@
     </div>
   </div>
 
+  <div class="subtitle">Exam Released On:</div>
+  <div class="secondary-wrapper">
+    <div class="time-block">
+      <div id="ex-days" class="value">00</div>
+      <div class="label">Days</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-hours" class="value">00</div>
+      <div class="label">Hours</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-mins" class="value">00</div>
+      <div class="label">Mins</div>
+    </div>
+    <div class="time-block">
+      <div id="ex-secs" class="value">00</div>
+      <div class="label">Secs</div>
+    </div>
+  </div>
+
   <div class="watermark">Brought to you by Results Committee</div>
 
   <script>
-    // Updated to May 9, 2026 at 8:00 PM (20:00:00)
-    const targetDate = new Date("May 9, 2026 20:00:00").getTime();
+    const resultsDate = new Date("May 9, 2026 00:00:00").getTime();
+    const examDate = new Date("April 27, 2026 16:00:00").getTime();
 
     function updateTimer() {
       const now = new Date().getTime();
-      const timeLeft = targetDate - now;
 
-      if (timeLeft < 0) {
+      // Main Timer Logic
+      const mainDiff = resultsDate - now;
+      if (mainDiff < 0) {
         document.querySelector(".countdown-wrapper").innerHTML = "<div class='value'>RESULTS ACHIEVED</div>";
-        return;
+      } else {
+        renderTime(mainDiff, "days", "hours", "minutes", "seconds");
       }
 
-      const d = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-      const h = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      // Secondary Timer Logic
+      const examDiff = examDate - now;
+      if (examDiff < 0) {
+        document.querySelector(".secondary-wrapper").innerHTML = "<div class='value' style='font-size: 1.5rem;'>EXAM RELEASED</div>";
+      } else {
+        renderTime(examDiff, "ex-days", "ex-hours", "ex-mins", "ex-secs");
+      }
+    }
 
-      document.getElementById("days").innerText = d.toString().padStart(2, '0');
-      document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-      document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-      document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+    function renderTime(diff, dId, hId, mId, sId) {
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById(dId).innerText = d.toString().padStart(2, '0');
+      document.getElementById(hId).innerText = h.toString().padStart(2, '0');
+      document.getElementById(mId).innerText = m.toString().padStart(2, '0');
+      document.getElementById(sId).innerText = s.toString().padStart(2, '0');
     }
 
     setInterval(updateTimer, 1000);
