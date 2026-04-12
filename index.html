@@ -27,13 +27,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      /* Padding creates the black margin from screen edges */
       padding: 20px; 
       box-sizing: border-box;
       z-index: -1;
       pointer-events: none;
 
-      /* Grid setup: 2 cols on mobile, 4 cols on desktop */
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
@@ -49,11 +47,9 @@
       white-space: nowrap;
     }
 
-    /* Alignment: Left dates align left, Right dates align right */
     .date-item:nth-child(odd) { text-align: left; }
     .date-item:nth-child(even) { text-align: right; }
 
-    /* Highlighted Dates */
     .highlight-date {
       color: rgba(255, 215, 0, 0.8);
       font-weight: 900;
@@ -69,14 +65,14 @@
       letter-spacing: 4px;
       margin: 0 0 1.5rem 0;
       color: #FFD700;
-      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Shadow helps text pop over dates */
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
     }
 
     .countdown-wrapper {
       display: flex;
       gap: 1.5rem;
       margin-bottom: 2rem;
-      background: rgba(10, 10, 10, 0.7); /* Subtle backdrop for readability */
+      background: rgba(10, 10, 10, 0.7);
       padding: 10px;
       border-radius: 8px;
     }
@@ -115,18 +111,25 @@
       display: flex;
       gap: 1rem;
       opacity: 0.9;
+      margin-bottom: 2rem; /* Added margin for space above the image */
     }
 
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    .watermark {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #FFD700;
+    /* New Image Styling */
+    .image-footer {
+      margin-top: 10px;
+      z-index: 10;
+    }
+
+    .results-img {
+      max-width: 250px; /* Adjust width as needed */
+      max-height: 150px; /* Prevents vertical overflow */
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      object-fit: contain;
     }
 
     /* Desktop Adjustments */
@@ -142,6 +145,7 @@
       .value { font-size: 5rem; }
       .countdown-wrapper { gap: 3rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
+      .results-img { max-width: 400px; max-height: 250px; }
     }
   </style>
 </head>
@@ -241,6 +245,10 @@
     <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
   </div>
 
+  <div class="image-footer">
+    <img src="Results.png" alt="Results Preview" class="results-img">
+  </div>
+
   <script>
     const resultsDate = new Date("May 9, 2026 00:00:00").getTime();
     const examDate = new Date("April 27, 2026 16:00:00").getTime();
@@ -248,8 +256,9 @@
     function updateTimer() {
       const now = new Date().getTime();
       const updateSection = (diff, containerId, ids) => {
+        const el = document.getElementById(containerId);
         if (diff <= 0) {
-          document.getElementById(containerId).innerHTML = `<div class='value' style='font-size:1.5rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
+          el.innerHTML = `<div class='value' style='font-size:1.5rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
         } else {
           const d = Math.floor(diff / (1000 * 60 * 60 * 24));
           const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
