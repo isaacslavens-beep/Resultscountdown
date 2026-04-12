@@ -17,52 +17,64 @@
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      overflow-x: hidden; /* Prevent scrolling if text overflows */
+      overflow: hidden; /* Prevent scrolling */
     }
 
-    /* Background Dates Styling */
-    .bg-dates {
+    /* Background Dates Layout */
+    .bg-dates-container {
       position: fixed;
       top: 0;
-      bottom: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 2rem;
-      z-index: -1; /* Keep behind main content */
-      pointer-events: none; /* User can click through the text */
-      font-weight: 400;
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: rgba(255, 215, 0, 0.15); /* Faint Gold */
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      padding: 1.5rem;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.15;
     }
+
+    .side-group {
+      display: flex;
+      gap: 2rem;
+      width: 45%;
+    }
+
+    .left-side { justify-content: flex-start; }
+    .right-side { justify-content: flex-end; }
 
     .column {
       display: flex;
       flex-direction: column;
-      width: 40%;
+      font-size: 0.75rem;
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #FFD700;
+      white-space: nowrap;
     }
 
-    .left-col { align-items: flex-start; text-align: left; }
-    .right-col { align-items: flex-end; text-align: right; }
+    .left-side .column { text-align: left; }
+    .right-side .column { text-align: right; }
 
-    /* Highlighted First and Last Dates */
+    /* Highlighted Dates */
     .highlight-date {
-      color: rgba(255, 215, 0, 0.5);
+      color: #FFD700;
       font-weight: 900;
-      font-size: 1.1rem;
+      font-size: 0.9rem;
+      opacity: 1;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
     }
 
-    /* Original Content Styling */
+    /* Main Content */
     h1 {
       font-size: 2.5rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 5px;
-      margin-top: 2rem;
-      margin-bottom: 3rem;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
       color: #FFD700;
       text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
     }
@@ -70,7 +82,7 @@
     .countdown-wrapper {
       display: flex;
       gap: 3rem;
-      margin-bottom: 5rem;
+      margin-bottom: 4rem;
     }
 
     .time-block {
@@ -84,7 +96,6 @@
       font-weight: 700;
       line-height: 1;
       font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
     }
 
     .label {
@@ -101,11 +112,11 @@
       text-transform: uppercase;
       letter-spacing: 4px;
       color: #FFD700;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 0.5rem;
     }
 
     .subtitle::before {
@@ -114,7 +125,6 @@
       height: 2px;
       background: #FFD700;
       opacity: 0.3;
-      margin-bottom: 1rem;
     }
 
     .secondary-wrapper {
@@ -123,159 +133,138 @@
       opacity: 0.85;
     }
 
-    .secondary-wrapper .value {
-      font-size: 2rem;
-    }
-
-    .secondary-wrapper .label {
-      font-size: 0.6rem;
-      margin-top: 0.5rem;
-    }
+    .secondary-wrapper .value { font-size: 2rem; }
+    .secondary-wrapper .label { font-size: 0.6rem; }
 
     .watermark {
-      margin-top: auto;
-      padding: 4rem 0 2rem 0;
-      font-size: 1.1rem;
+      margin-top: 3rem;
+      font-size: 1rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 3px;
       color: #FFD700;
-      opacity: 0.9;
+    }
+
+    @media (max-width: 900px) {
+      .side-group { gap: 1rem; }
+      .column { font-size: 0.6rem; }
     }
 
     @media (max-width: 700px) {
+      .bg-dates-container { display: none; } /* Hide on small mobile to keep UI clean */
+      .value { font-size: 2.5rem; }
       .countdown-wrapper { gap: 1rem; }
-      .value { font-size: 2.2rem; }
-      .secondary-wrapper { gap: 1rem; }
-      .secondary-wrapper .value { font-size: 1.5rem; }
-      h1 { font-size: 1.5rem; letter-spacing: 3px; }
-      .watermark { font-size: 0.8rem; }
-      .bg-dates { font-size: 0.6rem; }
+      h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-dates">
-    <div class="column left-col">
-      <span class="highlight-date">May 11 2024</span>
-      <span>May 10 2025</span>
-      <span>May 9 2026</span>
-      <span>May 8 2027</span>
-      <span>May 13 2028</span>
-      <span>May 12 2029</span>
-      <span>May 11 2030</span>
-      <span>May 10 2031</span>
-      <span>May 8 2032</span>
-      <span>May 14 2033</span>
-      <span>May 13 2034</span>
-      <span>May 12 2035</span>
-      <span>May 10 2036</span>
-      <span>May 9 2037</span>
-      <span>May 8 2038</span>
-      <span>May 14 2039</span>
-      <span>May 12 2040</span>
-      <span>May 11 2041</span>
-      <span>May 10 2042</span>
-      <span>May 9 2043</span>
-      <span>May 14 2044</span>
-      <span>May 13 2045</span>
-      <span>May 12 2046</span>
-      <span>May 11 2047</span>
-      <span>May 9 2048</span>
-      <span>May 8 2049</span>
-      <span>May 14 2050</span>
-      <span>May 13 2051</span>
-      <span>May 11 2052</span>
-      <span>May 10 2053</span>
-      <span>May 9 2054</span>
-      <span>May 8 2055</span>
-      <span>May 13 2056</span>
-      <span>May 12 2057</span>
-      <span>May 11 2058</span>
-      <span>May 10 2059</span>
-      <span>May 8 2060</span>
+  <div class="bg-dates-container">
+    <div class="side-group left-side">
+      <div class="column">
+        <span class="highlight-date">May 11 2024</span>
+        <span>May 10 2025</span>
+        <span>May 9 2026</span>
+        <span>May 8 2027</span>
+        <span>May 13 2028</span>
+        <span>May 12 2029</span>
+        <span>May 11 2030</span>
+        <span>May 10 2031</span>
+        <span>May 8 2032</span>
+        <span>May 14 2033</span>
+        <span>May 13 2034</span>
+        <span>May 12 2035</span>
+        <span>May 10 2036</span>
+        <span>May 9 2037</span>
+        <span>May 8 2038</span>
+        <span>May 14 2039</span>
+        <span>May 12 2040</span>
+        <span>May 11 2041</span>
+        <span>May 10 2042</span>
+      </div>
+      <div class="column">
+        <span>May 9 2043</span>
+        <span>May 14 2044</span>
+        <span>May 13 2045</span>
+        <span>May 12 2046</span>
+        <span>May 11 2047</span>
+        <span>May 9 2048</span>
+        <span>May 8 2049</span>
+        <span>May 14 2050</span>
+        <span>May 13 2051</span>
+        <span>May 11 2052</span>
+        <span>May 10 2053</span>
+        <span>May 9 2054</span>
+        <span>May 8 2055</span>
+        <span>May 13 2056</span>
+        <span>May 12 2057</span>
+        <span>May 11 2058</span>
+        <span>May 10 2059</span>
+        <span>May 8 2060</span>
+      </div>
     </div>
-    <div class="column right-col">
-      <span>May 14 2061</span>
-      <span>May 13 2062</span>
-      <span>May 12 2063</span>
-      <span>May 10 2064</span>
-      <span>May 9 2065</span>
-      <span>May 8 2066</span>
-      <span>May 14 2067</span>
-      <span>May 12 2068</span>
-      <span>May 11 2069</span>
-      <span>May 10 2070</span>
-      <span>May 9 2071</span>
-      <span>May 14 2072</span>
-      <span>May 13 2073</span>
-      <span>May 12 2074</span>
-      <span>May 11 2075</span>
-      <span>May 9 2076</span>
-      <span>May 8 2077</span>
-      <span>May 14 2078</span>
-      <span>May 13 2079</span>
-      <span>May 11 2080</span>
-      <span>May 10 2081</span>
-      <span>May 9 2082</span>
-      <span>May 8 2083</span>
-      <span>May 13 2084</span>
-      <span>May 12 2085</span>
-      <span>May 11 2086</span>
-      <span>May 10 2087</span>
-      <span>May 8 2088</span>
-      <span>May 14 2089</span>
-      <span>May 13 2090</span>
-      <span>May 12 2091</span>
-      <span>May 10 2092</span>
-      <span>May 9 2093</span>
-      <span>May 8 2094</span>
-      <span>May 14 2095</span>
-      <span>May 13 2096</span>
-      <span class="highlight-date">May 11 2097</span>
+
+    <div class="side-group right-side">
+      <div class="column">
+        <span>May 14 2061</span>
+        <span>May 13 2062</span>
+        <span>May 12 2063</span>
+        <span>May 10 2064</span>
+        <span>May 9 2065</span>
+        <span>May 8 2066</span>
+        <span>May 14 2067</span>
+        <span>May 12 2068</span>
+        <span>May 11 2069</span>
+        <span>May 10 2070</span>
+        <span>May 9 2071</span>
+        <span>May 14 2072</span>
+        <span>May 13 2073</span>
+        <span>May 12 2074</span>
+        <span>May 11 2075</span>
+        <span>May 9 2076</span>
+        <span>May 8 2077</span>
+        <span>May 14 2078</span>
+      </div>
+      <div class="column">
+        <span>May 13 2079</span>
+        <span>May 11 2080</span>
+        <span>May 10 2081</span>
+        <span>May 9 2082</span>
+        <span>May 8 2083</span>
+        <span>May 13 2084</span>
+        <span>May 12 2085</span>
+        <span>May 11 2086</span>
+        <span>May 10 2087</span>
+        <span>May 8 2088</span>
+        <span>May 14 2089</span>
+        <span>May 13 2090</span>
+        <span>May 12 2091</span>
+        <span>May 10 2092</span>
+        <span>May 9 2093</span>
+        <span>May 8 2094</span>
+        <span>May 14 2095</span>
+        <span>May 13 2096</span>
+        <span class="highlight-date">May 11 2097</span>
+      </div>
     </div>
   </div>
 
   <h1>Results Countdown</h1>
 
   <div id="main-container" class="countdown-wrapper">
-    <div class="time-block">
-      <div id="days" class="value">00</div>
-      <div class="label">Days</div>
-    </div>
-    <div class="time-block">
-      <div id="hours" class="value">00</div>
-      <div class="label">Hours</div>
-    </div>
-    <div class="time-block">
-      <div id="minutes" class="value">00</div>
-      <div class="label">Minutes</div>
-    </div>
-    <div class="time-block">
-      <div id="seconds" class="value">00</div>
-      <div class="label">Seconds</div>
-    </div>
+    <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
+    <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
+    <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
+    <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
   </div>
 
   <div class="subtitle">Exam Gets Released:</div>
   <div id="secondary-container" class="secondary-wrapper">
-    <div class="time-block">
-      <div id="ex-days" class="value">00</div>
-      <div class="label">Days</div>
-    </div>
-    <div class="time-block">
-      <div id="ex-hours" class="value">00</div>
-      <div class="label">Hours</div>
-    </div>
-    <div class="time-block">
-      <div id="ex-mins" class="value">00</div>
-      <div class="label">Mins</div>
-    </div>
-    <div class="time-block">
-      <div id="ex-secs" class="value">00</div>
-      <div class="label">Secs</div>
-    </div>
+    <div class="time-block"><div id="ex-days" class="value">00</div><div class="label">Days</div></div>
+    <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hours</div></div>
+    <div class="time-block"><div id="ex-mins" class="value">00</div><div class="label">Mins</div></div>
+    <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
   </div>
 
   <div class="watermark">Brought to you by Results Committee</div>
@@ -287,40 +276,28 @@
     function updateTimer() {
       const now = new Date().getTime();
 
-      const mainDiff = resultsDate - now;
-      if (mainDiff <= 0) {
-        document.getElementById("main-container").innerHTML = "<div class='value'>RESULTS ACHIEVED</div>";
-      } else {
-        const d = Math.floor(mainDiff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((mainDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((mainDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((mainDiff % (1000 * 60)) / 1000);
-        
-        document.getElementById("days").innerText = d.toString().padStart(2, '0');
-        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-      }
+      const updateSection = (diff, containerId, ids) => {
+        if (diff <= 0) {
+          document.getElementById(containerId).innerHTML = `<div class='value'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
+        } else {
+          const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          document.getElementById(ids[0]).innerText = d.toString().padStart(2, '0');
+          document.getElementById(ids[1]).innerText = h.toString().padStart(2, '0');
+          document.getElementById(ids[2]).innerText = m.toString().padStart(2, '0');
+          document.getElementById(ids[3]).innerText = s.toString().padStart(2, '0');
+        }
+      };
 
-      const examDiff = examDate - now;
-      if (examDiff <= 0) {
-        document.getElementById("secondary-container").innerHTML = "<div class='value' style='font-size: 1.5rem;'>EXAM RELEASED</div>";
-      } else {
-        const ed = Math.floor(examDiff / (1000 * 60 * 60 * 24));
-        const eh = Math.floor((examDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const em = Math.floor((examDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const es = Math.floor((examDiff % (1000 * 60)) / 1000);
-
-        document.getElementById("ex-days").innerText = ed.toString().padStart(2, '0');
-        document.getElementById("ex-hours").innerText = eh.toString().padStart(2, '0');
-        document.getElementById("ex-mins").innerText = em.toString().padStart(2, '0');
-        document.getElementById("ex-secs").innerText = es.toString().padStart(2, '0');
-      }
+      updateSection(resultsDate - now, "main-container", ["days", "hours", "minutes", "seconds"]);
+      updateSection(examDate - now, "secondary-container", ["ex-days", "ex-hours", "ex-mins", "ex-secs"]);
     }
 
     setInterval(updateTimer, 1000);
     updateTimer();
   </script>
-
 </body>
 </html>
