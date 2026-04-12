@@ -20,70 +20,65 @@
       overflow: hidden; 
     }
 
-    /* Background Dates Layout */
+    /* Background Dates - Responsive Grid */
     .bg-dates-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: space-between;
-      /* Added more padding to create the black margin from screen edges */
-      padding: 40px 60px; 
+      /* Padding creates the black margin from screen edges */
+      padding: 20px; 
       box-sizing: border-box;
       z-index: -1;
       pointer-events: none;
+
+      /* Grid setup: 2 cols on mobile, 4 cols on desktop */
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+      align-content: space-between;
     }
 
-    .side-group {
-      display: flex;
-      gap: 30px; 
-      width: 40%;
-    }
-
-    .left-side { justify-content: flex-start; }
-    .right-side { justify-content: flex-end; }
-
-    .column {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between; 
-      height: 100%; /* Spans the padded height */
-      font-size: 0.65rem;
-      line-height: 1;
+    .date-item {
+      font-size: 0.6rem;
+      line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.35);
+      color: rgba(255, 215, 0, 0.25);
       white-space: nowrap;
     }
 
-    .left-side .column { text-align: left; }
-    .right-side .column { text-align: right; }
+    /* Alignment: Left dates align left, Right dates align right */
+    .date-item:nth-child(odd) { text-align: left; }
+    .date-item:nth-child(even) { text-align: right; }
 
     /* Highlighted Dates */
     .highlight-date {
-      color: rgba(255, 215, 0, 0.9);
+      color: rgba(255, 215, 0, 0.8);
       font-weight: 900;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
     }
 
-    /* Main Content Styling */
+    /* Main Content */
     h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 5px;
-      margin: 0 0 2rem 0;
+      letter-spacing: 4px;
+      margin: 0 0 1.5rem 0;
       color: #FFD700;
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8); /* Shadow helps text pop over dates */
     }
 
     .countdown-wrapper {
       display: flex;
-      gap: 2.5rem;
-      margin-bottom: 3rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      background: rgba(10, 10, 10, 0.7); /* Subtle backdrop for readability */
+      padding: 10px;
+      border-radius: 8px;
     }
 
     .time-block {
@@ -93,149 +88,140 @@
     }
 
     .value {
-      font-size: 4.5rem;
+      font-size: 3rem;
       font-weight: 700;
       line-height: 1;
       font-variant-numeric: tabular-nums;
     }
 
     .label {
-      font-size: 0.7rem;
+      font-size: 0.6rem;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      margin-top: 0.8rem;
-      color: #777;
+      letter-spacing: 2px;
+      margin-top: 0.5rem;
+      color: #888;
     }
 
     .subtitle {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       color: #FFD700;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
     }
 
     .secondary-wrapper {
       display: flex;
-      gap: 1.5rem;
-      opacity: 0.85;
+      gap: 1rem;
+      opacity: 0.9;
     }
 
-    .secondary-wrapper .value { font-size: 1.8rem; }
-    .secondary-wrapper .label { font-size: 0.55rem; }
+    .secondary-wrapper .value { font-size: 1.5rem; }
+    .secondary-wrapper .label { font-size: 0.5rem; }
 
     .watermark {
-      margin-top: 3rem;
-      font-size: 0.9rem;
+      margin-top: 2rem;
+      font-size: 0.8rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       color: #FFD700;
     }
 
-    @media (max-width: 1000px) {
-      .bg-dates-container { padding: 20px 30px; }
-      .side-group { gap: 15px; }
-    }
-
-    @media (max-width: 800px) {
-      .bg-dates-container { display: none; }
-      .value { font-size: 2.5rem; }
-      .countdown-wrapper { gap: 1rem; }
+    /* Desktop Adjustments */
+    @media (min-width: 800px) {
+      .bg-dates-container {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 40px 60px;
+      }
+      .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
+      .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
+      
+      h1 { font-size: 2.5rem; }
+      .value { font-size: 5rem; }
+      .countdown-wrapper { gap: 3rem; background: none; }
+      .secondary-wrapper .value { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
 
   <div class="bg-dates-container">
-    <div class="side-group left-side">
-      <div class="column">
-        <span class="highlight-date">May 11 2024</span>
-        <span>May 10 2025</span>
-        <span>May 9 2026</span>
-        <span>May 8 2027</span>
-        <span>May 13 2028</span>
-        <span>May 12 2029</span>
-        <span>May 11 2030</span>
-        <span>May 10 2031</span>
-        <span>May 8 2032</span>
-        <span>May 14 2033</span>
-        <span>May 13 2034</span>
-        <span>May 12 2035</span>
-        <span>May 10 2036</span>
-        <span>May 9 2037</span>
-        <span>May 8 2038</span>
-        <span>May 14 2039</span>
-        <span>May 12 2040</span>
-        <span>May 11 2041</span>
-        <span>May 10 2042</span>
-      </div>
-      <div class="column">
-        <span>May 9 2043</span>
-        <span>May 14 2044</span>
-        <span>May 13 2045</span>
-        <span>May 12 2046</span>
-        <span>May 11 2047</span>
-        <span>May 9 2048</span>
-        <span>May 8 2049</span>
-        <span>May 14 2050</span>
-        <span>May 13 2051</span>
-        <span>May 11 2052</span>
-        <span>May 10 2053</span>
-        <span>May 9 2054</span>
-        <span>May 8 2055</span>
-        <span>May 13 2056</span>
-        <span>May 12 2057</span>
-        <span>May 11 2058</span>
-        <span>May 10 2059</span>
-        <span>May 8 2060</span>
-      </div>
-    </div>
-
-    <div class="side-group right-side">
-      <div class="column">
-        <span>May 14 2061</span>
-        <span>May 13 2062</span>
-        <span>May 12 2063</span>
-        <span>May 10 2064</span>
-        <span>May 9 2065</span>
-        <span>May 8 2066</span>
-        <span>May 14 2067</span>
-        <span>May 12 2068</span>
-        <span>May 11 2069</span>
-        <span>May 10 2070</span>
-        <span>May 9 2071</span>
-        <span>May 14 2072</span>
-        <span>May 13 2073</span>
-        <span>May 12 2074</span>
-        <span>May 11 2075</span>
-        <span>May 9 2076</span>
-        <span>May 8 2077</span>
-        <span>May 14 2078</span>
-      </div>
-      <div class="column">
-        <span>May 13 2079</span>
-        <span>May 11 2080</span>
-        <span>May 10 2081</span>
-        <span>May 9 2082</span>
-        <span>May 8 2083</span>
-        <span>May 13 2084</span>
-        <span>May 12 2085</span>
-        <span>May 11 2086</span>
-        <span>May 10 2087</span>
-        <span>May 8 2088</span>
-        <span>May 14 2089</span>
-        <span>May 13 2090</span>
-        <span>May 12 2091</span>
-        <span>May 10 2092</span>
-        <span>May 9 2093</span>
-        <span>May 8 2094</span>
-        <span>May 14 2095</span>
-        <span>May 13 2096</span>
-        <span class="highlight-date">May 11 2097</span>
-      </div>
-    </div>
+    <div class="date-item highlight-date">May 11 2024</div>
+    <div class="date-item">May 10 2025</div>
+    <div class="date-item">May 9 2026</div>
+    <div class="date-item">May 8 2027</div>
+    <div class="date-item">May 13 2028</div>
+    <div class="date-item">May 12 2029</div>
+    <div class="date-item">May 11 2030</div>
+    <div class="date-item">May 10 2031</div>
+    <div class="date-item">May 8 2032</div>
+    <div class="date-item">May 14 2033</div>
+    <div class="date-item">May 13 2034</div>
+    <div class="date-item">May 12 2035</div>
+    <div class="date-item">May 10 2036</div>
+    <div class="date-item">May 9 2037</div>
+    <div class="date-item">May 8 2038</div>
+    <div class="date-item">May 14 2039</div>
+    <div class="date-item">May 12 2040</div>
+    <div class="date-item">May 11 2041</div>
+    <div class="date-item">May 10 2042</div>
+    <div class="date-item">May 9 2043</div>
+    <div class="date-item">May 14 2044</div>
+    <div class="date-item">May 13 2045</div>
+    <div class="date-item">May 12 2046</div>
+    <div class="date-item">May 11 2047</div>
+    <div class="date-item">May 9 2048</div>
+    <div class="date-item">May 8 2049</div>
+    <div class="date-item">May 14 2050</div>
+    <div class="date-item">May 13 2051</div>
+    <div class="date-item">May 11 2052</div>
+    <div class="date-item">May 10 2053</div>
+    <div class="date-item">May 9 2054</div>
+    <div class="date-item">May 8 2055</div>
+    <div class="date-item">May 13 2056</div>
+    <div class="date-item">May 12 2057</div>
+    <div class="date-item">May 11 2058</div>
+    <div class="date-item">May 10 2059</div>
+    <div class="date-item">May 8 2060</div>
+    <div class="date-item">May 14 2061</div>
+    <div class="date-item">May 13 2062</div>
+    <div class="date-item">May 12 2063</div>
+    <div class="date-item">May 10 2064</div>
+    <div class="date-item">May 9 2065</div>
+    <div class="date-item">May 8 2066</div>
+    <div class="date-item">May 14 2067</div>
+    <div class="date-item">May 12 2068</div>
+    <div class="date-item">May 11 2069</div>
+    <div class="date-item">May 10 2070</div>
+    <div class="date-item">May 9 2071</div>
+    <div class="date-item">May 14 2072</div>
+    <div class="date-item">May 13 2073</div>
+    <div class="date-item">May 12 2074</div>
+    <div class="date-item">May 11 2075</div>
+    <div class="date-item">May 9 2076</div>
+    <div class="date-item">May 8 2077</div>
+    <div class="date-item">May 14 2078</div>
+    <div class="date-item">May 13 2079</div>
+    <div class="date-item">May 11 2080</div>
+    <div class="date-item">May 10 2081</div>
+    <div class="date-item">May 9 2082</div>
+    <div class="date-item">May 8 2083</div>
+    <div class="date-item">May 13 2084</div>
+    <div class="date-item">May 12 2085</div>
+    <div class="date-item">May 11 2086</div>
+    <div class="date-item">May 10 2087</div>
+    <div class="date-item">May 8 2088</div>
+    <div class="date-item">May 14 2089</div>
+    <div class="date-item">May 13 2090</div>
+    <div class="date-item">May 12 2091</div>
+    <div class="date-item">May 10 2092</div>
+    <div class="date-item">May 9 2093</div>
+    <div class="date-item">May 8 2094</div>
+    <div class="date-item">May 14 2095</div>
+    <div class="date-item">May 13 2096</div>
+    <div class="date-item highlight-date">May 11 2097</div>
   </div>
 
   <h1>Results Countdown</h1>
@@ -265,7 +251,7 @@
       const now = new Date().getTime();
       const updateSection = (diff, containerId, ids) => {
         if (diff <= 0) {
-          document.getElementById(containerId).innerHTML = `<div class='value' style='font-size:2rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
+          document.getElementById(containerId).innerHTML = `<div class='value' style='font-size:1.5rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
         } else {
           const d = Math.floor(diff / (1000 * 60 * 60 * 24));
           const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
