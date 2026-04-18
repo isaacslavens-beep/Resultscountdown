@@ -50,13 +50,6 @@
     .date-item:nth-child(odd) { text-align: left; }
     .date-item:nth-child(even) { text-align: right; }
 
-    .highlight-date {
-      color: rgba(255, 215, 0, 0.8);
-      font-weight: 900;
-      font-size: 0.7rem;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
-    }
-
     /* Main Content */
     h1 {
       font-size: 2rem;
@@ -117,24 +110,39 @@
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    /* Contact Info Styling */
-    .contact-info {
-      margin-bottom: 15px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    /* Enhanced Contact Info Styling */
+    .contact-container {
+      margin-bottom: 25px;
       z-index: 10;
     }
 
-    .contact-info a {
-      color: rgba(255, 215, 0, 0.7);
-      text-decoration: none;
-      transition: color 0.3s ease;
+    .contact-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #888;
+      margin-bottom: 8px;
     }
 
-    .contact-info a:hover {
+    .contact-link {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: #FFD700;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 50px;
+      background: rgba(255, 215, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      background: rgba(255, 215, 0, 0.15);
+      border-color: #FFD700;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      transform: translateY(-1px);
     }
 
     /* Image Styling */
@@ -164,6 +172,7 @@
       .value { font-size: 5rem; }
       .countdown-wrapper { gap: 3rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
+      .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
     }
   </style>
@@ -263,8 +272,9 @@
     <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
   </div>
 
-  <div class="contact-info">
-    <a href="mailto:resultscommitteeinfo@gmail.com">resultscommitteeinfo@gmail.com</a>
+  <div class="contact-container">
+    <div class="contact-label">Official Inquiries</div>
+    <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
   </div>
 
   <div class="image-footer">
