@@ -111,21 +111,40 @@
       display: flex;
       gap: 1rem;
       opacity: 0.9;
-      margin-bottom: 2rem; /* Added margin for space above the image */
+      margin-bottom: 2rem;
     }
 
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    /* New Image Styling */
+    /* Contact Info Styling */
+    .contact-info {
+      margin-bottom: 15px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      z-index: 10;
+    }
+
+    .contact-info a {
+      color: rgba(255, 215, 0, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #FFD700;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    /* Image Styling */
     .image-footer {
-      margin-top: 10px;
       z-index: 10;
     }
 
     .results-img {
-      max-width: 250px; /* Adjust width as needed */
-      max-height: 150px; /* Prevents vertical overflow */
+      max-width: 250px;
+      max-height: 150px;
       border: 1px solid rgba(255, 215, 0, 0.5);
       border-radius: 4px;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
@@ -244,12 +263,16 @@
     <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
   </div>
 
+  <div class="contact-info">
+    <a href="mailto:resultscommitteeinfo@gmail.com">resultscommitteeinfo@gmail.com</a>
+  </div>
+
   <div class="image-footer">
     <img src="Results.png" alt="Results Preview" class="results-img">
   </div>
 
   <script>
-    const resultsDate = new Date("May 9, 2026 00:00:00").getTime();
+    const resultsDate = new Date("May 9, 2026 20:00:00").getTime();
     const examDate = new Date("April 27, 2026 16:00:00").getTime();
 
     function updateTimer() {
