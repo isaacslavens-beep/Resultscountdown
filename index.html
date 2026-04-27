@@ -12,12 +12,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh; /* Changed to min-height to allow scrolling if content grows */
       background: #0a0a0a;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      overflow: hidden; 
+      padding: 40px 0; /* Added padding for mobile breathing room */
     }
 
     /* Background Dates - Responsive Grid */
@@ -43,7 +43,7 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.25);
+      color: rgba(255, 215, 0, 0.15); /* Slightly lowered opacity for better readability */
       white-space: nowrap;
     }
 
@@ -100,6 +100,70 @@
       margin-bottom: 0.8rem;
     }
 
+    /* Grading Section Styles */
+    .grading-container {
+      margin: 2rem 0;
+      padding: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 215, 0, 0.03);
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .grading-title {
+      font-size: 1.2rem;
+      color: #FFD700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      padding-bottom: 10px;
+    }
+
+    .marker-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+      padding-left: 20%;
+    }
+
+    .marker-name {
+      color: #FFD700;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .marker-name::before {
+      content: "✒️";
+      font-size: 0.8rem;
+    }
+
+    .student-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      color: #ccc;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    .student-list li {
+      margin: 3px 0;
+    }
+
+    .quote-footer {
+      font-style: italic;
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 1rem;
+      letter-spacing: 1px;
+    }
+
+    /* Existing Secondary Styles */
     .secondary-wrapper {
       display: flex;
       gap: 1rem;
@@ -110,11 +174,7 @@
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    /* Prominent Exam Link */
-    .exam-container {
-      margin-bottom: 15px;
-      z-index: 10;
-    }
+    .exam-container { margin-bottom: 15px; z-index: 10; }
 
     .exam-button {
       display: inline-block;
@@ -135,85 +195,27 @@
     .exam-button:hover {
       background: transparent;
       color: #FFD700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
       transform: scale(1.05);
     }
 
-    /* Enhanced Contact Info Styling */
-    .contact-container {
-      margin-bottom: 25px;
-      z-index: 10;
-    }
-
-    .contact-label {
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #888;
-      margin-bottom: 8px;
-    }
-
+    .contact-container { margin-bottom: 25px; z-index: 10; }
     .contact-link {
       display: inline-block;
       font-size: 0.9rem;
       font-weight: 600;
       color: #FFD700;
       text-decoration: none;
-      letter-spacing: 1.5px;
       padding: 8px 16px;
       border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 50px;
-      background: rgba(255, 215, 0, 0.05);
-      transition: all 0.3s ease;
     }
 
-    .contact-link:hover {
-      background: rgba(255, 215, 0, 0.15);
-      border-color: #FFD700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-      transform: translateY(-1px);
-    }
-
-    /* Image Styling */
-    .image-footer {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      padding: 0 20px;
-    }
-
-    .footer-img {
-      max-width: 150px;
-      max-height: 100px;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 4px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-      object-fit: contain;
-      transition: opacity 0.3s ease;
-    }
-
-    .footer-img:hover {
-      opacity: 0.8;
-      border-color: rgba(255, 215, 0, 0.6);
-    }
-
-    /* Desktop Adjustments */
     @media (min-width: 800px) {
-      .bg-dates-container {
-        grid-template-columns: repeat(4, 1fr);
-        padding: 40px 60px;
-      }
-      .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
-      .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
-      
+      .bg-dates-container { grid-template-columns: repeat(4, 1fr); padding: 40px 60px; }
       h1 { font-size: 2.5rem; }
       .value { font-size: 5rem; }
       .countdown-wrapper { gap: 3rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
-      .contact-link { font-size: 1.1rem; }
-      .footer-img { max-width: 250px; max-height: 180px; }
     }
   </style>
 </head>
@@ -228,74 +230,9 @@
     <div class="date-item">May 12 2029</div>
     <div class="date-item">May 11 2030</div>
     <div class="date-item">May 10 2031</div>
-    <div class="date-item">May 8 2032</div>
-    <div class="date-item">May 14 2033</div>
-    <div class="date-item">May 13 2034</div>
-    <div class="date-item">May 12 2035</div>
-    <div class="date-item">May 10 2036</div>
-    <div class="date-item">May 9 2037</div>
-    <div class="date-item">May 8 2038</div>
-    <div class="date-item">May 14 2039</div>
-    <div class="date-item">May 12 2040</div>
-    <div class="date-item">May 11 2041</div>
-    <div class="date-item">May 10 2042</div>
-    <div class="date-item">May 9 2043</div>
-    <div class="date-item">May 14 2044</div>
-    <div class="date-item">May 13 2045</div>
-    <div class="date-item">May 12 2046</div>
-    <div class="date-item">May 11 2047</div>
-    <div class="date-item">May 9 2048</div>
-    <div class="date-item">May 8 2049</div>
-    <div class="date-item">May 14 2050</div>
-    <div class="date-item">May 13 2051</div>
-    <div class="date-item">May 11 2052</div>
-    <div class="date-item">May 10 2053</div>
-    <div class="date-item">May 9 2054</div>
-    <div class="date-item">May 8 2055</div>
-    <div class="date-item">May 13 2056</div>
-    <div class="date-item">May 12 2057</div>
-    <div class="date-item">May 11 2058</div>
-    <div class="date-item">May 10 2059</div>
-    <div class="date-item">May 8 2060</div>
-    <div class="date-item">May 14 2061</div>
-    <div class="date-item">May 13 2062</div>
-    <div class="date-item">May 12 2063</div>
-    <div class="date-item">May 10 2064</div>
-    <div class="date-item">May 9 2065</div>
-    <div class="date-item">May 8 2066</div>
-    <div class="date-item">May 14 2067</div>
-    <div class="date-item">May 12 2068</div>
-    <div class="date-item">May 11 2069</div>
-    <div class="date-item">May 10 2070</div>
-    <div class="date-item">May 9 2071</div>
-    <div class="date-item">May 14 2072</div>
-    <div class="date-item">May 13 2073</div>
-    <div class="date-item">May 12 2074</div>
-    <div class="date-item">May 11 2075</div>
-    <div class="date-item">May 9 2076</div>
-    <div class="date-item">May 8 2077</div>
-    <div class="date-item">May 14 2078</div>
-    <div class="date-item">May 13 2079</div>
-    <div class="date-item">May 11 2080</div>
-    <div class="date-item">May 10 2081</div>
-    <div class="date-item">May 9 2082</div>
-    <div class="date-item">May 8 2083</div>
-    <div class="date-item">May 13 2084</div>
-    <div class="date-item">May 12 2085</div>
-    <div class="date-item">May 11 2086</div>
-    <div class="date-item">May 10 2087</div>
-    <div class="date-item">May 8 2088</div>
-    <div class="date-item">May 14 2089</div>
-    <div class="date-item">May 13 2090</div>
-    <div class="date-item">May 12 2091</div>
-    <div class="date-item">May 10 2092</div>
-    <div class="date-item">May 9 2093</div>
-    <div class="date-item">May 8 2094</div>
-    <div class="date-item">May 14 2095</div>
-    <div class="date-item">May 13 2096</div>
-    <div class="date-item">May 11 2097</div>
   </div>
 
+  <h1>May 9th Exam</h1>
 
   <div id="main-container" class="countdown-wrapper">
     <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
@@ -304,8 +241,38 @@
     <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
   </div>
 
+  <div class="grading-container">
+    <div class="grading-title">Grading Assignments</div>
+    
+    <div class="marker-group">
+      <div class="marker-name">Eitan is marking:</div>
+      <ul class="student-list">
+        <li>ISAAC</li>
+        <li>SETH</li>
+        <li>AMIT</li>
+        <li>JOSH</li>
+        <li>JONAH</li>
+      </ul>
+    </div>
+
+    <div class="marker-group">
+      <div class="marker-name">Isaac is marking:</div>
+      <ul class="student-list">
+        <li>BEN</li>
+        <li>DANIEL</li>
+        <li>JUSTIN</li>
+        <li>GLAZER</li>
+        <li>EITAN</li>
+      </ul>
+    </div>
+
+    <div class="quote-footer">
+      "From the second Saturday of May, we shall never run astray."
+    </div>
+  </div>
+
   <div class="exam-container">
-    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Click Here To Take Exam Due May 5 at 11:59pm</a>
+    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Click Here To Take Exam Due May 5</a>
   </div>
 
   <div class="subtitle">Time Remaining Until Deadline:</div>
@@ -317,13 +284,7 @@
   </div>
 
   <div class="contact-container">
-    <div class="contact-label">Click For Inquiries:</div>
     <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
-  </div>
-
-  <div class="image-footer">
-    <img src="RCLOGO_.png" alt="Results Preview" class="footer-img">
-    <img src="Grading.png" alt="Grading Info" class="footer-img">
   </div>
 
   <script>
