@@ -6,132 +6,85 @@
   <title>Results Countdown + Exam</title>
   
   <style>
+    /* Reset and Base Layout */
+    * { box-sizing: border-box; }
+    
     body {
       margin: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       background: #0a0a0a;
       color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       text-align: center;
-      overflow: hidden; 
+      overflow-x: hidden;
+      padding: 20px;
     }
 
-    /* Background Dates - Responsive Grid */
+    /* Background Date Grid */
     .bg-dates-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 20px; 
-      box-sizing: border-box;
+      padding: 20px;
       z-index: -1;
-      pointer-events: none;
-
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
-      align-content: space-between;
+      gap: 10px;
+      opacity: 0.2;
+      pointer-events: none;
     }
 
     .date-item {
-      font-size: 0.6rem;
-      line-height: 1.1;
+      font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.25);
-      white-space: nowrap;
+      color: #FFD700;
     }
 
-    .date-item:nth-child(odd) { text-align: left; }
     .date-item:nth-child(even) { text-align: right; }
 
-    /* Main Content */
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      margin: 0 0 1.5rem 0;
-      color: #FFD700;
-      text-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-    }
+    /* Layout Containers */
+    .section-spacing { margin-bottom: 2.5rem; }
 
+    /* Main Countdown */
     .countdown-wrapper {
       display: flex;
+      justify-content: center;
       gap: 1.5rem;
-      margin-bottom: 2rem;
-      background: rgba(10, 10, 10, 0.7);
-      padding: 10px;
-      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px 30px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 215, 0, 0.1);
     }
 
     .time-block {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      min-width: 60px;
     }
 
     .value {
-      font-size: 3rem;
-      font-weight: 700;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #FFD700;
       line-height: 1;
-      font-variant-numeric: tabular-nums;
     }
 
     .label {
       font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-top: 0.5rem;
       color: #888;
+      margin-top: 8px;
     }
 
-    .subtitle {
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #FFD700;
-      margin-bottom: 0.8rem;
-    }
-
-    /* Compact Grading Section */
-    .grading-info {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      font-size: 0.7rem;
-      text-align: left;
-      border-top: 1px solid rgba(255, 215, 0, 0.2);
-      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-      padding: 10px 0;
-    }
-
-    .grading-column b { color: #FFD700; text-transform: uppercase; letter-spacing: 1px; }
-    .grading-column div { color: #ccc; margin-top: 2px; }
-
-    .secondary-wrapper {
-      display: flex;
-      gap: 1rem;
-      opacity: 0.9;
-      margin-bottom: 2rem;
-    }
-
-    .secondary-wrapper .value { font-size: 1.5rem; }
-    .secondary-wrapper .label { font-size: 0.5rem; }
-
-    /* Prominent Exam Link */
-    .exam-container {
-      margin-bottom: 15px;
-      z-index: 10;
-    }
-
+    /* Exam Button */
     .exam-button {
       display: inline-block;
       font-size: 1rem;
@@ -139,161 +92,104 @@
       color: #0a0a0a;
       background: #FFD700;
       text-decoration: none;
-      letter-spacing: 1px;
-      padding: 12px 25px;
-      border-radius: 4px;
+      padding: 16px 32px;
+      border-radius: 6px;
       text-transform: uppercase;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
       transition: all 0.3s ease;
-      border: 2px solid #FFD700;
+      box-shadow: 0 10px 20px rgba(255, 215, 0, 0.2);
     }
 
     .exam-button:hover {
-      background: transparent;
-      color: #FFD700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-      transform: scale(1.05);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(255, 215, 0, 0.4);
+      background: #fff;
     }
 
-    /* Enhanced Contact Info Styling */
-    .contact-container {
-      margin-bottom: 25px;
-      z-index: 10;
-    }
-
-    .contact-label {
-      font-size: 0.55rem;
+    /* Secondary Countdown */
+    .subtitle {
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: #888;
-      margin-bottom: 8px;
-    }
-
-    .contact-link {
-      display: inline-block;
-      font-size: 0.9rem;
-      font-weight: 600;
       color: #FFD700;
+      margin-bottom: 1rem;
+    }
+
+    .secondary-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      opacity: 0.8;
+    }
+
+    .secondary-wrapper .value { font-size: 1.2rem; }
+
+    /* Contact & Footer */
+    .contact-link {
+      color: #888;
       text-decoration: none;
-      letter-spacing: 1.5px;
-      padding: 8px 16px;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 50px;
-      background: rgba(255, 215, 0, 0.05);
-      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      border-bottom: 1px solid transparent;
+      transition: 0.3s;
     }
 
-    .contact-link:hover {
-      background: rgba(255, 215, 0, 0.15);
-      border-color: #FFD700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-      transform: translateY(-1px);
-    }
-
-    /* Image Styling */
-    .image-footer {
-      z-index: 10;
-    }
+    .contact-link:hover { color: #FFD700; border-color: #FFD700; }
 
     .results-img {
-      max-width: 250px;
-      max-height: 150px;
-      border: 1px solid rgba(255, 215, 0, 0.5);
-      border-radius: 4px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
-      object-fit: contain;
+      margin-top: 2rem;
+      max-width: 180px;
+      filter: grayscale(1) brightness(1.5);
+      opacity: 0.7;
     }
 
-    .motto {
-      font-size: 0.6rem;
-      color: #666;
-      margin-top: 10px;
-      letter-spacing: 1px;
-    }
-
-    /* Desktop Adjustments */
-    @media (min-width: 800px) {
-      .bg-dates-container {
-        grid-template-columns: repeat(4, 1fr);
-        padding: 40px 60px;
-      }
-      .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
-      .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
-      
-      h1 { font-size: 2.5rem; }
-      .value { font-size: 5rem; }
-      .countdown-wrapper { gap: 3rem; background: none; }
+    /* Desktop View Adjustments */
+    @media (min-width: 768px) {
+      .bg-dates-container { grid-template-columns: repeat(4, 1fr); }
+      .value { font-size: 4.5rem; }
       .secondary-wrapper .value { font-size: 2rem; }
-      .contact-link { font-size: 1.1rem; }
-      .results-img { max-width: 400px; max-height: 250px; }
-      .exam-button { font-size: 1.1rem; }
+      .countdown-wrapper { gap: 3rem; }
     }
   </style>
 </head>
 <body>
 
   <div class="bg-dates-container">
-    <div class="date-item">May 11 2024</div>
-    <div class="date-item">May 10 2025</div>
     <div class="date-item">May 9 2026</div>
     <div class="date-item">May 8 2027</div>
     <div class="date-item">May 13 2028</div>
     <div class="date-item">May 12 2029</div>
-    <div class="date-item">May 11 2030</div>
-    <div class="date-item">May 10 2031</div>
-    <div class="date-item">May 8 2032</div>
-    <div class="date-item">May 14 2033</div>
-    <div class="date-item">May 13 2034</div>
-    <div class="date-item">May 12 2035</div>
-    <div class="date-item">May 10 2036</div>
-    <div class="date-item">May 9 2037</div>
-    <div class="date-item">May 8 2038</div>
-    <div class="date-item">May 14 2039</div>
-    <div class="date-item">May 12 2040</div>
-    <div class="date-item">May 11 2041</div>
-    <div class="date-item">May 10 2042</div>
-    <div class="date-item">May 9 2043</div>
-  </div>
-
-
-  <div id="main-container" class="countdown-wrapper">
-    <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
-    <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
-    <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
-    <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
-  </div>
-
-  <div class="exam-container">
-    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Take Exam Due May 5</a>
-  </div>
-
-  <div class="grading-info">
-    <div class="grading-column">
-      <b>Eitan marking:</b>
-      <div>Isaac, Seth, Amit, Josh, Jonah</div>
     </div>
-    <div class="grading-column">
-      <b>Isaac marking:</b>
-      <div>Ben, Daniel, Justin, Glazer, Eitan</div>
+
+  <div class="section-spacing">
+    <div id="main-container" class="countdown-wrapper">
+      <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
+      <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
+      <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
+      <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
     </div>
   </div>
 
-  <div class="subtitle">Deadline In:</div>
-  <div id="secondary-container" class="secondary-wrapper">
-    <div class="time-block"><div id="ex-days" class="value">00</div><div class="label">Days</div></div>
-    <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hours</div></div>
-    <div class="time-block"><div id="ex-mins" class="value">00</div><div class="label">Mins</div></div>
-    <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
+  <div class="section-spacing">
+    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">
+      Take Exam (Due May 5)
+    </a>
+  </div>
+
+  <div class="section-spacing">
+    <div class="subtitle">Deadline Remaining:</div>
+    <div id="secondary-container" class="secondary-wrapper">
+      <div class="time-block"><div id="ex-days" class="value">00</div><div class="label">Days</div></div>
+      <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hrs</div></div>
+      <div class="time-block"><div id="ex-mins" class="value">00</div><div class="label">Min</div></div>
+      <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Sec</div></div>
+    </div>
   </div>
 
   <div class="contact-container">
+    <p class="label" style="margin-bottom: 5px;">Inquiries</p>
     <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
   </div>
 
-  <div class="image-footer">
-    <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
-    <div class="motto">"From the second Saturday of May, we shall never run astray."</div>
-  </div>
+  <img src="RCLOGO_.png" alt="RC" class="results-img">
 
   <script>
     const resultsDate = new Date("May 9, 2026 20:00:00").getTime();
@@ -301,24 +197,28 @@
 
     function updateTimer() {
       const now = new Date().getTime();
-      const updateSection = (diff, containerId, ids) => {
-        const el = document.getElementById(containerId);
+
+      const calculate = (target, ids) => {
+        const diff = target - now;
         if (diff <= 0) {
-          el.innerHTML = `<div class='value' style='font-size:1.5rem'>${containerId === 'main-container' ? 'RESULTS ACHIEVED' : 'EXAM RELEASED'}</div>`;
-        } else {
-          const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const s = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById(ids[0]).innerText = d.toString().padStart(2, '0');
-          document.getElementById(ids[1]).innerText = h.toString().padStart(2, '0');
-          document.getElementById(ids[2]).innerText = m.toString().padStart(2, '0');
-          document.getElementById(ids[3]).innerText = s.toString().padStart(2, '0');
+          ids.forEach(id => document.getElementById(id).innerText = "00");
+          return;
         }
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById(ids[0]).innerText = d.toString().padStart(2, '0');
+        document.getElementById(ids[1]).innerText = h.toString().padStart(2, '0');
+        document.getElementById(ids[2]).innerText = m.toString().padStart(2, '0');
+        document.getElementById(ids[3]).innerText = s.toString().padStart(2, '0');
       };
-      updateSection(resultsDate - now, "main-container", ["days", "hours", "minutes", "seconds"]);
-      updateSection(examDate - now, "secondary-container", ["ex-days", "ex-hours", "ex-mins", "ex-secs"]);
+
+      calculate(resultsDate, ["days", "hours", "minutes", "seconds"]);
+      calculate(examDate, ["ex-days", "ex-hours", "ex-mins", "ex-secs"]);
     }
+
     setInterval(updateTimer, 1000);
     updateTimer();
   </script>
