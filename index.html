@@ -176,16 +176,27 @@
 
     /* Image Styling */
     .image-footer {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
       z-index: 10;
+      padding: 0 20px;
     }
 
-    .results-img {
-      max-width: 250px;
-      max-height: 150px;
-      border: 1px solid rgba(255, 215, 0, 0.5);
+    .footer-img {
+      max-width: 150px;
+      max-height: 100px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 4px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
       object-fit: contain;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer-img:hover {
+      opacity: 0.8;
+      border-color: rgba(255, 215, 0, 0.6);
     }
 
     /* Desktop Adjustments */
@@ -202,8 +213,7 @@
       .countdown-wrapper { gap: 3rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
       .contact-link { font-size: 1.1rem; }
-      .results-img { max-width: 400px; max-height: 250px; }
-      .exam-button { font-size: 1.1rem; }
+      .footer-img { max-width: 250px; max-height: 180px; }
     }
   </style>
 </head>
@@ -312,7 +322,8 @@
   </div>
 
   <div class="image-footer">
-    <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
+    <img src="RCLOGO_.png" alt="Results Preview" class="footer-img">
+    <img src="Grading.png" alt="Grading Info" class="footer-img">
   </div>
 
   <script>
