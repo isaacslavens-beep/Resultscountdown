@@ -110,6 +110,35 @@
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
+    /* Prominent Exam Link */
+    .exam-container {
+      margin-bottom: 30px;
+      z-index: 10;
+    }
+
+    .exam-button {
+      display: inline-block;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0a0a0a;
+      background: #FFD700;
+      text-decoration: none;
+      letter-spacing: 2px;
+      padding: 15px 40px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      transition: all 0.3s ease;
+      border: 2px solid #FFD700;
+    }
+
+    .exam-button:hover {
+      background: transparent;
+      color: #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+      transform: scale(1.05);
+    }
+
     /* Enhanced Contact Info Styling */
     .contact-container {
       margin-bottom: 25px;
@@ -270,6 +299,10 @@
     <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hours</div></div>
     <div class="time-block"><div id="ex-mins" class="value">00</div><div class="label">Mins</div></div>
     <div class="time-block"><div id="ex-secs" class="value">00</div><div class="label">Secs</div></div>
+  </div>
+
+  <div class="exam-container">
+    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Take The Exam Now</a>
   </div>
 
   <div class="contact-container">
