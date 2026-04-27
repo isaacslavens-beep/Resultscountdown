@@ -12,12 +12,12 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh; /* Changed to min-height to allow scrolling if content grows */
+      height: 100vh;
       background: #0a0a0a;
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      padding: 40px 0; /* Added padding for mobile breathing room */
+      overflow: hidden; 
     }
 
     /* Background Dates - Responsive Grid */
@@ -43,7 +43,7 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 215, 0, 0.15); /* Slightly lowered opacity for better readability */
+      color: rgba(255, 215, 0, 0.25);
       white-space: nowrap;
     }
 
@@ -100,70 +100,22 @@
       margin-bottom: 0.8rem;
     }
 
-    /* Grading Section Styles */
-    .grading-container {
-      margin: 2rem 0;
-      padding: 20px;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 8px;
-      background: rgba(255, 215, 0, 0.03);
-      max-width: 500px;
-      width: 90%;
-    }
-
-    .grading-title {
-      font-size: 1.2rem;
-      color: #FFD700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
-      padding-bottom: 10px;
-    }
-
-    .marker-group {
-      margin-bottom: 1.5rem;
-      text-align: left;
-      padding-left: 20%;
-    }
-
-    .marker-name {
-      color: #FFD700;
-      font-weight: bold;
-      text-transform: uppercase;
-      margin-bottom: 5px;
+    /* Compact Grading Section */
+    .grading-info {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      font-size: 0.7rem;
+      text-align: left;
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding: 10px 0;
     }
 
-    .marker-name::before {
-      content: "✒️";
-      font-size: 0.8rem;
-    }
+    .grading-column b { color: #FFD700; text-transform: uppercase; letter-spacing: 1px; }
+    .grading-column div { color: #ccc; margin-top: 2px; }
 
-    .student-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      color: #ccc;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-    }
-
-    .student-list li {
-      margin: 3px 0;
-    }
-
-    .quote-footer {
-      font-style: italic;
-      font-size: 0.75rem;
-      color: #888;
-      margin-top: 1rem;
-      letter-spacing: 1px;
-    }
-
-    /* Existing Secondary Styles */
     .secondary-wrapper {
       display: flex;
       gap: 1rem;
@@ -174,7 +126,11 @@
     .secondary-wrapper .value { font-size: 1.5rem; }
     .secondary-wrapper .label { font-size: 0.5rem; }
 
-    .exam-container { margin-bottom: 15px; z-index: 10; }
+    /* Prominent Exam Link */
+    .exam-container {
+      margin-bottom: 15px;
+      z-index: 10;
+    }
 
     .exam-button {
       display: inline-block;
@@ -195,27 +151,82 @@
     .exam-button:hover {
       background: transparent;
       color: #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
       transform: scale(1.05);
     }
 
-    .contact-container { margin-bottom: 25px; z-index: 10; }
+    /* Enhanced Contact Info Styling */
+    .contact-container {
+      margin-bottom: 25px;
+      z-index: 10;
+    }
+
+    .contact-label {
+      font-size: 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
     .contact-link {
       display: inline-block;
       font-size: 0.9rem;
       font-weight: 600;
       color: #FFD700;
       text-decoration: none;
+      letter-spacing: 1.5px;
       padding: 8px 16px;
       border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 50px;
+      background: rgba(255, 215, 0, 0.05);
+      transition: all 0.3s ease;
     }
 
+    .contact-link:hover {
+      background: rgba(255, 215, 0, 0.15);
+      border-color: #FFD700;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Image Styling */
+    .image-footer {
+      z-index: 10;
+    }
+
+    .results-img {
+      max-width: 250px;
+      max-height: 150px;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+      object-fit: contain;
+    }
+
+    .motto {
+      font-size: 0.6rem;
+      color: #666;
+      margin-top: 10px;
+      letter-spacing: 1px;
+    }
+
+    /* Desktop Adjustments */
     @media (min-width: 800px) {
-      .bg-dates-container { grid-template-columns: repeat(4, 1fr); padding: 40px 60px; }
+      .bg-dates-container {
+        grid-template-columns: repeat(4, 1fr);
+        padding: 40px 60px;
+      }
+      .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
+      .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
+      
       h1 { font-size: 2.5rem; }
       .value { font-size: 5rem; }
       .countdown-wrapper { gap: 3rem; background: none; }
       .secondary-wrapper .value { font-size: 2rem; }
+      .contact-link { font-size: 1.1rem; }
+      .results-img { max-width: 400px; max-height: 250px; }
+      .exam-button { font-size: 1.1rem; }
     }
   </style>
 </head>
@@ -230,9 +241,20 @@
     <div class="date-item">May 12 2029</div>
     <div class="date-item">May 11 2030</div>
     <div class="date-item">May 10 2031</div>
+    <div class="date-item">May 8 2032</div>
+    <div class="date-item">May 14 2033</div>
+    <div class="date-item">May 13 2034</div>
+    <div class="date-item">May 12 2035</div>
+    <div class="date-item">May 10 2036</div>
+    <div class="date-item">May 9 2037</div>
+    <div class="date-item">May 8 2038</div>
+    <div class="date-item">May 14 2039</div>
+    <div class="date-item">May 12 2040</div>
+    <div class="date-item">May 11 2041</div>
+    <div class="date-item">May 10 2042</div>
+    <div class="date-item">May 9 2043</div>
   </div>
 
-  <h1>May 9th Exam</h1>
 
   <div id="main-container" class="countdown-wrapper">
     <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
@@ -241,41 +263,22 @@
     <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
   </div>
 
-  <div class="grading-container">
-    <div class="grading-title">Grading Assignments</div>
-    
-    <div class="marker-group">
-      <div class="marker-name">Eitan is marking:</div>
-      <ul class="student-list">
-        <li>ISAAC</li>
-        <li>SETH</li>
-        <li>AMIT</li>
-        <li>JOSH</li>
-        <li>JONAH</li>
-      </ul>
-    </div>
-
-    <div class="marker-group">
-      <div class="marker-name">Isaac is marking:</div>
-      <ul class="student-list">
-        <li>BEN</li>
-        <li>DANIEL</li>
-        <li>JUSTIN</li>
-        <li>GLAZER</li>
-        <li>EITAN</li>
-      </ul>
-    </div>
-
-    <div class="quote-footer">
-      "From the second Saturday of May, we shall never run astray."
-    </div>
-  </div>
-
   <div class="exam-container">
-    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Click Here To Take Exam Due May 5</a>
+    <a href="https://forms.gle/d7xNWqN1j7u6mkBK6" target="_blank" class="exam-button">Take Exam Due May 5</a>
   </div>
 
-  <div class="subtitle">Time Remaining Until Deadline:</div>
+  <div class="grading-info">
+    <div class="grading-column">
+      <b>Eitan marking:</b>
+      <div>Isaac, Seth, Amit, Josh, Jonah</div>
+    </div>
+    <div class="grading-column">
+      <b>Isaac marking:</b>
+      <div>Ben, Daniel, Justin, Glazer, Eitan</div>
+    </div>
+  </div>
+
+  <div class="subtitle">Deadline In:</div>
   <div id="secondary-container" class="secondary-wrapper">
     <div class="time-block"><div id="ex-days" class="value">00</div><div class="label">Days</div></div>
     <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hours</div></div>
@@ -285,6 +288,11 @@
 
   <div class="contact-container">
     <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
+  </div>
+
+  <div class="image-footer">
+    <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
+    <div class="motto">"From the second Saturday of May, we shall never run astray."</div>
   </div>
 
   <script>
