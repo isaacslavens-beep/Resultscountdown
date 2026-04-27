@@ -264,7 +264,7 @@
     <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
   </div>
 
-  <div class="subtitle">Exam Gets Released:</div>
+  <div class="subtitle">Exam Is Due May 5 at 11:59pm:</div>
   <div id="secondary-container" class="secondary-wrapper">
     <div class="time-block"><div id="ex-days" class="value">00</div><div class="label">Days</div></div>
     <div class="time-block"><div id="ex-hours" class="value">00</div><div class="label">Hours</div></div>
@@ -283,7 +283,7 @@
 
   <script>
     const resultsDate = new Date("May 9, 2026 20:00:00").getTime();
-    const examDate = new Date("April 27, 2026 16:00:00").getTime();
+    const examDate = new Date("May 5, 2026 23:59:59").getTime();
 
     function updateTimer() {
       const now = new Date().getTime();
