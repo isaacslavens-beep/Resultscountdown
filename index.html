@@ -88,10 +88,10 @@
 
     .countdown-wrapper {
       display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
       background: transparent;
-      padding: 10px;
+      padding: 6px;
       border-radius: 8px;
     }
 
@@ -102,7 +102,7 @@
     }
 
     .value {
-      font-size: 3rem;
+      font-size: 1.6rem;
       font-weight: 700;
       line-height: 1;
       font-variant-numeric: tabular-nums;
@@ -110,10 +110,10 @@
     }
 
     .label {
-      font-size: 0.6rem;
+      font-size: 0.45rem;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 0.5rem;
+      letter-spacing: 1.5px;
+      margin-top: 0.3rem;
       color: #888;
     }
 
@@ -223,11 +223,12 @@
       
       h1 { font-size: 2.5rem; }
       .value { font-size: 5rem; }
-      .countdown-wrapper { gap: 3rem; background: none; }
+      .label { font-size: 0.6rem; letter-spacing: 2px; margin-top: 0.5rem; }
+      .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 2rem; }
       .secondary-wrapper .value { font-size: 2rem; }
       .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
-      .exam-button { font-size: 1.1rem; }
+      .exam-button { font-size: 1.1rem; color: #FFD700; }
     }
   </style>
 </head>
@@ -311,6 +312,7 @@
   </div>
 
 
+  <div class="subtitle" style="margin-bottom: 0.5rem;">The next May Ceremony is in:</div>
   <div id="main-container" class="countdown-wrapper">
     <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
     <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
