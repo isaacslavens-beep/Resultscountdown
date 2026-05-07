@@ -41,16 +41,17 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      /* Adjusted to be roughly 10% lighter with a golden glow */
-      color: rgba(255, 255, 255, 0.3); 
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.2), 0 0 10px rgba(255, 215, 0, 0.1);
+      /* Primarily white with a hint of gold/yellow influence */
+      color: rgba(255, 253, 240, 0.45); 
+      /* Sharp white core glow with a wider gold aura */
+      text-shadow: 0 0 4px rgba(255, 255, 255, 0.2), 0 0 10px rgba(255, 215, 0, 0.2);
       white-space: nowrap;
-      animation: gentlePulse 5s ease-in-out infinite;
+      animation: refinedGlow 6s ease-in-out infinite;
     }
 
-    @keyframes gentlePulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 0.8; text-shadow: 0 0 8px rgba(255, 215, 0, 0.4); }
+    @keyframes refinedGlow {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50% { opacity: 0.9; text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 215, 0, 0.3); }
     }
 
     .date-item:nth-child(odd) { text-align: left; }
@@ -162,6 +163,7 @@
 <body>
 
   <div class="bg-dates-container">
+    <!-- Items remain the same -->
     <div class="date-item">May 11 2024</div>
     <div class="date-item">May 10 2025</div>
     <div class="date-item">May 9 2026</div>
