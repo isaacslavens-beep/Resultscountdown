@@ -41,9 +41,7 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      /* Primarily white with a hint of gold/yellow influence */
       color: rgba(255, 253, 240, 0.45); 
-      /* Sharp white core glow with a wider gold aura */
       text-shadow: 0 0 4px rgba(255, 255, 255, 0.2), 0 0 10px rgba(255, 215, 0, 0.2);
       white-space: nowrap;
       animation: refinedGlow 6s ease-in-out infinite;
@@ -163,7 +161,7 @@
 <body>
 
   <div class="bg-dates-container">
-    <!-- Items remain the same -->
+    <!-- Background dates list -->
     <div class="date-item">May 11 2024</div>
     <div class="date-item">May 10 2025</div>
     <div class="date-item">May 9 2026</div>
@@ -258,7 +256,8 @@
   </div>
 
   <script>
-    const resultsDate = new Date("May 9, 2026 20:00:00").getTime();
+    // Updated Target: May 8, 2027 at 8:30 PM (20:30) EDT
+    const resultsDate = new Date("May 8, 2027 20:30:00 EDT").getTime();
 
     function updateTimer() {
       const now = new Date().getTime();
