@@ -41,15 +41,17 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: rgba(255, 253, 240, 0.45); 
-      text-shadow: 0 0 4px rgba(255, 255, 255, 0.2), 0 0 10px rgba(255, 215, 0, 0.2);
+      /* Changed to a solid, bright gold with full opacity */
+      color: #FFD700; 
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
       white-space: nowrap;
-      animation: refinedGlow 6s ease-in-out infinite;
+      animation: refinedGlow 4s ease-in-out infinite;
     }
 
     @keyframes refinedGlow {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50% { opacity: 0.9; text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 15px rgba(255, 215, 0, 0.3); }
+      /* Removed opacity changes to ensure they stay consistently bright */
+      0%, 100% { transform: scale(1); text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); }
+      50% { transform: scale(1.02); text-shadow: 0 0 15px rgba(255, 215, 0, 0.9); }
     }
 
     .date-item:nth-child(odd) { text-align: left; }
@@ -161,7 +163,6 @@
 <body>
 
   <div class="bg-dates-container">
-    <!-- Background dates list -->
     <div class="date-item">May 11 2024</div>
     <div class="date-item">May 10 2025</div>
     <div class="date-item">May 9 2026</div>
@@ -256,7 +257,6 @@
   </div>
 
   <script>
-    // Updated Target: May 8, 2027 at 8:30 PM (20:30) EDT
     const resultsDate = new Date("May 8, 2027 20:30:00 EDT").getTime();
 
     function updateTimer() {
