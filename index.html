@@ -29,7 +29,6 @@
       padding: 20px; 
       box-sizing: border-box;
       z-index: -1;
-      pointer-events: none;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
@@ -42,10 +41,30 @@
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: 1.2px;
-      /* Changed to a darker, muted metallic gold with lower opacity */
       color: rgba(184, 134, 11, 0.6); 
       white-space: nowrap;
       animation: subtleGlow 4s ease-in-out infinite;
+    }
+
+    /* Style for the calendar link wrapper */
+    .cal-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      pointer-events: auto;
+      transition: opacity 0.2s ease;
+    }
+    
+    .cal-link:hover {
+      opacity: 0.8;
+    }
+
+    /* Style for the emoji element */
+    .cal-emoji {
+      font-size: 0.75rem;
+      margin-left: 4px;
+      vertical-align: middle;
     }
 
     @keyframes subtleGlow {
@@ -162,6 +181,7 @@
       .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 3rem; }
       .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
+      .cal-emoji { font-size: 1.1rem; margin-left: 6px; }
     }
   </style>
 </head>
@@ -171,7 +191,13 @@
     <div class="date-item">May 11, 2024</div>
     <div class="date-item">May 10, 2025</div>
     <div class="date-item">May 9, 2026</div>
-    <div class="date-item">May 8, 2027</div>
+    <div class="date-item">
+      <!-- Google Calendar Link: 20:30 (May 8) to 00:30 (May 9) -->
+      <a class="cal-link" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The+Ceremony&dates=20270508T203000/20270509T003000&ctz=America/New_York" target="_blank" rel="noopener">
+        May 8, 2027
+        <span class="cal-emoji">📅</span>
+      </a>
+    </div>
     <div class="date-item">May 13, 2028</div>
     <div class="date-item">May 12, 2029</div>
     <div class="date-item">May 11, 2030</div>
