@@ -46,6 +46,14 @@
       animation: subtleGlow 4s ease-in-out infinite;
     }
 
+    /* Target highlighted date with a larger font and intense golden glow */
+    .date-item.target-highlight {
+      font-size: 0.85rem;
+      color: rgba(255, 215, 0, 1);
+      animation: intenseGlow 3s ease-in-out infinite;
+      z-index: 5;
+    }
+
     /* Style for the calendar link wrapper */
     .cal-link {
       display: inline-flex;
@@ -75,6 +83,18 @@
       50% { 
         filter: brightness(1.3);
         text-shadow: 0 0 8px rgba(184, 134, 11, 0.5);
+      }
+    }
+
+    /* Enhanced glow keyframes for the upcoming milestone */
+    @keyframes intenseGlow {
+      0%, 100% { 
+        filter: brightness(1.1);
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.6), 0 0 12px rgba(255, 215, 0, 0.4);
+      }
+      50% { 
+        filter: brightness(1.6);
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
       }
     }
 
@@ -176,6 +196,7 @@
       .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
       .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
       
+      .date-item.target-highlight { font-size: 1.1rem; }
       .value { font-size: 5rem; }
       .label { font-size: 0.6rem; letter-spacing: 2px; margin-top: 0.5rem; }
       .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 3rem; }
@@ -283,6 +304,14 @@
 
   <script>
     const resultsDate = new Date("May 8, 2027 20:30:00 EDT").getTime();
+
+    // Dynamically find and highlight the target date element in the grid
+    const dateElements = document.querySelectorAll('.date-item');
+    dateElements.forEach(el => {
+      if (el.textContent.trim() === "May 8, 2027") {
+        el.classList.add('target-highlight');
+      }
+    });
 
     function updateTimer() {
       const now = new Date().getTime();
