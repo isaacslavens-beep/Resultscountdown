@@ -209,9 +209,10 @@
 <body>
 
   <div class="bg-dates-container">
-    <div class="date-item">May 11, 2024</div>
-    <div class="date-item">May 10, 2025</div>
-    <div class="date-item">May 9, 2026</div>
+    <!-- Completed dates updated with green checkmark emojis -->
+    <div class="date-item">May 11, 2024<span class="cal-emoji">✅</span></div>
+    <div class="date-item">May 10, 2025<span class="cal-emoji">✅</span></div>
+    <div class="date-item">May 9, 2026<span class="cal-emoji">✅</span></div>
     <div class="date-item">May 8, 2027</div>
     <div class="date-item">May 13, 2028</div>
     <div class="date-item">May 12, 2029</div>
@@ -308,7 +309,8 @@
     // Dynamically find and highlight the target date element in the grid
     const dateElements = document.querySelectorAll('.date-item');
     dateElements.forEach(el => {
-      if (el.textContent.trim() === "May 8, 2027") {
+      // Updated comparison to ignore text from the emoji child node if present
+      if (el.textContent.replace('✅', '').trim() === "May 8, 2027") {
         el.classList.add('target-highlight');
       }
     });
