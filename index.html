@@ -19,7 +19,6 @@
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      /* Removed overflow: hidden to allow scrolling */
     }
 
     /* Main landing screen container to keep the countdown centered on load */
@@ -187,7 +186,7 @@
     /* Content Archive Sections styling */
     .archive-section {
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
       padding: 60px 20px;
       box-sizing: border-box;
       border-top: 1px solid rgba(184, 134, 11, 0.3);
@@ -198,13 +197,36 @@
       color: #FFF000;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    .archive-section p {
-      color: #ccc;
-      line-height: 1.6;
-      font-size: 1rem;
+    /* Grid structure for four archive images */
+    .archive-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .archive-img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid rgba(255, 240, 0, 0.4);
+      border-radius: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .archive-img:hover {
+      transform: scale(1.02);
+      border-color: #FFF000;
+    }
+
+    /* Specifying different layout logic for portraits if desired */
+    .archive-img.portrait {
+      aspect-ratio: 3 / 4;
     }
 
     @media (min-width: 800px) {
@@ -221,12 +243,18 @@
       .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 3rem; }
       .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
+      
       .archive-section { padding: 100px 40px; }
       .archive-section h2 { font-size: 2.5rem; }
+      .archive-gallery { grid-template-columns: repeat(4, 1fr); gap: 20px; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Everything above the fold lives inside this hero section -->
+  <div class="hero-section">
+    <div class="bg-dates-container">
       <div class="date-item">May 11, 2024</div>
       <div class="date-item">May 10, 2025</div>
       <div class="date-item">May 9, 2026</div>
@@ -321,20 +349,37 @@
     </div>
   </div>
 
-  <!-- New historical scroll blocks added cleanly underneath -->
+  <!-- 2026 Ceremony Archive -->
   <section class="archive-section">
     <h2>2026 Ceremony Archive</h2>
-    <p>Insert your summary, media links, or breakdown text here. This section is natively hidden below the fold when the user first lands on the page, encouraging them to scroll naturally down to view past details.</p>
+    <div class="archive-gallery">
+      <img src="portrait2026.jpg" alt="2026 Portrait" class="archive-img portrait">
+      <img src="picture12026.jpg" alt="2026 Scene 1" class="archive-img">
+      <img src="picture22026.jpg" alt="2026 Scene 2" class="archive-img">
+      <img src="picture32026.jpg" alt="2026 Scene 3" class="archive-img">
+    </div>
   </section>
 
+  <!-- 2025 Ceremony Archive -->
   <section class="archive-section">
     <h2>2025 Ceremony Archive</h2>
-    <p>Insert historical archive logs, recorded media links, and key milestone highlights from the May 10, 2025 ceremony events here.</p>
+    <div class="archive-gallery">
+      <img src="portrait2025.jpg" alt="2025 Portrait" class="archive-img portrait">
+      <img src="picture12025.jpg" alt="2025 Scene 1" class="archive-img">
+      <img src="picture22025.jpg" alt="2025 Scene 2" class="archive-img">
+      <img src="picture32025.jpg" alt="2025 Scene 3" class="archive-img">
+    </div>
   </section>
 
+  <!-- 2024 Ceremony Archive -->
   <section class="archive-section">
     <h2>2024 Ceremony Archive</h2>
-    <p>Insert archive details, legacy data blocks, and historical data summaries corresponding to the inaugural May 11, 2024 results release here.</p>
+    <div class="archive-gallery">
+      <img src="portrait2024.jpg" alt="2024 Portrait" class="archive-img portrait">
+      <img src="picture12024.jpg" alt="2024 Scene 1" class="archive-img">
+      <img src="picture22024.jpg" alt="2024 Scene 2" class="archive-img">
+      <img src="picture32024.jpg" alt="2024 Scene 3" class="archive-img">
+    </div>
   </section>
 
   <script>
