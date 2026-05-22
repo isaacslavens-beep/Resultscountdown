@@ -11,7 +11,7 @@
   <meta property="og:type" content="website" />
   
   <!-- IMPORTANT: Replace YOUR_USERNAME and YOUR_REPO_NAME with your actual GitHub details -->
-  <meta property="og:image" content="https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/RCLOGO_.png" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/RCLOGO_.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   
@@ -191,6 +191,16 @@
       border-radius: 4px;
       box-shadow: 0 0 20px rgba(255, 240, 0, 0.3);
       object-fit: contain;
+      margin-bottom: 12px; /* Generates space for the callout text underneath */
+    }
+
+    /* Style block for the custom scroll invitation */
+    .scroll-hint {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #FFF000;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 240, 0, 0.4);
     }
 
     /* Content Archive Sections styling */
@@ -249,6 +259,7 @@
       .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 3rem; }
       .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
+      .scroll-hint { font-size: 1rem; }
       
       .archive-section { padding: 100px 20px; }
       .archive-section h2 { font-size: 2.5rem; }
@@ -351,6 +362,8 @@
 
     <div class="image-footer">
       <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
+      <!-- Gold italic hint added safely inside the footer stack -->
+      <div class="scroll-hint">Scroll down for featured ceremony photos!</div>
     </div>
   </div>
 
