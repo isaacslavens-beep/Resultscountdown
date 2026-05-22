@@ -6,33 +6,48 @@
   <title>Results Countdown</title>
   
   <style>
+    html {
+      scroll-behavior: smooth; /* Smooth scrolling when moving down the page */
+    }
+
     body {
       margin: 0;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
       background: #000000; 
       color: #ffffff;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       text-align: center;
-      overflow: hidden; 
+      /* Removed overflow: hidden to allow scrolling */
+    }
+
+    /* Main landing screen container to keep the countdown centered on load */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative;
+      width: 100%;
     }
 
     .bg-dates-container {
-      position: fixed;
+      position: absolute; /* Changed from fixed to absolute so it stays pinned only to the hero screen */
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       padding: 20px; 
       box-sizing: border-box;
-      z-index: -1;
+      z-index: 1;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 5px;
       align-content: space-between;
+      pointer-events: none; /* Prevents text selection issues over the background grid */
     }
 
     .date-item {
@@ -44,13 +59,6 @@
       color: rgba(184, 134, 11, 0.6); 
       white-space: nowrap;
       animation: subtleGlow 4s ease-in-out infinite;
-      text-decoration: none; /* Keeps links from getting default underlines */
-    }
-
-    /* Style for past links on hover */
-    a.date-item:hover {
-      color: rgba(184, 134, 11, 1);
-      text-shadow: 0 0 10px rgba(184, 134, 11, 0.8);
     }
 
     /* Target highlighted date with a larger font and intense golden glow */
@@ -59,27 +67,6 @@
       color: rgba(255, 215, 0, 1);
       animation: intenseGlow 3s ease-in-out infinite;
       z-index: 5;
-    }
-
-    /* Style for the calendar link wrapper */
-    .cal-link {
-      display: inline-flex;
-      align-items: center;
-      text-decoration: none;
-      color: inherit;
-      pointer-events: auto;
-      transition: opacity 0.2s ease;
-    }
-    
-    .cal-link:hover {
-      opacity: 0.8;
-    }
-
-    /* Style for the emoji element */
-    .cal-emoji {
-      font-size: 0.75rem;
-      margin-left: 4px;
-      vertical-align: middle;
     }
 
     @keyframes subtleGlow {
@@ -93,7 +80,6 @@
       }
     }
 
-    /* Enhanced glow keyframes for the upcoming milestone */
     @keyframes intenseGlow {
       0%, 100% { 
         filter: brightness(1.1);
@@ -115,6 +101,7 @@
       background: rgba(0,0,0,0.7); 
       padding: 10px;
       border-radius: 8px;
+      z-index: 10;
     }
 
     .time-block {
@@ -147,6 +134,7 @@
       color: #FFF000;
       margin-bottom: 0.8rem;
       text-shadow: 0 0 10px rgba(255, 240, 0, 0.5);
+      z-index: 10;
     }
 
     .contact-container {
@@ -184,6 +172,7 @@
 
     .image-footer {
       z-index: 10;
+      margin-bottom: 40px;
     }
 
     .results-img {
@@ -193,6 +182,29 @@
       border-radius: 4px;
       box-shadow: 0 0 20px rgba(255, 240, 0, 0.3);
       object-fit: contain;
+    }
+
+    /* Content Archive Sections styling */
+    .archive-section {
+      width: 100%;
+      max-width: 800px;
+      padding: 60px 20px;
+      box-sizing: border-box;
+      border-top: 1px solid rgba(184, 134, 11, 0.3);
+    }
+
+    .archive-section h2 {
+      font-size: 1.8rem;
+      color: #FFF000;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .archive-section p {
+      color: #ccc;
+      line-height: 1.6;
+      font-size: 1rem;
     }
 
     @media (min-width: 800px) {
@@ -209,115 +221,132 @@
       .countdown-wrapper { gap: 3rem; background: none; margin-bottom: 3rem; }
       .contact-link { font-size: 1.1rem; }
       .results-img { max-width: 400px; max-height: 250px; }
-      .cal-emoji { font-size: 1.1rem; margin-left: 6px; }
+      .archive-section { padding: 100px 40px; }
+      .archive-section h2 { font-size: 2.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-dates-container">
-    <!-- Changed the first three elements to <a> tags with placeholder hrefs -->
-    <a href="/2024-results" id="link-2024" class="date-item">May 11, 2024</a>
-    <a href="/2025-results" id="link-2025" class="date-item">May 10, 2025</a>
-    <a href="/2026-results" id="link-2026" class="date-item">May 9, 2026</a>
-    
-    <div class="date-item">May 8, 2027</div>
-    <div class="date-item">May 13, 2028</div>
-    <div class="date-item">May 12, 2029</div>
-    <div class="date-item">May 11, 2030</div>
-    <div class="date-item">May 10, 2031</div>
-    <div class="date-item">May 8, 2032</div>
-    <div class="date-item">May 14, 2033</div>
-    <div class="date-item">May 13, 2034</div>
-    <div class="date-item">May 12, 2035</div>
-    <div class="date-item">May 10, 2036</div>
-    <div class="date-item">May 9, 2037</div>
-    <div class="date-item">May 8, 2038</div>
-    <div class="date-item">May 14, 2039</div>
-    <div class="date-item">May 12, 2040</div>
-    <div class="date-item">May 11, 2041</div>
-    <div class="date-item">May 10, 2042</div>
-    <div class="date-item">May 9, 2043</div>
-    <div class="date-item">May 14, 2044</div>
-    <div class="date-item">May 13, 2045</div>
-    <div class="date-item">May 12, 2046</div>
-    <div class="date-item">May 11, 2047</div>
-    <div class="date-item">May 9, 2048</div>
-    <div class="date-item">May 8, 2049</div>
-    <div class="date-item">May 14, 2050</div>
-    <div class="date-item">May 13, 2051</div>
-    <div class="date-item">May 11, 2052</div>
-    <div class="date-item">May 10, 2053</div>
-    <div class="date-item">May 9, 2054</div>
-    <div class="date-item">May 8, 2055</div>
-    <div class="date-item">May 13, 2056</div>
-    <div class="date-item">May 12, 2057</div>
-    <div class="date-item">May 11, 2058</div>
-    <div class="date-item">May 10, 2059</div>
-    <div class="date-item">May 8, 2060</div>
-    <div class="date-item">May 14, 2061</div>
-    <div class="date-item">May 13, 2062</div>
-    <div class="date-item">May 12, 2063</div>
-    <div class="date-item">May 10, 2064</div>
-    <div class="date-item">May 9, 2065</div>
-    <div class="date-item">May 8, 2066</div>
-    <div class="date-item">May 14, 2067</div>
-    <div class="date-item">May 12, 2068</div>
-    <div class="date-item">May 11, 2069</div>
-    <div class="date-item">May 10, 2070</div>
-    <div class="date-item">May 9, 2071</div>
-    <div class="date-item">May 14, 2072</div>
-    <div class="date-item">May 13, 2073</div>
-    <div class="date-item">May 12, 2074</div>
-    <div class="date-item">May 11, 2075</div>
-    <div class="date-item">May 9, 2076</div>
-    <div class="date-item">May 8, 2077</div>
-    <div class="date-item">May 14, 2078</div>
-    <div class="date-item">May 13, 2079</div>
-    <div class="date-item">May 11, 2080</div>
-    <div class="date-item">May 10, 2081</div>
-    <div class="date-item">May 9, 2082</div>
-    <div class="date-item">May 8, 2083</div>
-    <div class="date-item">May 13, 2084</div>
-    <div class="date-item">May 12, 2085</div>
-    <div class="date-item">May 11, 2086</div>
-    <div class="date-item">May 10, 2087</div>
-    <div class="date-item">May 8, 2088</div>
-    <div class="date-item">May 14, 2089</div>
-    <div class="date-item">May 13, 2090</div>
-    <div class="date-item">May 12, 2091</div>
-    <div class="date-item">May 10, 2092</div>
-    <div class="date-item">May 9, 2093</div>
-    <div class="date-item">May 8, 2094</div>
-    <div class="date-item">May 14, 2095</div>
-    <div class="date-item">May 13, 2096</div>
-    <div class="date-item">May 11, 2097</div>
+  <!-- Everything above the fold lives inside this hero section -->
+  <div class="hero-section">
+    <div class="bg-dates-container">
+      <!-- Dates returned to standard non-clickable <div> elements -->
+      <div class="date-item">May 11, 2024</div>
+      <div class="date-item">May 10, 2025</div>
+      <div class="date-item">May 9, 2026</div>
+      <div class="date-item">May 8, 2027</div>
+      <div class="date-item">May 13, 2028</div>
+      <div class="date-item">May 12, 2029</div>
+      <div class="date-item">May 11, 2030</div>
+      <div class="date-item">May 10, 2031</div>
+      <div class="date-item">May 8, 2032</div>
+      <div class="date-item">May 14, 2033</div>
+      <div class="date-item">May 13, 2034</div>
+      <div class="date-item">May 12, 2035</div>
+      <div class="date-item">May 10, 2036</div>
+      <div class="date-item">May 9, 2037</div>
+      <div class="date-item">May 8, 2038</div>
+      <div class="date-item">May 14, 2039</div>
+      <div class="date-item">May 12, 2040</div>
+      <div class="date-item">May 11, 2041</div>
+      <div class="date-item">May 10, 2042</div>
+      <div class="date-item">May 9, 2043</div>
+      <div class="date-item">May 14, 2044</div>
+      <div class="date-item">May 13, 2045</div>
+      <div class="date-item">May 12, 2046</div>
+      <div class="date-item">May 11, 2047</div>
+      <div class="date-item">May 9, 2048</div>
+      <div class="date-item">May 8, 2049</div>
+      <div class="date-item">May 14, 2050</div>
+      <div class="date-item">May 13, 2051</div>
+      <div class="date-item">May 11, 2052</div>
+      <div class="date-item">May 10, 2053</div>
+      <div class="date-item">May 9, 2054</div>
+      <div class="date-item">May 8, 2055</div>
+      <div class="date-item">May 13, 2056</div>
+      <div class="date-item">May 12, 2057</div>
+      <div class="date-item">May 11, 2058</div>
+      <div class="date-item">May 10, 2059</div>
+      <div class="date-item">May 8, 2060</div>
+      <div class="date-item">May 14, 2061</div>
+      <div class="date-item">May 13, 2062</div>
+      <div class="date-item">May 12, 2063</div>
+      <div class="date-item">May 10, 2064</div>
+      <div class="date-item">May 9, 2065</div>
+      <div class="date-item">May 8, 2066</div>
+      <div class="date-item">May 14, 2067</div>
+      <div class="date-item">May 12, 2068</div>
+      <div class="date-item">May 11, 2069</div>
+      <div class="date-item">May 10, 2070</div>
+      <div class="date-item">May 9, 2071</div>
+      <div class="date-item">May 14, 2072</div>
+      <div class="date-item">May 13, 2073</div>
+      <div class="date-item">May 12, 2074</div>
+      <div class="date-item">May 11, 2075</div>
+      <div class="date-item">May 9, 2076</div>
+      <div class="date-item">May 8, 2077</div>
+      <div class="date-item">May 14, 2078</div>
+      <div class="date-item">May 13, 2079</div>
+      <div class="date-item">May 11, 2080</div>
+      <div class="date-item">May 10, 2081</div>
+      <div class="date-item">May 9, 2082</div>
+      <div class="date-item">May 8, 2083</div>
+      <div class="date-item">May 13, 2084</div>
+      <div class="date-item">May 12, 2085</div>
+      <div class="date-item">May 11, 2086</div>
+      <div class="date-item">May 10, 2087</div>
+      <div class="date-item">May 8, 2088</div>
+      <div class="date-item">May 14, 2089</div>
+      <div class="date-item">May 13, 2090</div>
+      <div class="date-item">May 12, 2091</div>
+      <div class="date-item">May 10, 2092</div>
+      <div class="date-item">May 9, 2093</div>
+      <div class="date-item">May 8, 2094</div>
+      <div class="date-item">May 14, 2095</div>
+      <div class="date-item">May 13, 2096</div>
+      <div class="date-item">May 11, 2097</div>
+    </div>
+
+    <div class="subtitle">The Ceremony Begins In:</div>
+    <div id="main-container" class="countdown-wrapper">
+      <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
+      <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
+      <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
+      <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-label">Click For Inquiries:</div>
+      <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
+    </div>
+
+    <div class="image-footer">
+      <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
+    </div>
   </div>
 
-  <div class="subtitle">The Ceremony Begins In:</div>
-  <div id="main-container" class="countdown-wrapper">
-    <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
-    <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
-    <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
-    <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
-  </div>
+  <!-- New historical scroll blocks added cleanly underneath -->
+  <section class="archive-section">
+    <h2>2026 Ceremony Archive</h2>
+    <p>Insert your summary, media links, or breakdown text here. This section is natively hidden below the fold when the user first lands on the page, encouraging them to scroll naturally down to view past details.</p>
+  </section>
 
-  <div class="contact-container">
-    <div class="contact-label">Click For Inquiries:</div>
-    <a href="mailto:resultscommitteeinfo@gmail.com" class="contact-link">resultscommitteeinfo@gmail.com</a>
-  </div>
+  <section class="archive-section">
+    <h2>2025 Ceremony Archive</h2>
+    <p>Insert historical archive logs, recorded media links, and key milestone highlights from the May 10, 2025 ceremony events here.</p>
+  </section>
 
-  <div class="image-footer">
-    <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
-  </div>
+  <section class="archive-section">
+    <h2>2024 Ceremony Archive</h2>
+    <p>Insert archive details, legacy data blocks, and historical data summaries corresponding to the inaugural May 11, 2024 results release here.</p>
+  </section>
 
   <script>
     const resultsDate = new Date("May 8, 2027 20:30:00 EDT").getTime();
 
-    // Dynamically find and highlight the target date element in the grid
     const dateElements = document.querySelectorAll('.date-item');
     dateElements.forEach(el => {
-      // Updated comparison to ignore text from the emoji child node if present
       if (el.textContent.replace('✅', '').trim() === "May 8, 2027") {
         el.classList.add('target-highlight');
       }
