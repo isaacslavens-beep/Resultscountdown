@@ -44,6 +44,13 @@
       color: rgba(184, 134, 11, 0.6); 
       white-space: nowrap;
       animation: subtleGlow 4s ease-in-out infinite;
+      text-decoration: none; /* Keeps links from getting default underlines */
+    }
+
+    /* Style for past links on hover */
+    a.date-item:hover {
+      color: rgba(184, 134, 11, 1);
+      text-shadow: 0 0 10px rgba(184, 134, 11, 0.8);
     }
 
     /* Target highlighted date with a larger font and intense golden glow */
@@ -209,10 +216,11 @@
 <body>
 
   <div class="bg-dates-container">
-    <!-- Completed dates updated with green checkmark emojis -->
-    <div class="date-item">May 11, 2024</div>
-    <div class="date-item">May 10, 2025</div>
-    <div class="date-item">May 9, 2026</div>
+    <!-- Changed the first three elements to <a> tags with placeholder hrefs -->
+    <a href="/2024-results" id="link-2024" class="date-item">May 11, 2024</a>
+    <a href="/2025-results" id="link-2025" class="date-item">May 10, 2025</a>
+    <a href="/2026-results" id="link-2026" class="date-item">May 9, 2026</a>
+    
     <div class="date-item">May 8, 2027</div>
     <div class="date-item">May 13, 2028</div>
     <div class="date-item">May 12, 2029</div>
