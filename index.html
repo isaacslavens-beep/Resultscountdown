@@ -460,7 +460,7 @@
   </div>
 
   <!-- Archive Sections -->
-  <section class="archive-section">
+  <section class="archive-section" id="ceremony-2026">
     <h2>MAY 9, 2026: CHANGING OF DIRECTION CEREMONY</h2>
     <div class="archive-gallery">
       <img src="portrait2026.JPG" alt="2026 Portrait" class="archive-img">
@@ -470,7 +470,7 @@
     </div>
   </section>
 
-  <section class="archive-section">
+  <section class="archive-section" id="ceremony-2025">
     <h2>MAY 10, 2025: BEGINNING OF ADULTHOOD CEREMONY</h2>
     <div class="archive-gallery">
       <img src="portrait2025.JPG" alt="2025 Portrait" class="archive-img">
@@ -480,7 +480,7 @@
     </div>
   </section>
 
-  <section class="archive-section">
+  <section class="archive-section" id="ceremony-2024">
     <h2>MAY 11, 2024: CONCLUSION OF CHILDHOOD CEREMONY</h2>
     <div class="archive-gallery">
       <img src="portrait2024.JPG" alt="2024 Portrait" class="archive-img">
@@ -524,7 +524,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Calendar .ics download on date click
+    // Click handler: past dates scroll to ceremony records, future dates download .ics
     document.querySelectorAll('.date-item').forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -532,7 +532,19 @@
         if (!dateStr) return;
 
         const [year, month, day] = dateStr.split('-');
-        // Event at 8:00 PM to 11:59 PM local time
+        const eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        const now = new Date();
+
+        // If date is in the past, try to scroll to its ceremony section
+        if (eventDate < now) {
+          const section = document.getElementById('ceremony-' + year);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+            return;
+          }
+        }
+
+        // Future date: download .ics file
         const startDate = `${year}${month}${day}T200000`;
         const endDate = `${year}${month}${day}T235900`;
 
