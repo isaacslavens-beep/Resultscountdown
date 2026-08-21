@@ -10,14 +10,13 @@
   <meta property="og:description" content="The Ceremony Begins Soon. Check countdown and historical archives." />
   <meta property="og:type" content="website" />
   
-  <!-- IMPORTANT: Replace YOUR_USERNAME and YOUR_REPO_NAME with your actual GitHub details -->
   <meta property="og:image" content="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO_NAME/main/RCLOGO_.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   
   <style>
     html {
-      scroll-behavior: smooth; /* Smooth scrolling when moving down the page */
+      scroll-behavior: smooth;
     }
 
     body {
@@ -31,7 +30,7 @@
       text-align: center;
     }
 
-    /* Main landing screen container to keep the countdown centered on load */
+    /* ---- HERO SECTION ---- */
     .hero-section {
       min-height: 100vh;
       display: flex;
@@ -41,38 +40,40 @@
       box-sizing: border-box;
       position: relative;
       width: 100%;
+      /* Extra vertical padding on mobile so the date grid has room to breathe */
+      padding: 20px 0;
     }
 
+    /* ---- BACKGROUND DATE GRID ---- */
     .bg-dates-container {
-      position: absolute; /* Keeps background grid pinned only to the hero screen */
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      padding: 20px; 
+      padding: 12px 10px; 
       box-sizing: border-box;
       z-index: 1;
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
+      gap: 2px;
       align-content: space-between;
-      pointer-events: none; /* Prevents text selection issues over the background grid */
+      pointer-events: none;
     }
 
     .date-item {
-      font-size: 0.65rem;
+      font-size: 0.5rem;
       font-weight: 700; 
-      line-height: 1.1;
+      line-height: 1.05;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
-      color: rgba(184, 134, 11, 0.6); 
+      letter-spacing: 0.8px;
+      color: rgba(184, 134, 11, 0.35); 
       white-space: nowrap;
       animation: subtleGlow 4s ease-in-out infinite;
     }
 
-    /* Target highlighted date with a larger font and intense golden glow */
     .date-item.target-highlight {
-      font-size: 0.85rem;
+      font-size: 0.65rem;
       color: rgba(255, 215, 0, 1);
       animation: intenseGlow 3s ease-in-out infinite;
       z-index: 5;
@@ -103,14 +104,40 @@
     .date-item:nth-child(odd) { text-align: left; }
     .date-item:nth-child(even) { text-align: right; }
 
+    /* ---- CENTRAL CONTENT PANEL (mobile-first) ---- */
+    .content-panel {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.88);
+      border: 1px solid rgba(184, 134, 11, 0.25);
+      border-radius: 12px;
+      padding: 24px 20px 20px;
+      margin: 0 16px;
+      max-width: 340px;
+      width: calc(100% - 32px);
+      box-shadow: 
+        0 0 40px rgba(0, 0, 0, 0.9),
+        0 0 80px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ---- COUNTDOWN ---- */
+    .subtitle {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #FFF000;
+      margin-bottom: 0.6rem;
+      text-shadow: 0 0 10px rgba(255, 240, 0, 0.5);
+    }
+
     .countdown-wrapper {
       display: flex;
-      gap: 0.6rem;
-      margin-bottom: 2rem;
-      background: rgba(0,0,0,0.7); 
-      padding: 8px;
-      border-radius: 8px;
-      z-index: 10;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
     }
 
     .time-block {
@@ -120,7 +147,7 @@
     }
 
     .value {
-      font-size: 1.3rem;
+      font-size: 1.6rem;
       font-weight: 700;
       line-height: 1;
       font-variant-numeric: tabular-nums;
@@ -128,114 +155,69 @@
     }
 
     .label {
-      font-size: 0.45rem;
+      font-size: 0.4rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      margin-top: 0.3rem;
+      margin-top: 0.25rem;
       color: #aaa;
     }
 
-    .subtitle {
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #FFF000;
-      margin-bottom: 0.8rem;
-      text-shadow: 0 0 10px rgba(255, 240, 0, 0.5);
-      z-index: 10;
-    }
-
-    .contact-container {
-      margin-bottom: 25px;
-      z-index: 10;
-    }
-
-    .contact-label {
-      font-size: 0.55rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #888;
-      margin-bottom: 8px;
-    }
-
-    .contact-link {
-      display: inline-block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #FFF000;
-      text-decoration: none;
-      letter-spacing: 1.5px;
-      padding: 8px 16px;
-      border: 1px solid #FFF000;
-      border-radius: 50px;
-      background: rgba(255, 240, 0, 0.1);
-      transition: all 0.3s ease;
-    }
-
-    .contact-link:hover {
-      background: rgba(255, 240, 0, 0.3);
-      box-shadow: 0 0 20px #FFF000;
-      transform: translateY(-1px);
-    }
-
+    /* ---- LOGO IMAGE ---- */
     .image-footer {
-      z-index: 10;
-      margin-bottom: 40px;
+      margin-bottom: 0;
     }
 
     .results-img {
-      max-width: 250px;
-      max-height: 150px;
+      max-width: 200px;
+      max-height: 130px;
       border: 1px solid #FFF000;
       border-radius: 4px;
       box-shadow: 0 0 20px rgba(255, 240, 0, 0.3);
       object-fit: contain;
-      margin-bottom: 12px; /* Generates space for the callout text underneath */
+      margin-bottom: 12px;
     }
 
-    /* Style block for the custom scroll invitation */
+    /* ---- CONTACT & SCROLL HINT ---- */
     .scroll-hint {
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       font-style: italic;
       color: #FFF000;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       text-shadow: 0 0 8px rgba(255, 240, 0, 0.4);
-      margin-top: 5px;
+      margin-top: 2px;
+      line-height: 1.6;
     }
 
-    /* Line separator for the scroll-hint area */
     .hint-separator {
       border: none;
       border-top: 1px solid rgba(255, 240, 0, 0.4);
       width: 60%;
-      margin: 10px auto;
+      margin: 8px auto;
       box-shadow: 0 0 5px rgba(255, 240, 0, 0.3);
     }
 
-    /* Content Archive Sections styling */
+    /* ---- ARCHIVE SECTIONS ---- */
     .archive-section {
       width: 100%;
-      max-width: 600px; /* Constrained width looks best for clean mobile reading */
+      max-width: 600px;
       padding: 60px 20px;
       box-sizing: border-box;
       border-top: 1px solid rgba(184, 134, 11, 0.3);
     }
 
     .archive-section h2 {
-      font-size: 1.8rem;
+      font-size: 1.4rem;
       color: #FFF000;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin-bottom: 2rem;
     }
 
-    /* Forces single column image stack on all devices */
     .archive-gallery {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 25px; /* Spacing between stacked images */
+      gap: 25px;
       margin-top: 20px;
     }
 
@@ -255,30 +237,87 @@
       border-color: #FFF000;
     }
 
+    /* ========================================
+       DESKTOP / WIDE SCREENS (800px+)
+       ======================================== */
     @media (min-width: 800px) {
+      .hero-section {
+        padding: 0;
+      }
+
       .bg-dates-container {
         grid-template-columns: repeat(4, 1fr);
         padding: 40px 60px;
+        gap: 5px;
       }
+
+      .date-item {
+        font-size: 0.65rem;
+        letter-spacing: 1.2px;
+        color: rgba(184, 134, 11, 0.6);
+      }
+
+      .date-item.target-highlight {
+        font-size: 1.1rem;
+      }
+
       .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
       .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
-      
-      .date-item.target-highlight { font-size: 1.1rem; }
-      .value { font-size: 3.8rem; }
-      .label { font-size: 0.6rem; letter-spacing: 2px; margin-top: 0.5rem; }
-      .countdown-wrapper { gap: 2rem; background: none; margin-bottom: 3rem; }
-      .contact-link { font-size: 1.1rem; }
-      .results-img { max-width: 400px; max-height: 250px; }
-      .scroll-hint { font-size: 1rem; }
-      
-      .archive-section { padding: 100px 20px; }
-      .archive-section h2 { font-size: 2.5rem; }
+
+      /* On desktop, remove the panel look and go back to transparent/open feel */
+      .content-panel {
+        background: none;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        margin: 0;
+        max-width: none;
+        width: auto;
+      }
+
+      .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .countdown-wrapper {
+        gap: 2rem;
+        margin-bottom: 3rem;
+      }
+
+      .value {
+        font-size: 3.8rem;
+      }
+
+      .label {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        margin-top: 0.5rem;
+      }
+
+      .results-img {
+        max-width: 400px;
+        max-height: 250px;
+      }
+
+      .scroll-hint {
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+
+      .archive-section {
+        padding: 100px 20px;
+      }
+
+      .archive-section h2 {
+        font-size: 2.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Everything above the fold lives inside this hero section -->
   <div class="hero-section">
     <div class="bg-dates-container">
       <div class="date-item">May 11, 2024</div>
@@ -357,21 +396,24 @@
       <div class="date-item">May 11, 2097</div>
     </div>
 
-    <div class="subtitle">The Ceremony Begins In:</div>
-    <div id="main-container" class="countdown-wrapper">
-      <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
-      <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
-      <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
-      <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
-    </div>
+    <!-- All foreground content grouped into one panel -->
+    <div class="content-panel">
+      <div class="subtitle">The Ceremony Begins In:</div>
+      <div id="main-container" class="countdown-wrapper">
+        <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
+        <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
+        <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
+        <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
+      </div>
 
-    <div class="image-footer">
-      <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
-      <div class="scroll-hint">
-        <div style="margin-bottom: 6px;">Contact:</div>
-        resultscommitteeinfo@gmail.com
-        <hr class="hint-separator">
-        Scroll Down for Ceremony Records.
+      <div class="image-footer">
+        <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
+        <div class="scroll-hint">
+          <div style="margin-bottom: 4px;">Contact:</div>
+          resultscommitteeinfo@gmail.com
+          <hr class="hint-separator">
+          Scroll Down for Ceremony Records.
+        </div>
       </div>
     </div>
   </div>
