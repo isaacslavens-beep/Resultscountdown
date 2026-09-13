@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Attendance Records">
+    <meta property="og:description" content="Official attendance records for all Wii Sports members.">
+    <meta property="og:type" content="website">
+    <title>Attendance Records</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0f;
+            color: #f0ece4;
+            font-family: 'EB Garamond', Georgia, serif;
+            min-height: 100vh;
+            line-height: 1.65;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 64px 20px 20px;
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: 0.08em;
+            color: #f0ece4;
+            margin-bottom: 8px;
+        }
+
+        .page-header .subtitle {
+            font-size: 1.1rem;
+            color: #c8c0b4;
+            font-style: italic;
+        }
+
+        .sort-note {
+            text-align: center;
+            font-size: 0.95rem;
+            color: #a89e90;
+            margin: 16px 0 40px;
+        }
+
+        .ceremonies-legend {
+            max-width: 720px;
+            margin: 0 auto 48px;
+            padding: 0 20px;
+        }
+
+        .ceremonies-legend h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #d4c898;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .ceremony-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .ceremony-item {
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .ceremony-date {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #d4c898;
+            white-space: nowrap;
+        }
+
+        .ceremony-name {
+            font-size: 1rem;
+            color: #d0c8bc;
+            font-style: italic;
+        }
+
+        .divider {
+            width: 100%;
+            max-width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4c89844, transparent);
+            margin: 0 auto;
+        }
+
+        .records-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        .member-card {
+            border: 1px solid #252320;
+            background: #0e0e14;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .member-card:hover {
+            border-color: #d4c89855;
+        }
+
+        .member-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 28px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .member-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f0ece4;
+        }
+
+        .member-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .attendance-fraction {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .perfect {
+            color: #d4c898;
+        }
+
+        .imperfect {
+            color: #c8a070;
+        }
+
+        .attendance-bar {
+            display: flex;
+            gap: 5px;
+        }
+
+        .bar-pip {
+            width: 22px;
+            height: 6px;
+            border-radius: 1px;
+        }
+
+        .pip-present {
+            background-color: #d4c898;
+        }
+
+        .pip-absent {
+            background-color: #4a2020;
+        }
+
+        .pip-na {
+            background-color: #3a3a3a;
+        }
+
+        .member-details {
+            display: none;
+            padding: 0 28px 22px;
+            border-top: 1px solid #1e1c18;
+        }
+
+        .member-details.open {
+            display: block;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .detail-row + .detail-row {
+            border-top: 1px solid #1a1816;
+        }
+
+        .detail-ceremony {
+            font-size: 0.95rem;
+            color: #c8c0b4;
+        }
+
+        .detail-ceremony span {
+            display: block;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #9a9080;
+            margin-top: 2px;
+        }
+
+        .status-present {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d4c898;
+            letter-spacing: 0.06em;
+        }
+
+        .status-absent {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #c06040;
+            letter-spacing: 0.06em;
+        }
+
+        .status-na {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #707070;
+            letter-spacing: 0.06em;
+        }
+
+        .back-link {
+            text-align: center;
+            padding: 0 20px 60px;
+        }
+
+        .back-link a {
+            font-size: 0.95rem;
+            color: #d4c898;
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid #d4c89833;
+            padding-bottom: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            border-bottom-color: #d4c898;
+        }
+
+        .expand-icon {
+            font-size: 0.65rem;
+            color: #808080;
+            transition: transform 0.25s ease;
+            margin-left: 4px;
+        }
+
+        .member-card.open .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        @media (max-width: 520px) {
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .member-header {
+                padding: 16px 18px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .member-name {
+                font-size: 1.05rem;
+            }
+
+            .ceremony-item {
+                flex-direction: column;
+                align-items: center;
+                gap: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>ATTENDANCE RECORDS</h1>
+        <p class="subtitle">Official records for all Wii Sports members</p>
+    </header>
+
+    <p class="sort-note">Members listed in alphabetical order.</p>
+
+    <div class="ceremonies-legend">
+        <h2>CEREMONIES TO DATE</h2>
+        <div class="ceremony-list">
+            <div class="ceremony-item">
+                <span class="ceremony-date">May 11, 2024</span>
+                <span class="ceremony-name">Conclusion of Childhood</span>
+            </div>
+            <div class="ceremony-item">
+                <span class="ceremony-date">May 10, 2025</span>
+                <span class="ceremony-name">Beginning of Adulthood</span>
+            </div>
+            <div class="ceremony-item">
+                <span class="ceremony-date">May 9, 2026</span>
+                <span class="ceremony-name">Changing of Direction</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="records-container" id="records">
+    </div>
+
+    <div class="back-link">
+        <a href="https://resultscountdown.xyz">Return to Countdown</a>
+    </div>
+
+    <script>
+        const ceremonies = [
+            { date: "May 11, 2024", name: "Conclusion of Childhood" },
+            { date: "May 10, 2025", name: "Beginning of Adulthood" },
+            { date: "May 9, 2026",  name: "Changing of Direction" }
+        ];
+
+        // attended values: true = present, false = absent, null = N/A (not invited)
+        const members = [
+            { name: "Amit",   attended: [true, true, true] },
+            { name: "Ben",    attended: [true, true, true] },
+            { name: "Daniel", attended: [true, true, true] },
+            { name: "Eitan",  attended: [true, true, true] },
+            { name: "Glazer", attended: [null, true, true] },
+            { name: "Isaac",  attended: [true, true, true] },
+            { name: "Jonah",  attended: [true, false, true] },
+            { name: "Josh",   attended: [true, true, true] },
+            { name: "Justin", attended: [true, true, true] },
+            { name: "Seth",   attended: [true, true, true] }
+        ];
+
+        const container = document.getElementById("records");
+
+        members.forEach(member => {
+            const invited = member.attended.filter(a => a !== null).length;
+            const present = member.attended.filter(a => a === true).length;
+            const isPerfect = present === invited;
+
+            const card = document.createElement("div");
+            card.className = "member-card";
+
+            let pips = member.attended.map(a => {
+                if (a === null) return '<div class="bar-pip pip-na"></div>';
+                return `<div class="bar-pip ${a ? "pip-present" : "pip-absent"}"></div>`;
+            }).join("");
+
+            let details = ceremonies.map((c, i) => {
+                let statusClass, statusText;
+                if (member.attended[i] === null) {
+                    statusClass = "status-na";
+                    statusText = "N/A";
+                } else if (member.attended[i]) {
+                    statusClass = "status-present";
+                    statusText = "PRESENT";
+                } else {
+                    statusClass = "status-absent";
+                    statusText = "ABSENT";
+                }
+                return `
+                <div class="detail-row">
+                    <div class="detail-ceremony">
+                        ${c.date}
+                        <span>${c.name}</span>
+                    </div>
+                    <div class="${statusClass}">${statusText}</div>
+                </div>`;
+            }).join("");
+
+            card.innerHTML = `
+                <div class="member-header">
+                    <span class="member-name">${member.name} <span class="expand-icon">&#9654;</span></span>
+                    <div class="member-stats">
+                        <div class="attendance-bar">${pips}</div>
+                        <span class="attendance-fraction ${isPerfect ? "perfect" : "imperfect"}">${present}/${invited}</span>
+                    </div>
+                </div>
+                <div class="member-details">${details}</div>
+            `;
+
+            card.querySelector(".member-header").addEventListener("click", () => {
+                const det = card.querySelector(".member-details");
+                det.classList.toggle("open");
+                card.classList.toggle("open");
+            });
+
+            container.appendChild(card);
+        });
+    </script>
+
+</body>
+</html>
