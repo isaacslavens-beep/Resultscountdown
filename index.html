@@ -114,6 +114,38 @@
       box-shadow: 0 0 5px rgba(255, 240, 0, 0.3);
     }
 
+    /* ---- SCROLL-DOWN PROMPT ---- */
+    .attendance-prompt {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .attendance-prompt-text {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: #FFD700;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+    }
+
+    .attendance-prompt-arrow {
+      font-size: 1rem;
+      color: #FFD700;
+      animation: bounceDown 2s ease-in-out infinite;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(5px); opacity: 1; }
+    }
+
     /* ---- MANDATE BANNER ---- */
     .mandate-banner {
       width: 100%;
@@ -191,9 +223,7 @@
     }
 
     @keyframes intenseGlow {
-      0%, 100% { 
-        filter: brightness(1.1);
-      }
+      0%, 100% { filter: brightness(1.1); }
       50% { 
         filter: brightness(1.5);
         text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
@@ -203,45 +233,190 @@
     .date-item:nth-child(odd) { text-align: left; }
     .date-item:nth-child(even) { text-align: right; }
 
-    /* ---- ARCHIVE SECTIONS ---- */
-    .archive-section {
+    /* ---- ATTENDANCE SECTION ---- */
+    .attendance-section {
       width: 100%;
-      max-width: 600px;
-      padding: 60px 20px;
+      max-width: 640px;
+      padding: 60px 20px 80px;
       box-sizing: border-box;
-      border-top: 1px solid rgba(184, 134, 11, 0.3);
+      border-top: 1px solid rgba(255, 240, 0, 0.25);
     }
 
-    .archive-section h2 {
+    .attendance-section h2 {
       font-size: 1.4rem;
+      font-weight: 700;
       color: #FFF000;
       letter-spacing: 2px;
       text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 10px rgba(255, 240, 0, 0.3);
+    }
+
+    .attendance-subtitle {
+      font-size: 0.7rem;
+      color: #888;
+      letter-spacing: 0.5px;
       margin-bottom: 2rem;
     }
 
-    .archive-gallery {
+    .ceremonies-legend {
+      margin-bottom: 2.5rem;
+    }
+
+    .ceremonies-legend h3 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      color: #FFD700;
+      margin-bottom: 12px;
+      text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
+    }
+
+    .ceremony-legend-item {
+      font-size: 0.75rem;
+      color: #ccc;
+      line-height: 1.8;
+    }
+
+    .ceremony-legend-item .c-date {
+      color: #FFD700;
+      font-weight: 600;
+    }
+
+    .legend-divider {
+      border: none;
+      border-top: 1px solid rgba(255, 240, 0, 0.15);
+      width: 120px;
+      margin: 20px auto 0;
+    }
+
+    .member-card {
+      border: 1px solid rgba(255, 240, 0, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+      margin-bottom: 10px;
+      border-radius: 3px;
+      transition: border-color 0.2s ease;
+    }
+
+    .member-card:hover {
+      border-color: rgba(255, 240, 0, 0.3);
+    }
+
+    .member-header {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      gap: 25px;
-      margin-top: 20px;
+      padding: 14px 20px;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .archive-img {
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      object-fit: cover;
-      border: 1px solid rgba(255, 240, 0, 0.4);
-      border-radius: 6px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease, border-color 0.3s ease;
+    .member-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
     }
 
-    .archive-img:hover {
-      transform: scale(1.01);
-      border-color: #FFF000;
+    .member-stats {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .attendance-bar {
+      display: flex;
+      gap: 4px;
+    }
+
+    .bar-pip {
+      width: 18px;
+      height: 5px;
+      border-radius: 1px;
+    }
+
+    .pip-present { background-color: #FFD700; }
+    .pip-absent { background-color: #5a1a1a; }
+    .pip-na { background-color: #2a2a2a; }
+
+    .attendance-fraction {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .frac-perfect { color: #FFD700; }
+    .frac-imperfect { color: #c87040; }
+
+    .expand-icon {
+      font-size: 0.5rem;
+      color: #666;
+      transition: transform 0.2s ease;
+      margin-left: 3px;
+    }
+
+    .member-card.open .expand-icon {
+      transform: rotate(90deg);
+    }
+
+    .member-details {
+      display: none;
+      padding: 0 20px 16px;
+      border-top: 1px solid rgba(255, 240, 0, 0.08);
+    }
+
+    .member-details.open {
+      display: block;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .detail-row + .detail-row {
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .detail-ceremony {
+      text-align: left;
+      font-size: 0.72rem;
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    .detail-ceremony .c-name {
+      display: block;
+      font-size: 0.65rem;
+      font-style: italic;
+      color: #777;
+    }
+
+    .status-present {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-absent {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #c04030;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status-na {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #555;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     /* =============================================
@@ -263,7 +438,8 @@
 
       .content-panel .subtitle,
       .content-panel .countdown-wrapper,
-      .content-panel .image-footer {
+      .content-panel .image-footer,
+      .content-panel .attendance-prompt {
         pointer-events: auto;
       }
 
@@ -288,7 +464,6 @@
         border-top: none;
         border-bottom: none;
         background: linear-gradient(0deg, rgba(180, 0, 0, 0.2) 0%, rgba(0,0,0,0) 100%);
-        border-top: none;
       }
 
       .mandate-text {
@@ -340,12 +515,24 @@
         letter-spacing: 1px;
       }
 
-      .archive-section {
-        padding: 100px 20px;
+      .attendance-prompt-text {
+        font-size: 0.8rem;
       }
 
-      .archive-section h2 {
-        font-size: 2.5rem;
+      .attendance-section {
+        padding: 100px 20px 100px;
+      }
+
+      .attendance-section h2 {
+        font-size: 2rem;
+      }
+
+      .member-header {
+        padding: 16px 24px;
+      }
+
+      .member-name {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -369,6 +556,11 @@
           resultscommitteeinfo@gmail.com
         </div>
       </div>
+
+      <a class="attendance-prompt" href="#attendance" onclick="event.preventDefault(); document.getElementById('attendance').scrollIntoView({behavior:'smooth'});">
+        <span class="attendance-prompt-text">Scroll down for Attendance Records</span>
+        <span class="attendance-prompt-arrow">&#9660;</span>
+      </a>
     </div>
 
     <!-- Mandate banner between content and dates -->
@@ -457,35 +649,20 @@
     </div>
   </div>
 
-  <!-- Archive Sections -->
-  <section class="archive-section" id="ceremony-2026">
-    <h2>MAY 9, 2026: CHANGING OF DIRECTION CEREMONY</h2>
-    <div class="archive-gallery">
-      <img src="portrait2026.JPG" alt="2026 Portrait" class="archive-img">
-      <img src="picture12026.JPG" alt="2026 Scene 1" class="archive-img">
-      <img src="picture22026.JPG" alt="2026 Scene 2" class="archive-img">
-      <img src="picture32026.JPG" alt="2026 Scene 3" class="archive-img">
-    </div>
-  </section>
+  <!-- Attendance Records -->
+  <section class="attendance-section" id="attendance">
+    <h2>Attendance Records</h2>
+    <div class="attendance-subtitle">Members listed in alphabetical order.</div>
 
-  <section class="archive-section" id="ceremony-2025">
-    <h2>MAY 10, 2025: BEGINNING OF ADULTHOOD CEREMONY</h2>
-    <div class="archive-gallery">
-      <img src="portrait2025.JPG" alt="2025 Portrait" class="archive-img">
-      <img src="picture12025.JPG" alt="2025 Scene 1" class="archive-img">
-      <img src="picture22025.JPG" alt="2025 Scene 2" class="archive-img">
-      <img src="picture32025.JPG" alt="2025 Scene 3" class="archive-img">
+    <div class="ceremonies-legend">
+      <h3>Ceremonies to Date</h3>
+      <div class="ceremony-legend-item"><span class="c-date">May 11, 2024</span> · Conclusion of Childhood</div>
+      <div class="ceremony-legend-item"><span class="c-date">May 10, 2025</span> · Beginning of Adulthood</div>
+      <div class="ceremony-legend-item"><span class="c-date">May 9, 2026</span> · Changing of Direction</div>
+      <hr class="legend-divider">
     </div>
-  </section>
 
-  <section class="archive-section" id="ceremony-2024">
-    <h2>MAY 11, 2024: CONCLUSION OF CHILDHOOD CEREMONY</h2>
-    <div class="archive-gallery">
-      <img src="portrait2024.JPG" alt="2024 Portrait" class="archive-img">
-      <img src="picture12024.JPG" alt="2024 Scene 1" class="archive-img">
-      <img src="picture22024.JPG" alt="2024 Scene 2" class="archive-img">
-      <img src="picture32024.JPG" alt="2024 Scene 3" class="archive-img">
-    </div>
+    <div id="records"></div>
   </section>
 
   <script>
@@ -522,7 +699,7 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // Click handler: past dates scroll to ceremony records, future dates download .ics
+    // Click handler: past dates scroll to attendance, future dates download .ics
     document.querySelectorAll('.date-item').forEach(el => {
       el.addEventListener('click', function(e) {
         e.preventDefault();
@@ -533,13 +710,9 @@
         const eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
         const now = new Date();
 
-        // If date is in the past, try to scroll to its ceremony section
         if (eventDate < now) {
-          const section = document.getElementById('ceremony-' + year);
-          if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-            return;
-          }
+          document.getElementById('attendance').scrollIntoView({ behavior: 'smooth' });
+          return;
         }
 
         // Future date: download .ics file
@@ -572,6 +745,85 @@
         URL.revokeObjectURL(url);
       });
     });
+
+    // Attendance records
+    const ceremonies = [
+      { date: "May 11, 2024", name: "Conclusion of Childhood" },
+      { date: "May 10, 2025", name: "Beginning of Adulthood" },
+      { date: "May 9, 2026",  name: "Changing of Direction" }
+    ];
+
+    // true = present, false = absent, null = N/A (not invited)
+    const members = [
+      { name: "Amit",   attended: [true, true, true] },
+      { name: "Ben",    attended: [true, true, true] },
+      { name: "Daniel", attended: [true, true, true] },
+      { name: "Eitan",  attended: [true, true, true] },
+      { name: "Glazer", attended: [null, true, true] },
+      { name: "Isaac",  attended: [true, true, true] },
+      { name: "Jonah",  attended: [true, true, false] },
+      { name: "Josh",   attended: [true, true, true] },
+      { name: "Justin", attended: [true, true, true] },
+      { name: "Seth",   attended: [true, true, true] }
+    ];
+
+    const container = document.getElementById("records");
+
+    members.forEach(member => {
+      const invited = member.attended.filter(a => a !== null).length;
+      const present = member.attended.filter(a => a === true).length;
+      const isPerfect = present === invited;
+
+      const card = document.createElement("div");
+      card.className = "member-card";
+
+      let pips = member.attended.map(a => {
+        if (a === null) return '<div class="bar-pip pip-na"></div>';
+        return `<div class="bar-pip ${a ? "pip-present" : "pip-absent"}"></div>`;
+      }).join("");
+
+      let details = ceremonies.map((c, i) => {
+        let statusClass, statusText;
+        if (member.attended[i] === null) {
+          statusClass = "status-na";
+          statusText = "N/A";
+        } else if (member.attended[i]) {
+          statusClass = "status-present";
+          statusText = "PRESENT";
+        } else {
+          statusClass = "status-absent";
+          statusText = "ABSENT";
+        }
+        return `
+        <div class="detail-row">
+          <div class="detail-ceremony">
+            ${c.date}
+            <span class="c-name">${c.name}</span>
+          </div>
+          <div class="${statusClass}">${statusText}</div>
+        </div>`;
+      }).join("");
+
+      card.innerHTML = `
+        <div class="member-header">
+          <span class="member-name">${member.name} <span class="expand-icon">&#9654;</span></span>
+          <div class="member-stats">
+            <div class="attendance-bar">${pips}</div>
+            <span class="attendance-fraction ${isPerfect ? "frac-perfect" : "frac-imperfect"}">${present}/${invited}</span>
+          </div>
+        </div>
+        <div class="member-details">${details}</div>
+      `;
+
+      card.querySelector(".member-header").addEventListener("click", () => {
+        const det = card.querySelector(".member-details");
+        det.classList.toggle("open");
+        card.classList.toggle("open");
+      });
+
+      container.appendChild(card);
+    });
   </script>
+
 </body>
 </html>
