@@ -61,15 +61,23 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 32px 20px;
+      justify-content: space-between;
+      padding: 28px 20px 22px;
       text-align: center;
       background: radial-gradient(ellipse 60% 45% at 50% 70%, rgba(232, 193, 90, 0.09), transparent 70%);
     }
 
+    .hero-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
     .crest {
       width: auto;
-      height: min(36vh, 340px);
+      height: min(32vh, 320px);
       max-width: 78vw;
       object-fit: contain;
       margin-top: 28px;
@@ -164,6 +172,59 @@
       border: 1px solid var(--rule);
     }
     .btn-ghost:hover { border-color: var(--gold); }
+
+    /* ---------- Explore strip ---------- */
+    .explore { margin-top: 20px; }
+
+    .explore-hint {
+      margin: 0 0 12px;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 1.05rem;
+    }
+
+    .explore-links {
+      display: flex;
+      justify-content: center;
+      gap: clamp(14px, 5vw, 48px);
+    }
+
+    .explore-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--ivory);
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .arrow {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--rule);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .arrow::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-right: 1.5px solid var(--gold);
+      border-bottom: 1.5px solid var(--gold);
+      transform: translateY(-2px) rotate(45deg);
+    }
+
+    .explore-link:hover .arrow {
+      border-color: var(--gold);
+      background: rgba(232, 193, 90, 0.12);
+    }
+
+    .explore-link:hover .explore-label { color: var(--gold); }
 
     /* ---------- Sections ---------- */
     section {
@@ -367,6 +428,15 @@
       .when { animation-delay: 0.5s; }
       .actions { animation-delay: 0.6s; }
       .crest { animation-delay: 0.75s; }
+      .explore { animation: rise 0.9s 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+      .arrow { animation: nudge 2.4s ease-in-out 1.8s infinite; }
+      .explore-link:nth-child(2) .arrow { animation-delay: 2s; }
+      .explore-link:nth-child(3) .arrow { animation-delay: 2.2s; }
+    }
+
+    @keyframes nudge {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(6px); }
     }
 
     @keyframes rise {
@@ -382,12 +452,15 @@
       .sep { display: none; }
       .ledger th, .ledger td { padding: 12px 6px; }
       .ceremony-name { font-size: 0.82rem; }
+      .explore-link { font-size: 0.95rem; }
+      .arrow { width: 36px; height: 36px; }
     }
   </style>
 </head>
 <body>
 
   <header class="hero">
+    <div class="hero-main">
     <p class="lead">The ceremony begins in</p>
 
     <div class="countdown" id="countdown" role="timer" aria-live="off">
@@ -402,10 +475,6 @@
 
     <p class="when" id="when"></p>
 
-    <div class="actions">
-      <a class="btn btn-primary" href="#attendance">See attendance</a>
-    </div>
-
     <img
       class="crest"
       src="RCLOGO_.png"
@@ -413,6 +482,25 @@
       alt="Results Committee crest: From the second Saturday of May, we shall never run astray."
       width="1320" height="1256"
     />
+    </div>
+
+    <nav class="explore" aria-label="Sections below">
+      <p class="explore-hint">Scroll to explore</p>
+      <div class="explore-links">
+        <a href="#calendar" class="explore-link">
+          <span class="explore-label">Ceremony dates</span>
+          <span class="arrow" aria-hidden="true"></span>
+        </a>
+        <a href="#attendance" class="explore-link">
+          <span class="explore-label">Attendance</span>
+          <span class="arrow" aria-hidden="true"></span>
+        </a>
+        <a href="#portraits" class="explore-link">
+          <span class="explore-label">Portraits</span>
+          <span class="arrow" aria-hidden="true"></span>
+        </a>
+      </div>
+    </nav>
   </header>
 
   <section id="calendar" aria-labelledby="calendar-title">
