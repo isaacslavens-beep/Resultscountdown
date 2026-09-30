@@ -23,8 +23,7 @@
       --gold: #E8C15A;
       --gold-deep: #A97B26;
       --gold-light: #F7E3A1;
-      --ivory: #F2E8CF;
-      --muted: #8C826C;
+      --ivory: #FFFFFF;
       --rule: rgba(232, 193, 90, 0.22);
       --absent: #B4503A;
       --display: "Cinzel", "Trajan Pro", Georgia, serif;
@@ -82,7 +81,7 @@
       margin: 0 0 10px;
       font-style: italic;
       font-size: 1.25rem;
-      color: var(--muted);
+      color: var(--gold);
     }
 
     .countdown {
@@ -110,13 +109,12 @@
       font-size: clamp(2.2rem, 8vw, 4.5rem);
       line-height: 1.1;
       color: var(--gold-deep);
-      opacity: 0.6;
     }
 
     .unit-label {
       margin-top: 8px;
       font-size: 0.95rem;
-      color: var(--muted);
+      color: var(--ivory);
     }
 
     .in-progress {
@@ -188,7 +186,7 @@
     .section-note {
       text-align: center;
       font-style: italic;
-      color: var(--muted);
+      color: var(--ivory);
       margin: 0 0 40px;
     }
 
@@ -237,7 +235,7 @@
       font-style: italic;
       font-weight: 500;
       font-size: 0.92rem;
-      color: var(--muted);
+      color: var(--ivory);
       line-height: 1.25;
     }
 
@@ -262,8 +260,7 @@
       width: 14px;
       height: 1px;
       transform: none;
-      background: var(--muted);
-      opacity: 0.6;
+      background: var(--gold-deep);
     }
 
     .record { font-weight: 600; font-size: 1.15rem; }
@@ -276,7 +273,7 @@
       justify-content: center;
       gap: 8px 24px;
       margin-top: 24px;
-      color: var(--muted);
+      color: var(--ivory);
       font-size: 1rem;
     }
     .legend span { display: inline-flex; align-items: center; gap: 10px; }
@@ -310,9 +307,9 @@
       letter-spacing: 0.04em;
     }
 
-    .year-day { font-size: 0.95rem; color: var(--muted); }
+    .year-day { font-size: 0.95rem; color: var(--ivory); }
 
-    .year.past { opacity: 0.45; }
+    .year.past .year-num, .year.past .year-day { color: var(--gold-deep); }
     .year.past .year-num { text-decoration: line-through; text-decoration-color: var(--gold-deep); }
 
     .year.next {
@@ -322,12 +319,35 @@
     .year.next .year-num { color: var(--gold); }
     .year.next .year-day { color: var(--ivory); }
 
+    /* ---------- Portraits ---------- */
+    .portraits {
+      display: flex;
+      flex-direction: column;
+      gap: 56px;
+    }
+
+    .portrait { margin: 0; }
+
+    .portrait figcaption {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .portrait img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: rgba(232, 193, 90, 0.05);
+    }
+
     /* ---------- Footer ---------- */
     footer {
       border-top: 1px solid var(--rule);
       padding: 48px 20px 64px;
       text-align: center;
-      color: var(--muted);
+      color: var(--ivory);
     }
 
     footer a {
@@ -383,8 +403,7 @@
     <p class="when" id="when"></p>
 
     <div class="actions">
-      <button class="btn btn-primary" id="add-next" type="button">Add to calendar</button>
-      <a class="btn btn-ghost" href="#attendance">See attendance</a>
+      <a class="btn btn-primary" href="#attendance">See attendance</a>
     </div>
 
     <img
@@ -416,6 +435,12 @@
       <span><i class="mark mark-absent"></i> Absent</span>
       <span><i class="mark mark-na"></i> Not yet a member</span>
     </div>
+  </section>
+
+  <section id="portraits" aria-labelledby="portraits-title">
+    <h2 id="portraits-title">Results Committee Portraits by Ceremony</h2>
+    <p class="section-note">One official portrait from each ceremony.</p>
+    <div class="portraits" id="portrait-list"></div>
   </section>
 
   <footer>
@@ -540,7 +565,6 @@
       URL.revokeObjectURL(url);
     }
 
-    document.getElementById("add-next").addEventListener("click", () => downloadIcs(next));
 
     // ---------- Year grid ----------
     const grid = document.getElementById("years");
@@ -597,6 +621,24 @@
         <tbody>${rows}</tbody>`;
     }
 
+    // ---------- Portraits ----------
+    const RAW = "https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/";
+
+    function renderPortraits() {
+      const list = document.getElementById("portrait-list");
+      list.innerHTML = ceremonies.map(c => `
+        <figure class="portrait">
+          <figcaption>
+            <span class="ceremony-year">${c.year}</span>
+            <span class="ceremony-name">${c.name}</span>
+          </figcaption>
+          <img src="portrait${c.year}.JPG" loading="lazy"
+               alt="Results Committee portrait, ${c.year}: ${c.name}"
+               onerror="this.onerror=null;this.src='${RAW}portrait${c.year}.JPG';">
+        </figure>`).join("");
+    }
+
+    renderPortraits();
     renderWhen();
     renderLedger();
     renderYears();
