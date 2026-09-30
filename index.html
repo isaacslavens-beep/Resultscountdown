@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Results Countdown</title>
+  <meta name="theme-color" content="#000000" />
 
   <meta property="og:title" content="Results Countdown" />
   <meta property="og:description" content="The Ceremony Begins Soon. Check countdown and historical archives." />
@@ -11,741 +12,425 @@
   <meta property="og:image" content="https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/RCLOGO_.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+
   <style>
-    html {
-      scroll-behavior: smooth;
+    :root {
+      --black: #000000;
+      --gold: #E8C15A;
+      --gold-deep: #A97B26;
+      --gold-light: #F7E3A1;
+      --ivory: #F2E8CF;
+      --muted: #8C826C;
+      --rule: rgba(232, 193, 90, 0.22);
+      --absent: #B4503A;
+      --display: "Cinzel", "Trajan Pro", Georgia, serif;
+      --serif: "Cormorant Garamond", "Garamond", "Times New Roman", serif;
+      --foil: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 45%, var(--gold-deep) 100%);
     }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
+      background: var(--black);
+      color: var(--ivory);
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.125rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: #000000; 
-      color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      justify-content: center;
+      padding: 32px 20px;
+      text-align: center;
+      background: radial-gradient(ellipse 60% 45% at 50% 70%, rgba(232, 193, 90, 0.09), transparent 70%);
+    }
+
+    .crest {
+      width: auto;
+      height: min(36vh, 340px);
+      max-width: 78vw;
+      object-fit: contain;
+      margin-top: 28px;
+      display: block;
+      mix-blend-mode: lighten;
+    }
+
+    .lead {
+      margin: 0 0 10px;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--muted);
+    }
+
+    .countdown {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: clamp(10px, 3vw, 28px);
+    }
+
+    .unit { display: flex; flex-direction: column; align-items: center; min-width: 2.2ch; }
+
+    .num {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: clamp(3rem, 12vw, 6.5rem);
+      line-height: 1;
+      font-variant-numeric: lining-nums tabular-nums;
+      background: var(--foil);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sep {
+      font-size: clamp(2.2rem, 8vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--gold-deep);
+      opacity: 0.6;
+    }
+
+    .unit-label {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .in-progress {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 5vw, 2.4rem);
+      letter-spacing: 0.08em;
+      background: var(--foil);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .when {
+      margin: 18px 0 24px;
+      font-size: 1.2rem;
+      color: var(--ivory);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.05rem;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--black);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--rule);
+    }
+    .btn-ghost:hover { border-color: var(--gold); }
+
+    /* ---------- Sections ---------- */
+    section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 88px 20px;
+      border-top: 1px solid var(--rule);
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 4.5vw, 2.1rem);
+      letter-spacing: 0.06em;
+      text-align: center;
+      margin: 0 0 8px;
+      color: var(--gold);
+    }
+
+    .section-note {
+      text-align: center;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0 0 40px;
+    }
+
+    .ornament {
+      display: block;
+      text-align: center;
+      color: var(--gold-deep);
+      letter-spacing: 0.6em;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+    }
+
+    /* ---------- Attendance ledger ---------- */
+    .ledger-wrap { overflow-x: auto; }
+
+    .ledger {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+
+    .ledger th, .ledger td {
+      padding: 14px 10px;
+      border-bottom: 1px solid rgba(242, 232, 207, 0.07);
+    }
+
+    .ledger thead th {
+      vertical-align: bottom;
+      font-weight: 600;
+      border-bottom: 1px solid var(--rule);
       text-align: center;
     }
 
-    .hero-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
+    .ledger thead th:first-child { text-align: left; }
+
+    .ceremony-year {
+      display: block;
+      font-family: var(--display);
+      font-size: 1.05rem;
+      color: var(--gold);
+      letter-spacing: 0.04em;
     }
 
-    .content-panel {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 50px 20px 30px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .subtitle {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #FFF000;
-      margin-bottom: 0.6rem;
-      text-shadow: 0 0 10px rgba(255, 240, 0, 0.5);
-    }
-
-    .countdown-wrapper {
-      display: flex;
-      gap: 1.2rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .time-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 20px rgba(0,0,0,1);
-    }
-
-    .label {
-      font-size: 0.42rem;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 0.25rem;
-      color: #aaa;
-    }
-
-    .image-footer {
-      margin-bottom: 0;
-    }
-
-    .results-img {
-      max-width: 220px;
-      max-height: 140px;
-      border: 1px solid #FFF000;
-      border-radius: 4px;
-      box-shadow: 0 0 20px rgba(255, 240, 0, 0.3);
-      object-fit: contain;
-      margin-bottom: 12px;
-    }
-
-    .scroll-hint {
-      font-size: 0.72rem;
+    .ceremony-name {
+      display: block;
       font-style: italic;
-      color: #FFF000;
-      letter-spacing: 0.5px;
-      text-shadow: 0 0 8px rgba(255, 240, 0, 0.4);
-      margin-top: 2px;
-      line-height: 1.6;
-    }
-
-    .hint-separator {
-      border: none;
-      border-top: 1px solid rgba(255, 240, 0, 0.4);
-      width: 60%;
-      margin: 8px auto;
-      box-shadow: 0 0 5px rgba(255, 240, 0, 0.3);
-    }
-
-    /* ---- SCROLL-DOWN PROMPT ---- */
-    .attendance-prompt {
-      margin-top: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .attendance-prompt-text {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.8px;
-      color: #FFD700;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-    }
-
-    .attendance-prompt-arrow {
-      font-size: 1rem;
-      color: #FFD700;
-      animation: bounceDown 2s ease-in-out infinite;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
-    }
-
-    @keyframes bounceDown {
-      0%, 100% { transform: translateY(0); opacity: 0.6; }
-      50% { transform: translateY(5px); opacity: 1; }
-    }
-
-    /* ---- MANDATE BANNER ---- */
-    .mandate-banner {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 22px 24px 18px;
-    }
-
-    .mandate-text {
-      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-      color: #999;
-      max-width: 460px;
-      margin: 0 auto;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.25;
     }
 
-    .mandate-text .calendar-note {
-      display: block;
-      margin-top: 10px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: #FFD700;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-    }
-
-    /* ---- DATE GRID ---- */
-    .bg-dates-container {
-      position: relative;
-      width: 100%;
-      padding: 20px 14px 30px;
-      box-sizing: border-box;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px 10px;
-    }
-
-    .date-item {
-      font-size: 0.58rem;
-      font-weight: 700; 
-      line-height: 1.3;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #FFD700;
-      white-space: nowrap;
-      text-decoration: none;
-      display: block;
-      padding: 4px 2px;
-      border-radius: 3px;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      text-shadow: 0 0 4px rgba(255, 215, 0, 0.4);
-    }
-
-    .date-item:hover, .date-item:active {
-      color: #fff;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
-    }
-
-    .date-item.target-highlight {
-      font-size: 0.75rem;
-      color: #ffffff;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.8), 0 0 16px rgba(255, 215, 0, 0.5);
-      animation: intenseGlow 3s ease-in-out infinite;
-    }
-
-    .date-item.target-highlight:hover, .date-item.target-highlight:active {
-      color: #fff;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    @keyframes intenseGlow {
-      0%, 100% { filter: brightness(1.1); }
-      50% { 
-        filter: brightness(1.5);
-        text-shadow: 0 0 15px rgba(255, 215, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.6);
-      }
-    }
-
-    .date-item:nth-child(odd) { text-align: left; }
-    .date-item:nth-child(even) { text-align: right; }
-
-    /* ---- ATTENDANCE SECTION ---- */
-    .attendance-section {
-      width: 100%;
-      max-width: 640px;
-      padding: 60px 20px 80px;
-      box-sizing: border-box;
-      border-top: 1px solid rgba(255, 240, 0, 0.25);
-    }
-
-    .attendance-section h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #FFF000;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      text-shadow: 0 0 10px rgba(255, 240, 0, 0.3);
-    }
-
-    .attendance-subtitle {
-      font-size: 0.7rem;
-      color: #888;
-      letter-spacing: 0.5px;
-      margin-bottom: 2rem;
-    }
-
-    .ceremonies-legend {
-      margin-bottom: 2.5rem;
-    }
-
-    .ceremonies-legend h3 {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.6px;
-      color: #FFD700;
-      margin-bottom: 12px;
-      text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
-    }
-
-    .ceremony-legend-item {
-      font-size: 0.75rem;
-      color: #ccc;
-      line-height: 1.8;
-    }
-
-    .ceremony-legend-item .c-date {
-      color: #FFD700;
-      font-weight: 600;
-    }
-
-    .legend-divider {
-      border: none;
-      border-top: 1px solid rgba(255, 240, 0, 0.15);
-      width: 120px;
-      margin: 20px auto 0;
-    }
-
-    .member-card {
-      border: 1px solid rgba(255, 240, 0, 0.12);
-      background: rgba(255, 255, 255, 0.02);
-      margin-bottom: 10px;
-      border-radius: 3px;
-      transition: border-color 0.2s ease;
-    }
-
-    .member-card:hover {
-      border-color: rgba(255, 240, 0, 0.3);
-    }
-
-    .member-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 20px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .member-name {
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #fff;
-    }
-
-    .member-stats {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .attendance-bar {
-      display: flex;
-      gap: 4px;
-    }
-
-    .bar-pip {
-      width: 18px;
-      height: 5px;
-      border-radius: 1px;
-    }
-
-    .pip-present { background-color: #FFD700; }
-    .pip-absent { background-color: #5a1a1a; }
-    .pip-na { background-color: #2a2a2a; }
-
-    .attendance-fraction {
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    .frac-perfect { color: #FFD700; }
-    .frac-imperfect { color: #c87040; }
-
-    .expand-icon {
-      font-size: 0.5rem;
-      color: #666;
-      transition: transform 0.2s ease;
-      margin-left: 3px;
-    }
-
-    .member-card.open .expand-icon {
-      transform: rotate(90deg);
-    }
-
-    .member-details {
-      display: none;
-      padding: 0 20px 16px;
-      border-top: 1px solid rgba(255, 240, 0, 0.08);
-    }
-
-    .member-details.open {
-      display: block;
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-    }
-
-    .detail-row + .detail-row {
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .detail-ceremony {
+    .ledger tbody th {
       text-align: left;
-      font-size: 0.72rem;
-      color: #bbb;
-      line-height: 1.5;
+      font-weight: 600;
+      font-size: 1.2rem;
     }
 
-    .detail-ceremony .c-name {
-      display: block;
-      font-size: 0.65rem;
-      font-style: italic;
-      color: #777;
+    .ledger td { text-align: center; }
+
+    .mark {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      transform: rotate(45deg);
+      vertical-align: middle;
+    }
+    .mark-present { background: var(--gold); }
+    .mark-absent { border: 1.5px solid var(--absent); }
+    .mark-na {
+      width: 14px;
+      height: 1px;
+      transform: none;
+      background: var(--muted);
+      opacity: 0.6;
     }
 
-    .status-present {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #FFD700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .record { font-weight: 600; font-size: 1.15rem; }
+    .record-perfect { color: var(--gold); }
+    .record-missed { color: var(--absent); }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px 24px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 10px; }
+
+    /* ---------- Calendar ---------- */
+    .years {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: 8px;
     }
 
-    .status-absent {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #c04030;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .year {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 6px 10px;
+      background: transparent;
+      border: 1px solid rgba(242, 232, 207, 0.08);
+      border-radius: 6px;
+      color: var(--ivory);
+      font-family: var(--serif);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
     }
 
-    .status-na {
-      font-size: 0.68rem;
-      font-weight: 700;
-      color: #555;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .year:hover { border-color: var(--gold); }
+
+    .year-num {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
     }
 
-    /* =============================================
-       DESKTOP (800px+)
-       ============================================= */
-    @media (min-width: 800px) {
-      .hero-section {
-        min-height: 100vh;
-        justify-content: center;
-        position: relative;
-      }
+    .year-day { font-size: 0.95rem; color: var(--muted); }
 
-      .content-panel {
-        position: relative;
-        z-index: 10;
-        padding: 0;
-        pointer-events: none;
-      }
+    .year.past { opacity: 0.45; }
+    .year.past .year-num { text-decoration: line-through; text-decoration-color: var(--gold-deep); }
 
-      .content-panel .subtitle,
-      .content-panel .countdown-wrapper,
-      .content-panel .image-footer,
-      .content-panel .attendance-prompt {
-        pointer-events: auto;
-      }
+    .year.next {
+      border-color: var(--gold);
+      background: rgba(232, 193, 90, 0.1);
+    }
+    .year.next .year-num { color: var(--gold); }
+    .year.next .year-day { color: var(--ivory); }
 
-      .bg-dates-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        grid-template-columns: repeat(4, 1fr);
-        padding: 40px 60px;
-        gap: 5px;
-        align-content: space-between;
-        border-top: none;
-      }
+    /* ---------- Footer ---------- */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 48px 20px 64px;
+      text-align: center;
+      color: var(--muted);
+    }
 
-      .mandate-banner {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        z-index: 10;
-        padding: 16px 30px 14px;
-        border-top: none;
-        border-bottom: none;
-        background: linear-gradient(0deg, rgba(180, 0, 0, 0.2) 0%, rgba(0,0,0,0) 100%);
-      }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+    footer a:hover { border-color: var(--gold); }
 
-      .mandate-text {
-        font-size: 0.7rem;
+    /* ---------- Motion ---------- */
+    @media (prefers-reduced-motion: no-preference) {
+      .lead, .countdown, .when, .actions, .crest {
+        animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
       }
+      .lead { animation-delay: 0.25s; }
+      .countdown { animation-delay: 0.35s; }
+      .when { animation-delay: 0.5s; }
+      .actions { animation-delay: 0.6s; }
+      .crest { animation-delay: 0.75s; }
+    }
 
-      .date-item {
-        font-size: 0.65rem;
-        letter-spacing: 1.2px;
-      }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: none; }
+    }
 
-      .date-item.target-highlight {
-        font-size: 1.1rem;
-        z-index: 5;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
 
-      .date-item:nth-child(odd) { text-align: left; }
-      .date-item:nth-child(even) { text-align: right; }
-      .date-item:nth-child(4n+1), .date-item:nth-child(4n+2) { text-align: left; }
-      .date-item:nth-child(4n+3), .date-item:nth-child(4n+4) { text-align: right; }
-
-      .subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 0.8rem;
-      }
-
-      .countdown-wrapper {
-        gap: 2rem;
-        margin-bottom: 3rem;
-      }
-
-      .value {
-        font-size: 3.8rem;
-      }
-
-      .label {
-        font-size: 0.6rem;
-        letter-spacing: 2px;
-        margin-top: 0.5rem;
-      }
-
-      .results-img {
-        max-width: 400px;
-        max-height: 250px;
-      }
-
-      .scroll-hint {
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-
-      .attendance-prompt-text {
-        font-size: 0.8rem;
-      }
-
-      .attendance-section {
-        padding: 100px 20px 100px;
-      }
-
-      .attendance-section h2 {
-        font-size: 2rem;
-      }
-
-      .member-header {
-        padding: 16px 24px;
-      }
-
-      .member-name {
-        font-size: 0.9rem;
-      }
+    @media (max-width: 520px) {
+      .sep { display: none; }
+      .ledger th, .ledger td { padding: 12px 6px; }
+      .ceremony-name { font-size: 0.82rem; }
     }
   </style>
 </head>
 <body>
 
-  <div class="hero-section">
-    <div class="content-panel">
-      <div class="subtitle">The Ceremony Begins In:</div>
-      <div id="main-container" class="countdown-wrapper">
-        <div class="time-block"><div id="days" class="value">00</div><div class="label">Days</div></div>
-        <div class="time-block"><div id="hours" class="value">00</div><div class="label">Hours</div></div>
-        <div class="time-block"><div id="minutes" class="value">00</div><div class="label">Minutes</div></div>
-        <div class="time-block"><div id="seconds" class="value">00</div><div class="label">Seconds</div></div>
-      </div>
+  <header class="hero">
+    <p class="lead">The ceremony begins in</p>
 
-      <div class="image-footer">
-        <img src="RCLOGO_.png" alt="Results Preview" class="results-img">
-        <div class="scroll-hint">
-          <div style="margin-bottom: 4px;">Contact:</div>
-          resultscommitteeinfo@gmail.com
-        </div>
-      </div>
-
-      <a class="attendance-prompt" href="#attendance" onclick="event.preventDefault(); document.getElementById('attendance').scrollIntoView({behavior:'smooth'});">
-        <span class="attendance-prompt-text">Scroll down for Attendance Records</span>
-        <span class="attendance-prompt-arrow">&#9660;</span>
-      </a>
+    <div class="countdown" id="countdown" role="timer" aria-live="off">
+      <div class="unit"><span class="num" id="days">00</span><span class="unit-label">days</span></div>
+      <span class="sep" aria-hidden="true">:</span>
+      <div class="unit"><span class="num" id="hours">00</span><span class="unit-label">hours</span></div>
+      <span class="sep" aria-hidden="true">:</span>
+      <div class="unit"><span class="num" id="minutes">00</span><span class="unit-label">minutes</span></div>
+      <span class="sep" aria-hidden="true">:</span>
+      <div class="unit"><span class="num" id="seconds">00</span><span class="unit-label">seconds</span></div>
     </div>
 
-    <div class="bg-dates-container">
-      <a class="date-item" data-date="2024-05-11">May 11, 2024</a>
-      <a class="date-item" data-date="2025-05-10">May 10, 2025</a>
-      <a class="date-item" data-date="2026-05-09">May 9, 2026</a>
-      <a class="date-item" data-date="2027-05-08">May 8, 2027</a>
-      <a class="date-item" data-date="2028-05-13">May 13, 2028</a>
-      <a class="date-item" data-date="2029-05-12">May 12, 2029</a>
-      <a class="date-item" data-date="2030-05-11">May 11, 2030</a>
-      <a class="date-item" data-date="2031-05-10">May 10, 2031</a>
-      <a class="date-item" data-date="2032-05-08">May 8, 2032</a>
-      <a class="date-item" data-date="2033-05-14">May 14, 2033</a>
-      <a class="date-item" data-date="2034-05-13">May 13, 2034</a>
-      <a class="date-item" data-date="2035-05-12">May 12, 2035</a>
-      <a class="date-item" data-date="2036-05-10">May 10, 2036</a>
-      <a class="date-item" data-date="2037-05-09">May 9, 2037</a>
-      <a class="date-item" data-date="2038-05-08">May 8, 2038</a>
-      <a class="date-item" data-date="2039-05-14">May 14, 2039</a>
-      <a class="date-item" data-date="2040-05-12">May 12, 2040</a>
-      <a class="date-item" data-date="2041-05-11">May 11, 2041</a>
-      <a class="date-item" data-date="2042-05-10">May 10, 2042</a>
-      <a class="date-item" data-date="2043-05-09">May 9, 2043</a>
-      <a class="date-item" data-date="2044-05-14">May 14, 2044</a>
-      <a class="date-item" data-date="2045-05-13">May 13, 2045</a>
-      <a class="date-item" data-date="2046-05-12">May 12, 2046</a>
-      <a class="date-item" data-date="2047-05-11">May 11, 2047</a>
-      <a class="date-item" data-date="2048-05-09">May 9, 2048</a>
-      <a class="date-item" data-date="2049-05-08">May 8, 2049</a>
-      <a class="date-item" data-date="2050-05-14">May 14, 2050</a>
-      <a class="date-item" data-date="2051-05-13">May 13, 2051</a>
-      <a class="date-item" data-date="2052-05-11">May 11, 2052</a>
-      <a class="date-item" data-date="2053-05-10">May 10, 2053</a>
-      <a class="date-item" data-date="2054-05-09">May 9, 2054</a>
-      <a class="date-item" data-date="2055-05-08">May 8, 2055</a>
-      <a class="date-item" data-date="2056-05-13">May 13, 2056</a>
-      <a class="date-item" data-date="2057-05-12">May 12, 2057</a>
-      <a class="date-item" data-date="2058-05-11">May 11, 2058</a>
-      <a class="date-item" data-date="2059-05-10">May 10, 2059</a>
-      <a class="date-item" data-date="2060-05-08">May 8, 2060</a>
-      <a class="date-item" data-date="2061-05-14">May 14, 2061</a>
-      <a class="date-item" data-date="2062-05-13">May 13, 2062</a>
-      <a class="date-item" data-date="2063-05-12">May 12, 2063</a>
-      <a class="date-item" data-date="2064-05-10">May 10, 2064</a>
-      <a class="date-item" data-date="2065-05-09">May 9, 2065</a>
-      <a class="date-item" data-date="2066-05-08">May 8, 2066</a>
-      <a class="date-item" data-date="2067-05-14">May 14, 2067</a>
-      <a class="date-item" data-date="2068-05-12">May 12, 2068</a>
-      <a class="date-item" data-date="2069-05-11">May 11, 2069</a>
-      <a class="date-item" data-date="2070-05-10">May 10, 2070</a>
-      <a class="date-item" data-date="2071-05-09">May 9, 2071</a>
-      <a class="date-item" data-date="2072-05-14">May 14, 2072</a>
-      <a class="date-item" data-date="2073-05-13">May 13, 2073</a>
-      <a class="date-item" data-date="2074-05-12">May 12, 2074</a>
-      <a class="date-item" data-date="2075-05-11">May 11, 2075</a>
-      <a class="date-item" data-date="2076-05-09">May 9, 2076</a>
-      <a class="date-item" data-date="2077-05-08">May 8, 2077</a>
-      <a class="date-item" data-date="2078-05-14">May 14, 2078</a>
-      <a class="date-item" data-date="2079-05-13">May 13, 2079</a>
-      <a class="date-item" data-date="2080-05-11">May 11, 2080</a>
-      <a class="date-item" data-date="2081-05-10">May 10, 2081</a>
-      <a class="date-item" data-date="2082-05-09">May 9, 2082</a>
-      <a class="date-item" data-date="2083-05-08">May 8, 2083</a>
-      <a class="date-item" data-date="2084-05-13">May 13, 2084</a>
-      <a class="date-item" data-date="2085-05-12">May 12, 2085</a>
-      <a class="date-item" data-date="2086-05-11">May 11, 2086</a>
-      <a class="date-item" data-date="2087-05-10">May 10, 2087</a>
-      <a class="date-item" data-date="2088-05-08">May 8, 2088</a>
-      <a class="date-item" data-date="2089-05-14">May 14, 2089</a>
-      <a class="date-item" data-date="2090-05-13">May 13, 2090</a>
-      <a class="date-item" data-date="2091-05-12">May 12, 2091</a>
-      <a class="date-item" data-date="2092-05-10">May 10, 2092</a>
-      <a class="date-item" data-date="2093-05-09">May 9, 2093</a>
-      <a class="date-item" data-date="2094-05-08">May 8, 2094</a>
-      <a class="date-item" data-date="2095-05-14">May 14, 2095</a>
-      <a class="date-item" data-date="2096-05-13">May 13, 2096</a>
-      <a class="date-item" data-date="2097-05-11">May 11, 2097</a>
-    </div>
-  </div>
+    <p class="when" id="when"></p>
 
-  <!-- Attendance Records -->
-  <section class="attendance-section" id="attendance">
-    <h2>Attendance Records</h2>
-    <div class="attendance-subtitle">Members listed in alphabetical order.</div>
-
-    <div class="ceremonies-legend">
-      <h3>Ceremonies to Date</h3>
-      <div class="ceremony-legend-item"><span class="c-date">May 11, 2024</span> · Conclusion of Childhood</div>
-      <div class="ceremony-legend-item"><span class="c-date">May 10, 2025</span> · Beginning of Adulthood</div>
-      <div class="ceremony-legend-item"><span class="c-date">May 9, 2026</span> · Changing of Direction</div>
-      <hr class="legend-divider">
+    <div class="actions">
+      <button class="btn btn-primary" id="add-next" type="button">Add to calendar</button>
+      <a class="btn btn-ghost" href="#attendance">See attendance</a>
     </div>
 
-    <div id="records"></div>
+    <img
+      class="crest"
+      src="RCLOGO_.png"
+      onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/RCLOGO_.png';"
+      alt="Results Committee crest: From the second Saturday of May, we shall never run astray."
+      width="1320" height="1256"
+    />
+  </header>
+
+  <section id="calendar" aria-labelledby="calendar-title">
+    <span class="ornament" aria-hidden="true">&#9733;&#9733;&#9733;</span>
+    <h2 id="calendar-title">Every Second Saturday of May</h2>
+    <p class="section-note">Select any future year to add it to your calendar.</p>
+    <div class="years" id="years"></div>
   </section>
 
+  <section id="attendance" aria-labelledby="attendance-title">
+    <h2 id="attendance-title">Attendance Records</h2>
+    <p class="section-note">Members listed in alphabetical order.</p>
+
+    <div class="ledger-wrap">
+      <table class="ledger" id="ledger"></table>
+    </div>
+
+    <div class="legend">
+      <span><i class="mark mark-present"></i> Present</span>
+      <span><i class="mark mark-absent"></i> Absent</span>
+      <span><i class="mark mark-na"></i> Not yet a member</span>
+    </div>
+  </section>
+
+  <footer>
+    Questions for the committee: <a href="mailto:resultscommitteeinfo@gmail.com">resultscommitteeinfo@gmail.com</a>
+  </footer>
+
   <script>
-    // Countdown timer
-    const resultsDate = new Date("May 8, 2027 20:30:00 EDT").getTime();
-
-    const dateElements = document.querySelectorAll('.date-item');
-    dateElements.forEach(el => {
-      if (el.textContent.replace('✅', '').trim() === "May 8, 2027") {
-        el.classList.add('target-highlight');
-      }
-    });
-
-    function updateTimer() {
-      const now = new Date().getTime();
-      const diff = resultsDate - now;
-      const el = document.getElementById("main-container");
-
-      if (diff <= 0) {
-        el.innerHTML = `<div class='value' style='font-size:1.5rem; color:#FFF000;'>RESULTS IN PROGRESS</div>`;
-      } else {
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-        
-        document.getElementById("days").innerText = d.toString().padStart(2, '0');
-        document.getElementById("hours").innerText = h.toString().padStart(2, '0');
-        document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
-        document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-      }
-    }
-
-    setInterval(updateTimer, 1000);
-    updateTimer();
-
-    // Click handler: past dates scroll to attendance, future dates download .ics
-    document.querySelectorAll('.date-item').forEach(el => {
-      el.addEventListener('click', function(e) {
-        e.preventDefault();
-        const dateStr = this.getAttribute('data-date');
-        if (!dateStr) return;
-
-        const [year, month, day] = dateStr.split('-');
-        const eventDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        const now = new Date();
-
-        if (eventDate < now) {
-          document.getElementById('attendance').scrollIntoView({ behavior: 'smooth' });
-          return;
-        }
-
-        // Future date: download .ics file
-        const startDate = `${year}${month}${day}T200000`;
-        const endDate = `${year}${month}${day}T235900`;
-
-        const icsContent = [
-          'BEGIN:VCALENDAR',
-          'VERSION:2.0',
-          'PRODID:-//Results Committee//EN',
-          'BEGIN:VEVENT',
-          `DTSTART:${startDate}`,
-          `DTEND:${endDate}`,
-          `SUMMARY:Results`,
-          'DESCRIPTION:Mandatory attendance required for all Wii Sports members.',
-          'LOCATION:TBD',
-          'STATUS:CONFIRMED',
-          'END:VEVENT',
-          'END:VCALENDAR'
-        ].join('\r\n');
-
-        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `ceremony-${dateStr}.ics`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      });
-    });
-
-    // Attendance records
+    // ---------- Data ----------
     const ceremonies = [
-      { date: "May 11, 2024", name: "Conclusion of Childhood" },
-      { date: "May 10, 2025", name: "Beginning of Adulthood" },
-      { date: "May 9, 2026",  name: "Changing of Direction" }
+      { year: 2024, name: "Conclusion of Childhood" },
+      { year: 2025, name: "Beginning of Adulthood" },
+      { year: 2026, name: "Changing of Direction" }
     ];
 
-    // true = present, false = absent, null = N/A (not invited)
+    // true = present, false = absent, null = not yet a member
     const members = [
       { name: "Amit",   attended: [true, true, true] },
       { name: "Ben",    attended: [true, true, true] },
@@ -759,63 +444,164 @@
       { name: "Seth",   attended: [true, true, true] }
     ];
 
-    const container = document.getElementById("records");
+    const FIRST_YEAR = 2024;
+    const LAST_YEAR = 2097;
+    const START_HOUR = 20, START_MIN = 30;   // 8:30 p.m. Eastern (EDT, UTC-4 in May)
+    const CEREMONY_HOURS = 4;                // "in progress" window
 
-    members.forEach(member => {
-      const invited = member.attended.filter(a => a !== null).length;
-      const present = member.attended.filter(a => a === true).length;
-      const isPerfect = present === invited;
+    // ---------- Dates ----------
+    function secondSaturdayOfMay(year) {
+      const first = new Date(Date.UTC(year, 4, 1)).getUTCDay();
+      const firstSat = 1 + ((6 - first + 7) % 7);
+      return firstSat + 7;
+    }
 
-      const card = document.createElement("div");
-      card.className = "member-card";
+    function startTime(year) {
+      const day = secondSaturdayOfMay(year);
+      return Date.UTC(year, 4, day, START_HOUR + 4, START_MIN);
+    }
 
-      let pips = member.attended.map(a => {
-        if (a === null) return '<div class="bar-pip pip-na"></div>';
-        return `<div class="bar-pip ${a ? "pip-present" : "pip-absent"}"></div>`;
-      }).join("");
+    const years = [];
+    for (let y = FIRST_YEAR; y <= LAST_YEAR; y++) {
+      years.push({ year: y, day: secondSaturdayOfMay(y), start: startTime(y) });
+    }
 
-      let details = ceremonies.map((c, i) => {
-        let statusClass, statusText;
-        if (member.attended[i] === null) {
-          statusClass = "status-na";
-          statusText = "N/A";
-        } else if (member.attended[i]) {
-          statusClass = "status-present";
-          statusText = "PRESENT";
+    function findNext(now) {
+      return years.find(y => y.start + CEREMONY_HOURS * 3600000 > now) || years[years.length - 1];
+    }
+
+    // ---------- Countdown ----------
+    const pad = n => String(n).padStart(2, "0");
+    const els = {
+      d: document.getElementById("days"),
+      h: document.getElementById("hours"),
+      m: document.getElementById("minutes"),
+      s: document.getElementById("seconds"),
+      box: document.getElementById("countdown"),
+      when: document.getElementById("when")
+    };
+
+    let next = findNext(Date.now());
+
+    function renderWhen() {
+      els.when.textContent = `Saturday, May ${next.day}, ${next.year} at 8:30 p.m. Eastern`;
+    }
+
+    function tick() {
+      const now = Date.now();
+      if (now > next.start + CEREMONY_HOURS * 3600000) {
+        next = findNext(now);
+        renderWhen();
+        renderYears();
+      }
+      const diff = next.start - now;
+
+      if (diff <= 0) {
+        els.box.innerHTML = '<span class="in-progress">Results in progress</span>';
+        return;
+      }
+
+      els.d.textContent = pad(Math.floor(diff / 86400000));
+      els.h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+      els.m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+      els.s.textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+
+    // ---------- Calendar file ----------
+    function downloadIcs(y) {
+      const mm = "05";
+      const dd = pad(y.day);
+      const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Results Committee//EN",
+        "BEGIN:VEVENT",
+        `UID:results-${y.year}@resultscountdown.xyz`,
+        `DTSTAMP:${stamp}`,
+        `DTSTART;TZID=America/Toronto:${y.year}${mm}${dd}T${pad(START_HOUR)}${pad(START_MIN)}00`,
+        `DTEND;TZID=America/Toronto:${y.year}${mm}${dd}T235900`,
+        "SUMMARY:Results",
+        "DESCRIPTION:Mandatory attendance required for all Wii Sports members.",
+        "LOCATION:TBD",
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `results-${y.year}.ics`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("add-next").addEventListener("click", () => downloadIcs(next));
+
+    // ---------- Year grid ----------
+    const grid = document.getElementById("years");
+
+    function renderYears() {
+      const now = Date.now();
+      grid.innerHTML = "";
+      years.forEach(y => {
+        const held = ceremonies.find(c => c.year === y.year);
+        const isPast = y.start + CEREMONY_HOURS * 3600000 <= now;
+        const isNext = y.year === next.year;
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "year" + (isPast ? " past" : "") + (isNext ? " next" : "");
+        btn.innerHTML = `<span class="year-num">${y.year}</span><span class="year-day">May ${y.day}</span>`;
+
+        if (isPast) {
+          btn.title = held ? held.name : "Held";
+          btn.setAttribute("aria-label", `${y.year}, ${held ? held.name : "held"}. View attendance.`);
+          btn.addEventListener("click", () => document.getElementById("attendance").scrollIntoView());
         } else {
-          statusClass = "status-absent";
-          statusText = "ABSENT";
+          btn.setAttribute("aria-label", `Add May ${y.day}, ${y.year} to calendar`);
+          btn.addEventListener("click", () => downloadIcs(y));
         }
-        return `
-        <div class="detail-row">
-          <div class="detail-ceremony">
-            ${c.date}
-            <span class="c-name">${c.name}</span>
-          </div>
-          <div class="${statusClass}">${statusText}</div>
-        </div>`;
+        grid.appendChild(btn);
+      });
+    }
+
+    // ---------- Ledger ----------
+    function renderLedger() {
+      const table = document.getElementById("ledger");
+      const head = ceremonies.map(c =>
+        `<th scope="col"><span class="ceremony-year">${c.year}</span><span class="ceremony-name">${c.name}</span></th>`
+      ).join("");
+
+      const rows = members.map(m => {
+        const invited = m.attended.filter(a => a !== null).length;
+        const present = m.attended.filter(a => a === true).length;
+        const cells = m.attended.map((a, i) => {
+          const label = a === null ? "Not yet a member" : a ? "Present" : "Absent";
+          const cls = a === null ? "mark-na" : a ? "mark-present" : "mark-absent";
+          return `<td><i class="mark ${cls}" role="img" aria-label="${label} ${ceremonies[i].year}"></i></td>`;
+        }).join("");
+        return `<tr>
+          <th scope="row">${m.name}</th>
+          ${cells}
+          <td class="record ${present === invited ? "record-perfect" : "record-missed"}">${present}/${invited}</td>
+        </tr>`;
       }).join("");
 
-      card.innerHTML = `
-        <div class="member-header">
-          <span class="member-name">${member.name} <span class="expand-icon">&#9654;</span></span>
-          <div class="member-stats">
-            <div class="attendance-bar">${pips}</div>
-            <span class="attendance-fraction ${isPerfect ? "frac-perfect" : "frac-imperfect"}">${present}/${invited}</span>
-          </div>
-        </div>
-        <div class="member-details">${details}</div>
-      `;
+      table.innerHTML = `
+        <thead><tr><th scope="col">Member</th>${head}<th scope="col"><span class="ceremony-year">Record</span></th></tr></thead>
+        <tbody>${rows}</tbody>`;
+    }
 
-      card.querySelector(".member-header").addEventListener("click", () => {
-        const det = card.querySelector(".member-details");
-        det.classList.toggle("open");
-        card.classList.toggle("open");
-      });
-
-      container.appendChild(card);
-    });
+    renderWhen();
+    renderLedger();
+    renderYears();
+    tick();
+    setInterval(tick, 1000);
   </script>
-
 </body>
 </html>
