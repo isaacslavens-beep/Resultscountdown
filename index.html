@@ -4,14 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Results Countdown</title>
+  <meta name="description" content="Countdown to the Results ceremony, every second Saturday of May. Ceremony dates, attendance records and portraits." />
   <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <meta property="og:title" content="Results Countdown" />
   <meta property="og:description" content="The Ceremony Begins Soon. Check countdown and historical archives." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/RCLOGO_.png" />
+  <meta property="og:url" content="https://resultscountdown.xyz/" />
+  <meta property="og:image" content="https://resultscountdown.xyz/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Results Committee crest: From the second Saturday of May, we shall never run astray." />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -419,6 +425,19 @@
     .year.next .year-num { color: var(--gold); }
     .year.next .year-day { color: var(--ivory); }
 
+    .years-more {
+      display: block;
+      margin: 20px auto 0;
+    }
+
+    .cal-status {
+      min-height: 1.5em;
+      margin: 16px 0 0;
+      text-align: center;
+      font-style: italic;
+      color: var(--gold);
+    }
+
     /* ---------- Portraits ---------- */
     .portraits {
       display: flex;
@@ -545,6 +564,8 @@
     <h2 id="calendar-title">Every Second Saturday of May</h2>
     <p class="section-note">Select any future year to add it to your calendar.</p>
     <div class="years" id="years"></div>
+    <button class="btn btn-ghost years-more" id="years-more" type="button" aria-expanded="false">Show all years</button>
+    <p class="cal-status" id="cal-status" role="status" aria-live="polite"></p>
   </section>
 
   <section id="attendance" aria-labelledby="attendance-title">
@@ -660,22 +681,23 @@
     }
 
     // ---------- Calendar file ----------
+    // Times are written in UTC (the trailing "Z") so every calendar app
+    // shows 8:30 p.m. Eastern correctly, whatever the viewer's time zone.
+    const icsTime = ms => new Date(ms).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
     function downloadIcs(y) {
-      const mm = "05";
-      const dd = pad(y.day);
-      const stamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
       const ics = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
         "PRODID:-//Results Committee//EN",
         "BEGIN:VEVENT",
         `UID:results-${y.year}@resultscountdown.xyz`,
-        `DTSTAMP:${stamp}`,
-        `DTSTART;TZID=America/Toronto:${y.year}${mm}${dd}T${pad(START_HOUR)}${pad(START_MIN)}00`,
-        `DTEND;TZID=America/Toronto:${y.year}${mm}${dd}T235900`,
+        `DTSTAMP:${icsTime(Date.now())}`,
+        `DTSTART:${icsTime(y.start)}`,
+        `DTEND:${icsTime(y.start + CEREMONY_HOURS * 3600000)}`,
         "SUMMARY:Results",
         "DESCRIPTION:Mandatory attendance required for all Wii Sports members.",
-        "LOCATION:TBD",
+        "LOCATION:15 Cedarpoint Court",
         "STATUS:CONFIRMED",
         "END:VEVENT",
         "END:VCALENDAR"
@@ -690,16 +712,31 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+
+      document.getElementById("cal-status").textContent =
+        `Calendar file for May ${y.day}, ${y.year} downloaded. Open it to add the ceremony to your calendar.`;
     }
 
 
     // ---------- Year grid ----------
     const grid = document.getElementById("years");
+    const moreBtn = document.getElementById("years-more");
+    const FUTURE_SHOWN = 5;   // upcoming years shown before "Show all years"
+    let showAll = false;
+
+    moreBtn.addEventListener("click", () => {
+      showAll = !showAll;
+      moreBtn.textContent = showAll ? "Show fewer years" : "Show all years";
+      moreBtn.setAttribute("aria-expanded", String(showAll));
+      renderYears();
+    });
 
     function renderYears() {
       const now = Date.now();
+      const nextIndex = years.indexOf(next);
       grid.innerHTML = "";
-      years.forEach(y => {
+      years.forEach((y, i) => {
+        if (!showAll && i >= nextIndex + FUTURE_SHOWN) return;
         const held = ceremonies.find(c => c.year === y.year);
         const isPast = y.start + CEREMONY_HOURS * 3600000 <= now;
         const isNext = y.year === next.year;
