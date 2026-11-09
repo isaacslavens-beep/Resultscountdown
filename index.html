@@ -328,6 +328,15 @@
 
     .ledger thead th:first-child { text-align: left; }
 
+    /* Member names stay put while the table scrolls sideways on phones */
+    .ledger thead th:first-child,
+    .ledger tbody th {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: var(--black);
+    }
+
     .ceremony-year {
       display: block;
       font-family: var(--display);
@@ -415,8 +424,17 @@
 
     .year-day { font-size: 0.95rem; color: var(--ivory); }
 
+    .year.past { opacity: 0.75; }
+    .year.past:hover { opacity: 1; }
     .year.past .year-num, .year.past .year-day { color: var(--gold-deep); }
-    .year.past .year-num { text-decoration: line-through; text-decoration-color: var(--gold-deep); }
+
+    .year-name {
+      margin-top: 4px;
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.2;
+      color: var(--ivory);
+    }
 
     .year.next {
       border-color: var(--gold);
@@ -482,7 +500,7 @@
       .actions { animation-delay: 0.6s; }
       .crest { animation-delay: 0.75s; }
       .explore { animation: rise 0.9s 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-      .arrow { animation: nudge 2.4s ease-in-out 1.8s infinite; }
+      .arrow { animation: nudge 2.4s ease-in-out 1.8s 3; }
     }
 
     @keyframes nudge {
@@ -591,10 +609,11 @@
 
   <script>
     // ---------- Data ----------
+    // portrait = [width, height] of portraitYEAR.JPG in pixels (stops the page jumping as it loads)
     const ceremonies = [
-      { year: 2024, name: "Conclusion of Childhood" },
-      { year: 2025, name: "Beginning of Adulthood" },
-      { year: 2026, name: "Changing of Direction" }
+      { year: 2024, name: "Conclusion of Childhood", portrait: [1656, 846] },
+      { year: 2025, name: "Beginning of Adulthood",  portrait: [2048, 1536] },
+      { year: 2026, name: "Changing of Direction",   portrait: [2304, 1728] }
     ];
 
     // true = present, false = absent, null = not yet a member
@@ -665,13 +684,21 @@
 
       if (diff <= 0) {
         els.box.innerHTML = '<span class="in-progress">Results in progress</span>';
+        document.title = "Results in progress · Results Countdown";
         return;
       }
 
-      els.d.textContent = pad(Math.floor(diff / 86400000));
-      els.h.textContent = pad(Math.floor((diff % 86400000) / 3600000));
-      els.m.textContent = pad(Math.floor((diff % 3600000) / 60000));
+      const days = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins = Math.floor((diff % 3600000) / 60000);
+      els.d.textContent = pad(days);
+      els.h.textContent = pad(hours);
+      els.m.textContent = pad(mins);
       els.s.textContent = pad(Math.floor((diff % 60000) / 1000));
+
+      // Countdown in the browser tab
+      const left = days >= 1 ? `${days} ${days === 1 ? "day" : "days"}` : `${hours}h ${pad(mins)}m`;
+      document.title = `${left} · Results Countdown`;
     }
 
     // ---------- Calendar file ----------
@@ -726,10 +753,10 @@
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "year" + (isPast ? " past" : "") + (isNext ? " next" : "");
-        btn.innerHTML = `<span class="year-num">${y.year}</span><span class="year-day">May ${y.day}</span>`;
+        btn.innerHTML = `<span class="year-num">${y.year}</span><span class="year-day">May ${y.day}</span>` +
+          (isPast && held ? `<span class="year-name">${held.name}</span>` : "");
 
         if (isPast) {
-          btn.title = held ? held.name : "Held";
           btn.setAttribute("aria-label", `${y.year}, ${held ? held.name : "held"}. View attendance.`);
           btn.addEventListener("click", () => document.getElementById("attendance").scrollIntoView());
         } else {
@@ -779,6 +806,7 @@
             <span class="ceremony-name">${c.name}</span>
           </figcaption>
           <img src="portrait${c.year}.JPG" loading="lazy"
+               width="${c.portrait[0]}" height="${c.portrait[1]}"
                alt="Results Committee portrait, ${c.year}: ${c.name}"
                onerror="this.onerror=null;this.src='${RAW}portrait${c.year}.JPG';">
         </figure>`).join("");
