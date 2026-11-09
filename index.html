@@ -425,11 +425,6 @@
     .year.next .year-num { color: var(--gold); }
     .year.next .year-day { color: var(--ivory); }
 
-    .years-more {
-      display: block;
-      margin: 20px auto 0;
-    }
-
     .cal-status {
       min-height: 1.5em;
       margin: 16px 0 0;
@@ -564,7 +559,6 @@
     <h2 id="calendar-title">Every Second Saturday of May</h2>
     <p class="section-note">Select any future year to add it to your calendar.</p>
     <div class="years" id="years"></div>
-    <button class="btn btn-ghost years-more" id="years-more" type="button" aria-expanded="false">Show all years</button>
     <p class="cal-status" id="cal-status" role="status" aria-live="polite"></p>
   </section>
 
@@ -720,23 +714,11 @@
 
     // ---------- Year grid ----------
     const grid = document.getElementById("years");
-    const moreBtn = document.getElementById("years-more");
-    const FUTURE_SHOWN = 5;   // upcoming years shown before "Show all years"
-    let showAll = false;
-
-    moreBtn.addEventListener("click", () => {
-      showAll = !showAll;
-      moreBtn.textContent = showAll ? "Show fewer years" : "Show all years";
-      moreBtn.setAttribute("aria-expanded", String(showAll));
-      renderYears();
-    });
 
     function renderYears() {
       const now = Date.now();
-      const nextIndex = years.indexOf(next);
       grid.innerHTML = "";
-      years.forEach((y, i) => {
-        if (!showAll && i >= nextIndex + FUTURE_SHOWN) return;
+      years.forEach(y => {
         const held = ceremonies.find(c => c.year === y.year);
         const isPast = y.start + CEREMONY_HOURS * 3600000 <= now;
         const isNext = y.year === next.year;
