@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Results Countdown</title>
-  <meta name="description" content="Countdown to the Results ceremony, every second Saturday of May. Ceremony dates, attendance records and portraits." />
+  <meta name="description" content="Countdown to the Results ceremony, every second Saturday of May. Ceremony dates, attendance records, grades and portraits." />
   <meta name="theme-color" content="#000000" />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -191,7 +191,7 @@
 
     .explore-links {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 150px));
+      grid-template-columns: repeat(4, minmax(0, 150px));
       justify-content: center;
       gap: clamp(8px, 3vw, 24px);
     }
@@ -379,6 +379,10 @@
     }
 
     .record { font-weight: 600; font-size: 1.15rem; }
+
+    .grade { font-size: 1.1rem; white-space: nowrap; }
+    .grade-none { color: var(--gold-deep); }
+    .grade-top { color: var(--gold); font-weight: 600; }
     .record-perfect { color: var(--gold); }
     .record-missed { color: var(--absent); }
 
@@ -564,6 +568,10 @@
           <span class="explore-label">Attendance</span>
           <span class="arrow" aria-hidden="true"></span>
         </a>
+        <a href="#grades" class="explore-link">
+          <span class="explore-label">Grades</span>
+          <span class="arrow" aria-hidden="true"></span>
+        </a>
         <a href="#portraits" class="explore-link">
           <span class="explore-label">Portraits</span>
           <span class="arrow" aria-hidden="true"></span>
@@ -595,6 +603,20 @@
     </div>
   </section>
 
+  <section id="grades" aria-labelledby="grades-title">
+    <h2 id="grades-title">Grades</h2>
+    <p class="section-note" id="grades-note">Exam results from each ceremony.</p>
+
+    <div class="ledger-wrap">
+      <table class="ledger" id="grades-table"></table>
+    </div>
+
+    <div class="legend">
+      <span><span class="grade-top">&#9733;</span> Top score of the year</span>
+      <span>&mdash; Not yet a member</span>
+    </div>
+  </section>
+
   <section id="portraits" aria-labelledby="portraits-title">
     <h2 id="portraits-title">Results Committee Portraits by Ceremony</h2>
     <p class="section-note">One official portrait from each ceremony.</p>
@@ -610,10 +632,11 @@
   <script>
     // ---------- Data ----------
     // portrait = [width, height] of portraitYEAR.JPG in pixels (stops the page jumping as it loads)
+    // graded = true when there is a grades/YEAR.csv file for that ceremony
     const ceremonies = [
-      { year: 2024, name: "Conclusion of Childhood", portrait: [1656, 846] },
-      { year: 2025, name: "Beginning of Adulthood",  portrait: [2048, 1536] },
-      { year: 2026, name: "Changing of Direction",   portrait: [2304, 1728] }
+      { year: 2024, name: "Conclusion of Childhood", portrait: [1656, 846],  graded: true },
+      { year: 2025, name: "Beginning of Adulthood",  portrait: [2048, 1536], graded: false },
+      { year: 2026, name: "Changing of Direction",   portrait: [2304, 1728], graded: true }
     ];
 
     // true = present, false = absent, null = not yet a member
@@ -794,6 +817,63 @@
         <tbody>${rows}</tbody>`;
     }
 
+    // ---------- Grades ----------
+    // Reads grades/YEAR.csv for each graded ceremony. Only the
+    // "member" and "grade" (percent) columns are used on the page.
+    function parseCsv(text) {
+      const [head, ...lines] = text.trim().split(/\r?\n/);
+      const keys = head.split(",").map(k => k.trim());
+      return lines.filter(l => l.trim()).map(line => {
+        const values = line.split(",");
+        return Object.fromEntries(keys.map((k, i) => [k, (values[i] || "").trim()]));
+      });
+    }
+
+    async function renderGrades() {
+      const graded = ceremonies.filter(c => c.graded);
+      const sheets = await Promise.all(graded.map(c =>
+        fetch(`grades/${c.year}.csv`)
+          .then(r => r.ok ? r.text() : "member,grade")
+          .then(parseCsv)
+          .catch(() => [])
+      ));
+
+      // grades[i][name] = percent for graded ceremony i
+      const grades = sheets.map(rows => {
+        const byName = {};
+        rows.forEach(r => { if (r.grade !== "") byName[r.member] = parseFloat(r.grade); });
+        return byName;
+      });
+      const tops = grades.map(g => Math.max(...Object.values(g)));
+
+      const head = graded.map(c =>
+        `<th scope="col"><span class="ceremony-year">${c.year}</span><span class="ceremony-name">${c.name}</span></th>`
+      ).join("");
+
+      const rows = members.map(m => {
+        const mine = [];
+        const cells = grades.map((g, i) => {
+          const value = g[m.name];
+          if (value === undefined) return `<td class="grade grade-none" aria-label="Not yet a member">&mdash;</td>`;
+          mine.push(value);
+          const top = value === tops[i];
+          return `<td class="grade${top ? " grade-top" : ""}">${top ? "&#9733; " : ""}${value.toFixed(1)}%</td>`;
+        }).join("");
+        const avg = mine.length ? (mine.reduce((a, b) => a + b, 0) / mine.length).toFixed(1) + "%" : "&mdash;";
+        return `<tr><th scope="row">${m.name}</th>${cells}<td class="grade record">${avg}</td></tr>`;
+      }).join("");
+
+      document.getElementById("grades-table").innerHTML = `
+        <thead><tr><th scope="col">Member</th>${head}<th scope="col"><span class="ceremony-year">Average</span></th></tr></thead>
+        <tbody>${rows}</tbody>`;
+
+      const ungraded = ceremonies.filter(c => !c.graded).map(c => c.year);
+      if (ungraded.length) {
+        document.getElementById("grades-note").textContent =
+          `Exam results from each ceremony. No exam was graded in ${ungraded.join(" or ")}.`;
+      }
+    }
+
     // ---------- Portraits ----------
     const RAW = "https://raw.githubusercontent.com/isaacslavens-beep/Resultscountdown/main/";
 
@@ -823,6 +903,7 @@
 
     renderWhen();
     renderLedger();
+    renderGrades();
     renderYears();
     tick();
     setInterval(tick, 1000);
